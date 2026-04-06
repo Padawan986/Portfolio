@@ -13,6 +13,21 @@
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
+.p2.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  /* readable size for the heading */
+  font-size: 2rem;
+  font-weight: 600;
+  /* gradient text */
+  background: linear-gradient(90deg, rgb(0, 94, 255) 0%, rgb(0, 94, 255) 35%, rgba(0, 212, 255, 1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
 /* Make the whole page a centered column */
 body {
   min-height: 100vh;
