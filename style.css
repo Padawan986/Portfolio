@@ -10,7 +10,13 @@
 body {
 
 }
+div {
+ display: grid;
+  place-items: center;
+  height: 600px;
+  border: 1px solid black;
+}
+
 img {
-  align-items: center;
-  
+  width: 50%;
 }
