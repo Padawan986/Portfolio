@@ -17,9 +17,11 @@ div {
  display: grid;
   place-items: center;
   height: 600px;
+  pointer-events: fill;
   border: 1px solid black;
 }
 
 img {
   width: 10%
+  
 }
