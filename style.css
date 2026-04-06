@@ -2,34 +2,38 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #020024;
-  color: linear-gradient(90deg,rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
-  position: x(500px);
-  z-index: 100
-  
-  ;
-    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
-
+  margin: 1rem 0;
+  /* readable size for the heading */
+  font-size: 2rem;
+  font-weight: 600;
+  /* gradient text */
+  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 9, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+/* Make the whole page a centered column */
 body {
-background: #000000;
-background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(61, 55, 55, 1) 100%);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(61, 55, 55, 1) 100%);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  color: #fff;
 }
 
-div {
- display: grid;
-  place-items: center;
-  height: 600px;
-  pointer-events: fill;
-  border: 1px solid black;
-}
+/* Generic centered container styling was removed from the global div selector
+   to avoid surprising side-effects; use a specific class if needed. */
 
 img {
-  width: 10%;
+  max-width: 200px;
+  width: 30%;
+  height: auto;
   display: block;
-  margin: 0 auto;
+  margin: 1rem auto;
+  border-radius: 8px;
 }
