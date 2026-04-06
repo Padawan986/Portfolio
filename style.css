@@ -3,7 +3,9 @@
   justify-content: center;
   align-items: center;
 }
-
+head{
+  background-color: blue;
+}
 body {
-  background-color: blue,violet;
+  background-color: blue;
 }
