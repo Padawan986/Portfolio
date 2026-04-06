@@ -8,8 +8,10 @@
 } 
 
 body {
-
+background: #000000;
+background: linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(61, 55, 55, 1) 100%);
 }
+
 div {
  display: grid;
   place-items: center;
