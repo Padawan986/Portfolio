@@ -1,15 +1,91 @@
 <!DOCTYPE html>
-<html>     
-<link rel="icon" type="image/x-icon" href="favicon.ico">
+<html lang="de">
 <head>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Padawan985 – Portfolio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<p class="p1 center">Hello I'm Padawan985</p>
-<p class="p2 center">Welcome to my portfolio</p>
-<img src="fav-fotor-2026040622214.png" alt="Me">
+<header>
+  <div class="container">
+    <h1>Padawan985</h1>
+    <nav>
+      <a href="#about">Über mich</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Kontakt</a>
+    </nav>
+  </div>
+</header>
 
-</body>
+<section class="hero">
+  <div class="container">
+    <h2>Hi, ich bin <span>Padawan985</span></h2>
+    <p>Ich entwickle Web-Apps und beschäftige mich mit moderner Softwareentwicklung.</p>
+  </div>
+</section>
+
+<section id="about" class="section">
+  <div class="container">
+    <h2>Über mich</h2>
+    <p>
+      Ich programmiere vor allem im Webbereich und arbeite gerne an eigenen Projekten.
+      Mein Fokus liegt auf sauberen Lösungen, verständlichem Code und solider Technik.
+      Aktuell erweitere ich mein Wissen in TypeScript und modernen Tools im Frontend.
+    </p>
+  </div>
+</section>
+
+<section id="skills" class="section">
+  <div class="container">
+    <h2>Skills</h2>
+
+    <div class="skills">
+
+      <div class="skill">
+        <span>Python</span>
+        <div class="bar"><div class="fill" data-width="80%"></div></div>
+      </div>
+
+      <div class="skill">
+        <span>HTML</span>
+        <div class="bar"><div class="fill" data-width="90%"></div></div>
+      </div>
+
+      <div class="skill">
+        <span>CSS</span>
+        <div class="bar"><div class="fill" data-width="85%"></div></div>
+      </div>
+
+      <div class="skill">
+        <span>JavaScript</span>
+        <div class="bar"><div class="fill" data-width="80%"></div></div>
+      </div>
+
+      <div class="skill">
+        <span>TypeScript (aktuell am Lernen)</span>
+        <div class="bar"><div class="fill" data-width="45%"></div></div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section id="contact" class="section">
+  <div class="container">
+    <h2>Kontakt</h2>
+    <p>Erreichbar per E-Mail: <a href="mailto:padawan985.dev@gmail.com">padawan985.dev@gmail.com</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Padawan985</p>
+  </div>
+</footer>
+
 <script src="index.js"></script>
+</body>
 </html>
