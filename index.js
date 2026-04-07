@@ -1,20 +1,43 @@
 
-document.addEventListener('DOMContentLoaded', () => {
-	const heading = document.querySelector('.p1.center');
-	if (!heading) return;
-
-	function adjustFont() {
-		const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-		// scale between 1.5rem and 3rem depending on viewport width
-		const min = 1.5; // rem
-		const max = 3; // rem
-		// Map vw from 320..1200 to min..max
-		const t = Math.min(1, Math.max(0, (vw - 320) / (1200 - 320)));
-		const size = min + (max - min) * t;
-		heading.style.fontSize = size + 'rem';
-	}
-
-	adjustFont();
-	window.addEventListener('resize', adjustFont);
+// Smooth Scroll
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
 });
 
+// Fade-In Sections
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+});
+
+document.querySelectorAll('.section').forEach(section => {
+  section.classList.add('hidden');
+  fadeObserver.observe(section);
+});
+
+// Skill Bars Animation
+const skillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const fills = entry.target.querySelectorAll('.fill');
+      fills.forEach(fill => {
+        const width = fill.getAttribute('data-width');
+        fill.style.width = width;
+      });
+    }
+  });
+});
+
+const skillsSection = document.querySelector('#skills');
+if (skillsSection) {
+  skillObserver.observe(skillsSection);
+}
