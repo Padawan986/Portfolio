@@ -1,0 +1,310 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ========================================
+   FROSTED ELEGANCE LIQUID GLASS DESIGN
+   Minimalist Premium Glasmorphism Portfolio
+   ======================================== */
+
+/* Import Google Fonts for Frosted Elegance */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  /* Frosted Elegance Color Palette */
+  --primary: #00d4ff;
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #00d4ff;
+  --sidebar-primary-foreground: #ffffff;
+  --chart-1: #00d4ff;
+  --chart-2: #0099cc;
+  --chart-3: #0066ff;
+  --chart-4: #0052cc;
+  --chart-5: #003d99;
+  --radius: 1rem;
+  --background: #0a1628;
+  --foreground: #e0e8f0;
+  --card: rgba(255, 255, 255, 0.08);
+  --card-foreground: #e0e8f0;
+  --popover: rgba(255, 255, 255, 0.1);
+  --popover-foreground: #e0e8f0;
+  --secondary: #1a3a52;
+  --secondary-foreground: #e0e8f0;
+  --muted: #2a4a62;
+  --muted-foreground: #a0b0c0;
+  --accent: #00d4ff;
+  --accent-foreground: #0a1628;
+  --destructive: #ff4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 212, 255, 0.2);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #00d4ff;
+  --sidebar: #0a1628;
+  --sidebar-foreground: #e0e8f0;
+  --sidebar-accent: #00d4ff;
+  --sidebar-accent-foreground: #0a1628;
+  --sidebar-border: rgba(0, 212, 255, 0.2);
+  --sidebar-ring: #00d4ff;
+  
+  /* Glassmorphism Effects */
+  --glass-blur: 12px;
+  --glass-opacity: 0.08;
+  --glow-color: #00d4ff;
+  --glow-opacity: 0.3;
+}
+
+.dark {
+  /* Dark mode uses the same Frosted Elegance palette */
+  --primary: #00d4ff;
+  --primary-foreground: #ffffff;
+  --sidebar-primary: #00d4ff;
+  --sidebar-primary-foreground: #ffffff;
+  --background: #0a1628;
+  --foreground: #e0e8f0;
+  --card: rgba(255, 255, 255, 0.08);
+  --card-foreground: #e0e8f0;
+  --popover: rgba(255, 255, 255, 0.1);
+  --popover-foreground: #e0e8f0;
+  --secondary: #1a3a52;
+  --secondary-foreground: #e0e8f0;
+  --muted: #2a4a62;
+  --muted-foreground: #a0b0c0;
+  --accent: #00d4ff;
+  --accent-foreground: #0a1628;
+  --destructive: #ff4444;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 212, 255, 0.2);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #00d4ff;
+  --chart-1: #00d4ff;
+  --chart-2: #0099cc;
+  --chart-3: #0066ff;
+  --chart-4: #0052cc;
+  --chart-5: #003d99;
+  --sidebar: #0a1628;
+  --sidebar-foreground: #e0e8f0;
+  --sidebar-accent: #00d4ff;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgba(0, 212, 255, 0.2);
+  --sidebar-ring: #00d4ff;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: var(--ring);
+  }
+  
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', sans-serif;
+    background-image: url('https://d2xsxph8kpxj0f.cloudfront.net/310519663345969366/Fv7rtrFSSgYqGfeers58KS/hero-gradient-hpD9HGCb9Lro3ZSPssJG3b.webp');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+  
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  
+  h3 {
+    font-size: 1.75rem;
+    font-weight: 600;
+  }
+  
+  p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #a0b0c0;
+  }
+  
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* ========================================
+   GLASSMORPHISM UTILITIES
+   ======================================== */
+
+@layer components {
+  .glass-panel {
+    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+  
+  .glass-panel:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(0, 212, 255, 0.4);
+    box-shadow: 0 12px 48px rgba(0, 212, 255, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  }
+  
+  .glass-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+    color: #0a1628;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+  }
+  
+  .glass-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4);
+  }
+  
+  .glass-button:active {
+    transform: translateY(0);
+  }
+  
+  .skill-bar {
+    height: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 9999px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+  }
+  
+  .skill-bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.8s ease-out;
+    background: linear-gradient(90deg, #00d4ff 0%, #0099cc 100%);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  }
+  
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+  
+  .section {
+    padding-top: 5rem;
+    padding-bottom: 8rem;
+  }
+  
+  @media (min-width: 768px) {
+    .section {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+  }
+  
+  .section-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    text-align: center;
+    background: linear-gradient(135deg, #e0e8f0 0%, #00d4ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  @media (min-width: 768px) {
+    .section-title {
+      font-size: 3rem;
+    }
+  }
+  
+  .section-subtitle {
+    font-size: 1.125rem;
+    color: #a0b0c0;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+}

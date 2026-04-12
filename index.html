@@ -1,87 +1,24 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Padawan985 – Portfolio</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <aside class="sidebar">
-    <nav>
-      <a href="#about">&#x1F4DA; Über mich</a>
-      <a href="#skills">&#x2699;&#xFE0F; Skills</a>
-      <a href="#contact">&#x2709;&#xFE0F; Kontakt</a>
-    </nav>
-  </aside>
+<!doctype html>
+<html lang="en">
 
-  <main>
-    <header>
-      <div class="container">
-        <h1>Padawan985</h1>
-      </div>
-    </header>
-    
-    <section class="hero">
-      <div class="container">
-        <h2>Hi, ich bin <span>Padawan985</span></h2>
-        <p>Ich entwickle Web-Apps und beschäfige mich mit moderner Softwareentwicklung.</p>
-      </div>
-    </section>
-    
-    <section id="about" class="section">
-      <div class="container">
-        <h2>Über mich</h2>
-        <p>
-          Ich programmiere hauptsächlich im Webbereich und arbeite gerne an eigenen Projekten.
-          Mein Fokus liegt auf sauberen Lösungen, verständlichem Code und solider Technik.
-          Aktuell erweitere ich mein Wissen in TypeScript und modernen Frontend-Tools.
-        </p>
-      </div>
-    </section>
-    
-    <section id="skills" class="section">
-      <div class="container">
-        <h2>Skills</h2>
-        <div class="skills">
-          <div class="skill">
-            <span>Python</span>
-            <div class="bar"><div class="fill" data-width="80%"></div></div>
-          </div>
-          <div class="skill">
-            <span>HTML</span>
-            <div class="bar"><div class="fill" data-width="90%"></div></div>
-          </div>
-          <div class="skill">
-            <span>CSS</span>
-            <div class="bar"><div class="fill" data-width="85%"></div></div>
-          </div>
-          <div class="skill">
-            <span>JavaScript</span>
-            <div class="bar"><div class="fill" data-width="80%"></div></div>
-          </div>
-          <div class="skill">
-            <span>TypeScript (aktuell am Lernen)</span>
-            <div class="bar"><div class="fill" data-width="50%"></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <section id="contact" class="section">
-      <div class="container">
-        <h2>Kontakt</h2>
-        <p>Erreichbar per E-Mail: <a href="mailto:padawan985@gmail.com">padawan985.dev@gmail.com</a></p>
-      </div>
-    </section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Padawan985 – Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />-->
+  </head>
 
-    <footer>
-      <div class="container">
-        <p>© 2026 Padawan985</p>
-      </div>
-    </footer>
-  </main>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script
+      defer
+      src="%VITE_ANALYTICS_ENDPOINT%/umami"
+      data-website-id="%VITE_ANALYTICS_WEBSITE_ID%"></script>
+  </body>
 
-  <script src="index.js"></script>
-</body>
 </html>
