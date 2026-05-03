@@ -366,6 +366,64 @@ nav a:hover::before {
   width: 100%;
 }
 
+/* ==================== SOCIALS PAGE ==================== */
+.socials-container {
+  position: relative;
+  z-index: 10;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  padding: 80px 8%;
+  margin: 40px auto;
+  max-width: 500px;
+}
+
+.social-card {
+  width: 100%;
+  display: block;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 1.1em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: rgba(26, 31, 58, 0.3);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.social-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.social-card:hover {
+  color: var(--primary);
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.social-card:hover::before {
+  left: 100%;
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
   nav {
@@ -419,6 +477,17 @@ nav a:hover::before {
   .card p {
     font-size: 1em;
   }
+
+  .socials-container {
+    padding: 60px 5%;
+    max-width: 100%;
+    gap: 18px;
+  }
+
+  .social-card {
+    padding: 18px;
+    font-size: 1em;
+  }
 }
 
 @media (max-width: 480px) {
@@ -457,6 +526,7 @@ nav a:hover::before {
   .projects {
     padding: 60px 4%;
     gap: 20px;
+    grid-template-columns: 1fr;
     padding-top: 80px;
   }
 
@@ -475,6 +545,16 @@ nav a:hover::before {
   }
 
   .card p {
+    font-size: 0.95em;
+  }
+
+  .socials-container {
+    padding: 50px 4%;
+    gap: 16px;
+  }
+
+  .social-card {
+    padding: 16px;
     font-size: 0.95em;
   }
 }
