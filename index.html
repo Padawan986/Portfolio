@@ -8,111 +8,119 @@
 </head>
 <body>
 
-<div class="animated-bg"></div>
-
 <nav class="navbar">
     <div class="nav-container">
-        <h1 class="logo">Padawan985</h1>
+        <a href="#" class="logo">Padawan985</a>
         <div class="nav-links">
             <a href="#projects" class="nav-link">Projekte</a>
-            <a href="socials.html" class="nav-link">Kontakt</a>
+            <a href="socials.html" class="nav-link nav-contact">Kontakt</a>
         </div>
     </div>
 </nav>
 
 <section class="hero">
     <div class="hero-content">
-        <div class="hero-text">
-            <h2 class="hero-title">Hi, ich bin <span class="gradient-text">Padawan985</span></h2>
-            <p class="hero-subtitle">Hobby-Developer • Tech Enthusiast</p>
-            <p class="hero-description">Ich entwickle lustige und hilfreiche Projekte</p>
-            <button class="cta-button" onclick="scrollToProjects()">Meine Projekte entdecken</button>
-        </div>
-        <div class="hero-decoration">
-            <div class="floating-shape"></div>
-            <div class="floating-shape delay-1"></div>
-            <div class="floating-shape delay-2"></div>
+        <span class="hero-badge">Verfügbar für neue Projekte</span>
+        <h1 class="hero-title">Ich entwickle digitale <br><span class="highlight-text">Erlebnisse & Werkzeuge.</span></h1>
+        <p class="hero-description">Hi, ich bin Arjen (Padawan985). Hobby-Developer und Tech-Enthusiast. Ich baue nützliche Skripte, Server-Utilities und interaktive Anwendungen.</p>
+        <div class="hero-actions">
+            <a href="#projects" class="btn btn-primary">Projekte ansehen</a>
+            <a href="socials.html" class="btn btn-secondary">Kontakt aufnehmen</a>
         </div>
     </div>
 </section>
 
 <section id="projects" class="projects">
-    <div class="projects-header">
-        <h2>Meine Projekte</h2>
-        <p>Eine Auswahl meiner besten Arbeiten</p>
+    <div class="section-header">
+        <p class="section-subtitle">Portfolio</p>
+        <h2 class="section-title">Ausgewählte Arbeiten</h2>
     </div>
 
     <div class="projects-grid">
-        <div class="card">
+        <div class="card" data-animate>
             <div class="card-header">
-                <div class="card-icon">🎮</div>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                </div>
                 <h3>Quiz System</h3>
             </div>
-            <p>Kahoot ähnliches Multiplayer Spiel mit Echtzeit-Synchronisation für Teams</p>
+            <p class="card-text">Kahoot-ähnliches Multiplayer-Spiel mit Echtzeit-Synchronisation für Teams.</p>
             <div class="card-tags">
                 <span class="tag">JavaScript</span>
-                <span class="tag">Multiplayer</span>
+                <span class="tag">WebSockets</span>
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" data-animate>
             <div class="card-header">
-                <div class="card-icon">⚙️</div>
-                <h3>Auto Minecraft Server Konfigurator</h3>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+                </div>
+                <h3>Auto MC Configurator</h3>
             </div>
-            <p>Automatisiertes Tool zur Konfiguration und Verwaltung von Minecraft-Servern</p>
+            <p class="card-text">Automatisiertes Tool zur schnellen Konfiguration und Verwaltung von Minecraft-Servern.</p>
             <div class="card-tags">
                 <span class="tag">Automation</span>
-                <span class="tag">Minecraft</span>
+                <span class="tag">Networks</span>
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" data-animate>
             <div class="card-header">
-                <div class="card-icon">🤖</div>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"></path></svg>
+                </div>
                 <h3>SchoolAI App</h3>
             </div>
-            <p>Desktop-Anwendung mit KI-Integration zur Unterstützung im schulischen Alltag</p>
+            <p class="card-text">Desktop-Anwendung mit smarter API-Integration zur Unterstützung im strukturierten Lernalltag.</p>
             <div class="card-tags">
-                <span class="tag">Desktop App</span>
-                <span class="tag">AI</span>
+                <span class="tag">Python</span>
+                <span class="tag">UI/UX</span>
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" data-animate>
             <div class="card-header">
-                <div class="card-icon">📦</div>
-                <h3>Pajaware</h3>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                </div>
+                <h3>Pajaware Macro</h3>
             </div>
-            <p>Roblox Cheat-Macro für das Roblox spiel "Blox-Fruits"</p>
+            <p class="card-text">Optimiertes Windows-Eingabemakro in C++ für präzise Steuerungsabläufe.</p>
             <div class="card-tags">
-                <span class="tag">Macro</span>
                 <span class="tag">C++</span>
+                <span class="tag">Macros</span>
             </div>
         </div>
 
-        <div class="card">
+        <div class="card" data-animate>
             <div class="card-header">
-                <div class="card-icon">🖥️</div>
-                <h3>Minecraft Remote Server Utility</h3>
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                </div>
+                <h3>MC Remote Utility</h3>
             </div>
-            <p>Ein Backdoor Programm geschrieben in Java wo dem Spieler ohne OP Rechte erlaubt Commands auszuführen</p>
+            <p class="card-text">Ein lokales Verwaltungsprogramm in Java zur Steuerung dedizierter Serverinstanzen.</p>
             <div class="card-tags">
                 <span class="tag">Java</span>
-                <span class="tag">Minecraft</span>
+                <span class="tag">Management</span>
             </div>
         </div>
     </div>
 </section>
 
 <section class="cta-section">
-    <h2>Interessiert?</h2>
-    <p>Lass mich wissen, was du von meinen Projekten hältst</p>
-    <a href="socials.html" class="cta-button">Kontaktiere mich</a>
+    <div class="cta-box">
+        <h2>Etwas zusammen bauen?</h2>
+        <p>Ich bin immer offen für Feedback, Fragen oder Server-Talks.</p>
+        <a href="socials.html" class="btn btn-primary">Schreib mir</a>
+    </div>
 </section>
 
 <footer>
-    <p>&copy; 2026 Padawan985. Alle Rechte vorbehalten.</p>
+    <div class="footer-container">
+        <p>&copy; 2026 Padawan985. Code sauber von Hand geschrieben.</p>
+    </div>
 </footer>
 
 <script src="index.js"></script>
