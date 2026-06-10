@@ -3,30 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Monitor & Info</title>
+    <title>Padawan985</title>
     <style>
-        /* Modern-Brutalistischer Minimalismus – Kein KI-Standard-Look */
-        :root {
-            --bg-color: #0b0c10;
-            --card-bg: #11141a;
-            --border-color: #1f242e;
-            --text-main: #e2e8f0;
-            --text-muted: #64748b;
-            --accent-orange: #ff6b35; /* Hinweis-Farbe */
-            --accent-red: #ef4444;    /* Timer-Farbe */
-            --accent-green: #10b981;  /* Fertig-Farbe */
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace; /* Roher, technischer Vibe */
+            font-family: 'Courier New', Courier, monospace;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: #0a0a0c;
+            color: #e2e8f0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -34,134 +22,81 @@
             padding: 20px;
         }
 
-        .window {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+        .terminal {
+            background: #111216;
+            border: 1px solid #232429;
             width: 100%;
-            max-width: 480px;
-            box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.3); /* Kantiger Schatten */
-            display: flex;
-            flex-direction: column;
+            max-width: 400px;
+            box-shadow: 8px 8px 0px #000000;
         }
 
-        /* Obere Statusleiste */
-        .window-header {
-            background: #161b22;
-            padding: 10px 15px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .notice {
+            border: 1px dashed #ff6b35;
+            background: rgba(255, 107, 53, 0.05);
+            padding: 12px;
+            font-size: 13px;
+            color: #ff6b35;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .timer {
+            font-size: 64px;
+            font-weight: bold;
+            color: #ef4444;
+            font-variant-numeric: tabular-nums;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            border-top: 1px solid #232429;
+            padding: 15px;
+            text-align: center;
             font-size: 12px;
-            color: var(--text-muted);
-            text-transform: uppercase;
+            color: #64748b;
+            background: #0d0e12;
             letter-spacing: 1px;
         }
 
-        .window-body {
-            padding: 25px;
-        }
-
-        .info-text {
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            color: var(--text-main);
-        }
-
-        /* Hinweis-Box */
-        .notice-box {
-            border: 1px solid var(--accent-orange);
-            background: rgba(255, 107, 53, 0.05);
-            padding: 12px 15px;
-            font-size: 13px;
-            color: var(--accent-orange);
-            margin-bottom: 25px;
-        }
-
-        /* Timer Bereich */
-        .timer-container {
-            border-top: 1px dashed var(--border-color);
-            padding-top: 20px;
-            text-align: center;
-        }
-
-        .timer-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-bottom: 5px;
-        }
-
-        .timer-digits {
-            font-size: 48px;
-            font-weight: bold;
-            color: var(--accent-red);
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* Footer mit deinem Brand */
-        .footer {
-            border-top: 1px solid var(--border-color);
-            padding: 12px;
-            text-align: center;
-            font-size: 11px;
-            color: var(--text-muted);
-            background: #0d1117;
-            letter-spacing: 0.5px;
-        }
-
         .footer span {
-            color: #8b949e;
+            color: #ffffff;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-<div class="window">
-    <div class="window-header">
-        <div>[ System_Core ]</div>
-        <div>Status: Active</div>
-    </div>
-    
-    <div class="window-body">
-        <p class="info-text">
-            > Initialisiere Datenübertragung...<br>
-            > Verbindung stabil. Inhalt erfolgreich geladen.
-        </p>
-        
-        <div class="notice-box">
-            <strong>ATTN:</strong> Automatischer Prozess läuft. Das Fenster hält den Fokus, bis die Sequenz beendet ist.
+<div class="terminal">
+    <div class="content">
+        <div class="notice">
+            [HINWEIS]: Prozess aktiv. Bitte warten.
         </div>
         
-        <div class="timer-container">
-            <div class="timer-label">Countdown</div>
-            <div class="timer-digits" id="timer">15s</div>
-        </div>
+        <div class="timer" id="timer">15</div>
     </div>
 
     <div class="footer">
-        Made By <span>Padawan985</span>
+        MADE BY <span>PADAWAN985</span>
     </div>
 </div>
 
 <script>
-    // Timer startet sofort beim Laden automatisch
     let timeLeft = 15;
     const timerElement = document.getElementById('timer');
 
     const countdown = setInterval(() => {
         timeLeft--;
-        timerElement.textContent = timeLeft + "s";
+        timerElement.textContent = timeLeft;
 
         if (timeLeft <= 0) {
             clearInterval(countdown);
-            timerElement.textContent = "DONE";
-            timerElement.style.color = "var(--accent-green)";
-            
-            // Optional: Hier kannst du eine Aktion einbauen, wenn die 15 Sek um sind
+            timerElement.textContent = "0";
+            timerElement.style.color = "#10b981";
         }
     }, 1000);
 </script>
