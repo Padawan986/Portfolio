@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawa-Client | by Padawan985</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">Padawan985</a>
+        <div class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#download" class="nav-link">Download</a>
+            <a href="socials.html" class="nav-link nav-contact">Kontakt</a>
+        </div>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-badge">Basierend auf Liquidbounce</span>
+        <h1 class="hero-title">Next-Level <br><span class="highlight-text">Pawa-Client.</span></h1>
+        <p class="hero-description">Ein maßgeschneiderter Minecraft Client von Arjen (Padawan985). Optimiertes Movement, cleane Custom-UI und exklusive Module für das beste Spielerlebnis.</p>
+        <div class="hero-actions">
+            <a href="#download" class="btn btn-primary">Client Herunterladen</a>
+            <a href="#features" class="btn btn-secondary">Features ansehen</a>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="projects">
+    <div class="section-header">
+        <p class="section-subtitle">Core Features</p>
+        <h2 class="section-title">Was den Pawa-Client ausmacht</h2>
+    </div>
+
+    <div class="projects-grid">
+        <div class="card" data-animate>
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                        <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"></path>
+                    </svg>
+                </div>
+                <h3>Custom UI</h3>
+            </div>
+            <p class="card-text">Ein komplett überarbeitetes, modernes ClickGUI und HUD, das übersichtlich bleibt und nicht vom Spiel ablenkt.</p>
+            <div class="card-tags">
+                <span class="tag">Design</span>
+                <span class="tag">Interface</span>
+            </div>
+        </div>
+
+        <div class="card" data-animate>
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <h3>Erweiterte Module</h3>
+            </div>
+            <p class="card-text">Auf Liquidbounce aufbauende, stark optimierte Bypasses und Skripte für maximale Kontrolle auf dem Server.</p>
+            <div class="card-tags">
+                <span class="tag">Bypasses</span>
+                <span class="tag">Liquidbounce</span>
+            </div>
+        </div>
+
+        <div class="card" data-animate>
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                </div>
+                <h3>Performance Boost</h3>
+            </div>
+            <p class="card-text">Ressourcenschonend programmiert für konstant hohe FPS und minimalen RAM-Verbrauch.</p>
+            <div class="card-tags">
+                <span class="tag">FPS</span>
+                <span class="tag">Optimization</span>
+            </div>
+        </div>
+
+        <div class="card" data-animate>
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                        <polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                </div>
+                <h3>Pawa Macros</h3>
+            </div>
+            <p class="card-text">Direkte Integration für benutzerdefinierte Tastenkürzel und schnelle Eingabebefehle im Client.</p>
+            <div class="card-tags">
+                <span class="tag">Keybinds</span>
+                <span class="tag">Utility</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="download" class="cta-section">
+    <div class="cta-box">
+        <h2>Bereit für das Upgrade?</h2>
+        <p>Lade dir die neueste Version des Pawa-Clients herunter und entdecke alle neuen Features.</p>
+        <a href="#" class="btn btn-primary">Download Pawa-Client (.jar)</a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-container">
+        <p>&copy; 2026 Padawan985.</p>
+    </div>
+</footer>
+
+<script src="index.js"></script>
+</body>
+</html>
