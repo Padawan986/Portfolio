@@ -25,7 +25,6 @@
         <h1 class="hero-title">Next-Level <br><span class="highlight-text">Pawa-Client.</span></h1>
         <p class="hero-description">Ein maßgeschneiderter Minecraft Client von Arjen (Padawan985). Optimiertes Movement, cleane Custom-UI und exklusive Module für das beste Spielerlebnis.</p>
         <div class="hero-actions">
-            <!-- Button ruft jetzt die JS-Funktion auf -->
             <button onclick="requestDownload()" class="btn btn-primary" style="border: none; cursor: pointer; font-family: inherit; font-size: 1rem;">Client (1.21.11 Beta) Herunterladen</button>
             <a href="#features" class="btn btn-secondary">Features ansehen</a>
         </div>
@@ -122,24 +121,40 @@
 
 <script src="index.js"></script>
 <script>
-    function requestDownload() {
-        const password = prompt("Bitte gib dein Beta-Passwort (Access-Key) ein:");
+    async function requestDownload() {
+        const password = prompt("Bitte gib deinen Pawa-Client Access-Key ein:");
         
-        if (!password) return; // Abbruch, wenn nichts eingegeben wurde
+        if (!password) return; 
 
-        // HINWEIS: Das ist ein reiner Frontend-Schutz für GitHub Pages. 
-        // Ohne Backend-Server kann man die Datei trotzdem über den direkten Link laden.
-        const validPasswords = ["testbeta1", "pawa2026"]; 
+        // Deine spezifischen Supabase-Daten aus dem Curl-Befehl
+        const edgeFunctionUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co/functions/v1/verify-beta-key';
+        const apiKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
 
-        if (validPasswords.includes(password)) {
-            alert("Passwort akzeptiert! Download startet...");
-            // Leitet zum Download weiter
-            const link = document.createElement('a');
-            link.href = 'pawaclient-1.21.11.jar';
-            link.download = 'pawaclient-1.21.11.jar';
-            link.click();
-        } else {
-            alert("Falsches Passwort. Zugriff verweigert.");
+        try {
+            const response = await fetch(edgeFunctionUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`,
+                    'apikey': apiKey
+                },
+                // Hier schicken wir das eingegebene Passwort an die Edge Function
+                body: JSON.stringify({ betaKey: password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.downloadUrl) {
+                alert("Key akzeptiert! Der Download startet...");
+                // Leitet den Browser auf die sichere, temporäre Signed URL weiter
+                window.location.href = data.downloadUrl;
+            } else {
+                // Zeigt Fehlermeldungen von der Edge Function an (z.B. "Ungültiger Key")
+                alert("Fehler: " + (data.error || "Zugriff verweigert."));
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Verbindungsfehler zum Server. Bitte versuche es später noch einmal.");
         }
     }
 </script>
