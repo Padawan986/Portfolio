@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Pawa-Client</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         .admin-container {
             max-width: 800px;
@@ -36,6 +37,14 @@
             border-radius: 6px;
             align-items: center;
         }
+        .key-status {
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+        .status-active { background: #2ecc71; color: #000; }
+        .status-used { background: #e74c3c; color: #fff; }
         .btn-danger {
             background: #ff4757;
             color: white;
@@ -62,6 +71,11 @@
             color: #fff;
             font-family: inherit;
         }
+        #login-error {
+            color: #ff4757;
+            margin-top: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -77,10 +91,12 @@
 
 <div class="admin-container" id="login-screen">
     <h2>Admin Login</h2>
-    <p>Bitte logge dich ein, um Beta-Keys zu verwalten.</p>
-    <div class="add-controls" style="margin-top: 20px;">
-        <input type="password" id="admin-pass" class="admin-input" placeholder="Admin Passwort...">
+    <p>Bitte logge dich mit deinem Supabase-Account ein.</p>
+    <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px; max-width: 400px;">
+        <input type="email" id="admin-email" class="admin-input" placeholder="E-Mail Adresse...">
+        <input type="password" id="admin-pass" class="admin-input" placeholder="Passwort...">
         <button onclick="login()" class="btn btn-primary" style="border: none;">Login</button>
+        <p id="login-error">Login fehlgeschlagen. Bitte prüfe deine Daten.</p>
     </div>
 </div>
 
@@ -91,55 +107,141 @@
     </div>
 
     <div class="add-controls">
-        <input type="text" id="new-key" class="admin-input" placeholder="Neuen Access-Key generieren...">
+        <input type="text" id="new-key" class="admin-input" placeholder="Neuen Access-Key eingeben (z.B. beta-2026)...">
         <button onclick="addKey()" class="btn btn-primary" style="border: none;">Key hinzufügen</button>
     </div>
 
-    <h3>Aktive Keys</h3>
+    <h3>Aktive & Verwendete Keys</h3>
     <ul class="pass-list" id="key-list">
-        <!-- Generierte Keys landen hier -->
-        <li class="pass-item">
-            <span>testbeta1</span>
-            <button class="btn-danger" onclick="this.parentElement.remove()">Löschen</button>
-        </li>
-        <li class="pass-item">
-            <span>pawa2026</span>
-            <button class="btn-danger" onclick="this.parentElement.remove()">Löschen</button>
-        </li>
+        <li class="pass-item">Lade Keys...</li>
     </ul>
 </div>
 
 <script>
-    function login() {
-        const pass = document.getElementById('admin-pass').value;
-        // Standardmäßig "admin" als Passwort für das Mockup
-        if (pass === 'admin') {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('dashboard-screen').style.display = 'block';
+    // Supabase Initialisierung mit deinen Daten
+    const supabaseUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co';
+    const supabaseKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Prüft beim Laden der Seite, ob du schon eingeloggt bist
+    window.onload = async () => {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+            showDashboard();
+        }
+    };
+
+    // --- LOGIN & LOGOUT LOGIK ---
+
+    async function login() {
+        const email = document.getElementById('admin-email').value;
+        const password = document.getElementById('admin-pass').value;
+        const errorMsg = document.getElementById('login-error');
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
+
+        if (error) {
+            errorMsg.style.display = 'block';
+            errorMsg.innerText = error.message;
         } else {
-            alert('Falsches Admin-Passwort!');
+            errorMsg.style.display = 'none';
+            document.getElementById('admin-email').value = '';
+            document.getElementById('admin-pass').value = '';
+            showDashboard();
         }
     }
 
-    function logout() {
+    async function logout() {
+        await supabase.auth.signOut();
         document.getElementById('login-screen').style.display = 'block';
         document.getElementById('dashboard-screen').style.display = 'none';
-        document.getElementById('admin-pass').value = '';
     }
 
-    function addKey() {
-        const input = document.getElementById('new-key');
-        const key = input.value.trim();
-        if (key) {
-            const list = document.getElementById('key-list');
+    function showDashboard() {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('dashboard-screen').style.display = 'block';
+        fetchKeys(); // Lädt die Keys aus der Datenbank
+    }
+
+    // --- DATENBANK LOGIK (KEYS VERWALTEN) ---
+
+    async function fetchKeys() {
+        const list = document.getElementById('key-list');
+        list.innerHTML = '<li class="pass-item">Lade Keys...</li>';
+
+        // Holt alle Keys, sortiert nach Erstellungsdatum (neueste zuerst)
+        const { data: keys, error } = await supabase
+            .from('beta_keys')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            list.innerHTML = `<li class="pass-item" style="color: #ff4757;">Fehler: ${error.message}</li>`;
+            return;
+        }
+
+        list.innerHTML = ''; // Liste leeren
+
+        if (keys.length === 0) {
+            list.innerHTML = '<li class="pass-item">Keine Keys vorhanden. Erstelle deinen ersten!</li>';
+            return;
+        }
+
+        // Baut die HTML-Liste basierend auf der Datenbank auf
+        keys.forEach(keyObj => {
+            const statusClass = keyObj.is_used ? 'status-used' : 'status-active';
+            const statusText = keyObj.is_used ? 'Benutzt' : 'Aktiv';
+            
             const li = document.createElement('li');
             li.className = 'pass-item';
             li.innerHTML = `
-                <span>${key}</span>
-                <button class="btn-danger" onclick="this.parentElement.remove()">Löschen</button>
+                <div>
+                    <strong>${keyObj.key}</strong> 
+                    <span class="key-status ${statusClass}">${statusText}</span>
+                </div>
+                <button class="btn-danger" onclick="deleteKey('${keyObj.id}')">Löschen</button>
             `;
             list.appendChild(li);
+        });
+    }
+
+    async function addKey() {
+        const input = document.getElementById('new-key');
+        const keyValue = input.value.trim();
+        
+        if (!keyValue) {
+            alert("Bitte gib einen Key ein.");
+            return;
+        }
+
+        const { data, error } = await supabase
+            .from('beta_keys')
+            .insert([{ key: keyValue }]);
+
+        if (error) {
+            // Zeigt Fehler, z.B. wenn der Key schon existiert (UNIQUE constraint)
+            alert("Fehler beim Erstellen: " + error.message);
+        } else {
             input.value = '';
+            fetchKeys(); // Liste aktualisieren
+        }
+    }
+
+    async function deleteKey(id) {
+        if (!confirm("Diesen Key wirklich löschen?")) return;
+
+        const { error } = await supabase
+            .from('beta_keys')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            alert("Fehler beim Löschen: " + error.message);
+        } else {
+            fetchKeys(); // Liste aktualisieren
         }
     }
 </script>
