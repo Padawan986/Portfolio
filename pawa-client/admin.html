@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Pawa-Client</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            color: #fff;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .pass-list {
+            list-style: none;
+            padding: 0;
+        }
+        .pass-item {
+            display: flex;
+            justify-content: space-between;
+            background: #2a2a2a;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            align-items: center;
+        }
+        .btn-danger {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .btn-danger:hover {
+            background: #ff6b81;
+        }
+        .add-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .admin-input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #444;
+            background: #222;
+            color: #fff;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">Padawan985</a>
+        <div class="nav-links">
+            <a href="pawa-client.html" class="nav-link">Zurück zum Client</a>
+        </div>
+    </div>
+</nav>
+
+<div class="admin-container" id="login-screen">
+    <h2>Admin Login</h2>
+    <p>Bitte logge dich ein, um Beta-Keys zu verwalten.</p>
+    <div class="add-controls" style="margin-top: 20px;">
+        <input type="password" id="admin-pass" class="admin-input" placeholder="Admin Passwort...">
+        <button onclick="login()" class="btn btn-primary" style="border: none;">Login</button>
+    </div>
+</div>
+
+<div class="admin-container" id="dashboard-screen" style="display: none;">
+    <div class="admin-header">
+        <h2>Beta-Key Verwaltung</h2>
+        <button onclick="logout()" class="btn btn-secondary" style="border: none;">Logout</button>
+    </div>
+
+    <div class="add-controls">
+        <input type="text" id="new-key" class="admin-input" placeholder="Neuen Access-Key generieren...">
+        <button onclick="addKey()" class="btn btn-primary" style="border: none;">Key hinzufügen</button>
+    </div>
+
+    <h3>Aktive Keys</h3>
+    <ul class="pass-list" id="key-list">
+        <!-- Generierte Keys landen hier -->
+        <li class="pass-item">
+            <span>testbeta1</span>
+            <button class="btn-danger" onclick="this.parentElement.remove()">Löschen</button>
+        </li>
+        <li class="pass-item">
+            <span>pawa2026</span>
+            <button class="btn-danger" onclick="this.parentElement.remove()">Löschen</button>
+        </li>
+    </ul>
+</div>
+
+<script>
+    function login() {
+        const pass = document.getElementById('admin-pass').value;
+        // Standardmäßig "admin" als Passwort für das Mockup
+        if (pass === 'admin') {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard-screen').style.display = 'block';
+        } else {
+            alert('Falsches Admin-Passwort!');
+        }
+    }
+
+    function logout() {
+        document.getElementById('login-screen').style.display = 'block';
+        document.getElementById('dashboard-screen').style.display = 'none';
+        document.getElementById('admin-pass').value = '';
+    }
+
+    function addKey() {
+        const input = document.getElementById('new-key');
+        const key = input.value.trim();
+        if (key) {
+            const list = document.getElementById('key-list');
+            const li = document.createElement('li');
+            li.className = 'pass-item';
+            li.innerHTML = `
+                <span>${key}</span>
+                <button class="btn-danger" onclick="this.parentElement.remove()">Löschen</button>
+            `;
+            list.appendChild(li);
+            input.value = '';
+        }
+    }
+</script>
+
+</body>
+</html>
