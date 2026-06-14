@@ -131,14 +131,14 @@
         const apiKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
 
         try {
-            const response = await fetch(edgeFunctionUrl, {
+   const response = await fetch(edgeFunctionUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`,
-                    'apikey': apiKey
+                    // WICHTIG: Füge diese Zeilen hinzu, damit Supabase den Key akzeptiert
+                    'apikey': apiKey,
+                    'Authorization': `Bearer ${apiKey}`
                 },
-                // Hier schicken wir das eingegebene Passwort an die Edge Function
                 body: JSON.stringify({ betaKey: password })
             });
 
