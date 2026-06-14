@@ -21,11 +21,12 @@
 
 <section class="hero">
     <div class="hero-content">
-        <span class="hero-badge">Basierend auf Liquidbounce</span>
+        <span class="hero-badge">Closed Beta Phase</span>
         <h1 class="hero-title">Next-Level <br><span class="highlight-text">Pawa-Client.</span></h1>
         <p class="hero-description">Ein maßgeschneiderter Minecraft Client von Arjen (Padawan985). Optimiertes Movement, cleane Custom-UI und exklusive Module für das beste Spielerlebnis.</p>
         <div class="hero-actions">
-            <a href="pawaclient-1.21.11.jar" download class="btn btn-primary">Client (1.21.11 Beta) Herunterladen</a>
+            <!-- Button ruft jetzt die JS-Funktion auf -->
+            <button onclick="requestDownload()" class="btn btn-primary" style="border: none; cursor: pointer; font-family: inherit; font-size: 1rem;">Client (1.21.11 Beta) Herunterladen</button>
             <a href="#features" class="btn btn-secondary">Features ansehen</a>
         </div>
     </div>
@@ -107,17 +108,40 @@
 <section id="download" class="cta-section">
     <div class="cta-box">
         <h2>Bereit für das Upgrade?</h2>
-        <p>Lade dir die neueste Version des Pawa-Clients herunter und entdecke alle neuen Features.</p>
-        <a href="pawaclient-1.21.11.jar" download class="btn btn-primary">Download Pawa-Client 1.21.11 Beta</a>
+        <p>Der Pawa-Client befindet sich aktuell in der Closed Beta. Gib deinen Access-Key ein, um die Datei herunterzuladen.</p>
+        <button onclick="requestDownload()" class="btn btn-primary" style="border: none; cursor: pointer; font-family: inherit; font-size: 1rem;">Download mit Access-Key</button>
     </div>
 </section>
 
 <footer>
-    <div class="footer-container">
+    <div class="footer-container" style="display: flex; justify-content: space-between; align-items: center;">
         <p>&copy; 2026 Padawan985.</p>
+        <a href="admin.html" style="color: #666; text-decoration: none; font-size: 0.8rem;">Admin Login</a>
     </div>
 </footer>
 
 <script src="index.js"></script>
+<script>
+    function requestDownload() {
+        const password = prompt("Bitte gib dein Beta-Passwort (Access-Key) ein:");
+        
+        if (!password) return; // Abbruch, wenn nichts eingegeben wurde
+
+        // HINWEIS: Das ist ein reiner Frontend-Schutz für GitHub Pages. 
+        // Ohne Backend-Server kann man die Datei trotzdem über den direkten Link laden.
+        const validPasswords = ["testbeta1", "pawa2026"]; 
+
+        if (validPasswords.includes(password)) {
+            alert("Passwort akzeptiert! Download startet...");
+            // Leitet zum Download weiter
+            const link = document.createElement('a');
+            link.href = 'pawaclient-1.21.11.jar';
+            link.download = 'pawaclient-1.21.11.jar';
+            link.click();
+        } else {
+            alert("Falsches Passwort. Zugriff verweigert.");
+        }
+    }
+</script>
 </body>
 </html>
