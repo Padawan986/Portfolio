@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Pawa-Client</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Offizieller Supabase CDN-Link -->
+    <link rel="stylesheet" href="./style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
-        /* Direktes Backup-Styling, falls style.css nicht greift */
+        /* Direktes Backup-Styling, falls style.css nicht lädt */
         body {
             background-color: #0b0b0d !important;
             color: #ffffff;
@@ -95,7 +94,6 @@
             margin-bottom: 30px;
         }
 
-        /* Key Liste Styles */
         .key-list {
             list-style: none;
             padding: 0;
@@ -130,6 +128,29 @@
 
         .badge-active { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
         .badge-used { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-family: inherit;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+
+        .btn-secondary {
+            background: #27272a;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-family: inherit;
+        }
 
         .btn-delete {
             background: rgba(239, 68, 68, 0.1);
@@ -170,18 +191,8 @@
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="logo">Padawan985</a>
-        <div class="nav-links">
-            <a href="pawa-client.html" class="nav-link">Zurück zum Client</a>
-        </div>
-    </div>
-</nav>
-
 <div class="admin-wrapper">
 
-    <!-- LOGIN SCREEN -->
     <div class="admin-card" id="login-screen">
         <h2 class="admin-title">Admin Login</h2>
         <p class="admin-subtitle">Melde dich an, um neue Beta-Keys zu generieren.</p>
@@ -196,25 +207,24 @@
             <input type="password" id="admin-pass" class="admin-input" placeholder="••••••••">
         </div>
         
-        <button onclick="login()" class="btn btn-primary" style="border: none; width: 100%; margin-top: 10px; cursor: pointer;">Einloggen</button>
+        <button onclick="login()" class="btn-primary" style="border: none; width: 100%; margin-top: 10px; cursor: pointer;">Einloggen</button>
         <div id="login-error" class="alert-box"></div>
     </div>
 
-    <!-- DASHBOARD SCREEN -->
     <div class="admin-card dashboard-width" id="dashboard-screen" style="display: none;">
         <div class="header-actions">
             <div>
                 <h2 class="admin-title" style="margin: 0;">Beta-Key Control Panel</h2>
                 <p style="color: #8a8a93; margin: 5px 0 0 0; font-size: 0.9rem;">Erstelle oder lösche Keys für die geschlossene Beta.</p>
             </div>
-            <button onclick="logout()" class="btn btn-secondary" style="border: none; cursor: pointer;">Abmelden</button>
+            <button onclick="logout()" class="btn-secondary" style="border: none; cursor: pointer;">Abmelden</button>
         </div>
 
         <div class="form-group">
             <label>Neuen Access-Key erstellen</label>
             <div class="input-row">
                 <input type="text" id="new-key" class="admin-input" placeholder="z.B. beta-pawa-2026">
-                <button onclick="addKey()" class="btn btn-primary" style="border: none; white-space: nowrap; cursor: pointer;">Key anlegen</button>
+                <button onclick="addKey()" class="btn-primary" style="border: none; white-space: nowrap; cursor: pointer;">Key anlegen</button>
             </div>
         </div>
 
@@ -227,17 +237,16 @@
 </div>
 
 <script>
-    // Konfiguration aus deinem cURL-Befehl
+    // Konfiguration aus deinem Projekt
     const supabaseUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co';
     const supabaseKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
-    let supabase = null;
+    
+    // WICHTIG: Die Variable heißt jetzt supabaseClient (verhindert den Crash!)
+    let supabaseClient = null;
 
-    // Supabase absolut sicher initialisieren, damit bei Fehlern der Rest der Seite weiterläuft
     try {
         if (typeof window.supabase !== 'undefined') {
-            supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-        } else if (typeof库 !== 'undefined') {
-            supabase = supabase.createClient(supabaseUrl, supabaseKey);
+            supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
         }
     } catch (e) {
         console.error("Supabase konnte nicht initialisiert werden:", e);
@@ -245,28 +254,28 @@
 
     // Beim Laden der Seite direkt Session prüfen
     window.onload = async () => {
-        if (!supabase) {
-            showError("Supabase-Bibliothek wurde blockiert (z.B. durch einen Adblocker)!");
+        if (!supabaseClient) {
+            showError("Supabase-Bibliothek konnte nicht geladen werden.");
             return;
         }
 
-        const { data: { session }, error } = await supabase.auth.getSession();
+        const { data: { session }, error } = await supabaseClient.auth.getSession();
         if (session) {
             showDashboard();
         }
     };
 
-    // --- ENGINES (FUNKTIONEN SIND JETZT IMMER DEFINIERT) ---
+    // --- ENGINES ---
 
     async function login() {
-        if (!supabase) return;
+        if (!supabaseClient) return;
         const email = document.getElementById('admin-email').value;
         const password = document.getElementById('admin-pass').value;
         const errorBox = document.getElementById('login-error');
 
         errorBox.style.display = 'none';
 
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
             email: email,
             password: password,
         });
@@ -282,8 +291,8 @@
     }
 
     async function logout() {
-        if (!supabase) return;
-        await supabase.auth.signOut();
+        if (!supabaseClient) return;
+        await supabaseClient.auth.signOut();
         document.getElementById('login-screen').style.display = 'block';
         document.getElementById('dashboard-screen').style.display = 'none';
     }
@@ -295,11 +304,11 @@
     }
 
     async function fetchKeys() {
-        if (!supabase) return;
+        if (!supabaseClient) return;
         const list = document.getElementById('key-list');
         list.innerHTML = '<li class="key-item">Lade Keys...</li>';
 
-        const { data: keys, error } = await supabase
+        const { data: keys, error } = await supabaseClient
             .from('beta_keys')
             .select('*')
             .order('created_at', { ascending: false });
@@ -334,7 +343,7 @@
     }
 
     async function addKey() {
-        if (!supabase) return;
+        if (!supabaseClient) return;
         const input = document.getElementById('new-key');
         const keyValue = input.value.trim();
         
@@ -343,7 +352,7 @@
             return;
         }
 
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('beta_keys')
             .insert([{ key: keyValue }]);
 
@@ -356,10 +365,10 @@
     }
 
     async function deleteKey(id) {
-        if (!supabase) return;
+        if (!supabaseClient) return;
         if (!confirm("Diesen Key wirklich permanent löschen?")) return;
 
-        const { error } = await supabase
+        const { error } = await supabaseClient
             .from('beta_keys')
             .delete()
             .eq('id', id);
