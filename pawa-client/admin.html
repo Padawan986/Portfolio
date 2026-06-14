@@ -5,76 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Pawa-Client</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Offizieller Supabase CDN-Link -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <style>
-        .admin-container {
-            max-width: 800px;
-            margin: 100px auto;
-            padding: 20px;
-            background: #1a1a1a;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            color: #fff;
-        }
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #333;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
-        .pass-list {
-            list-style: none;
+        /* Direktes Backup-Styling, falls style.css nicht greift */
+        body {
+            background-color: #0b0b0d !important;
+            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
             padding: 0;
         }
-        .pass-item {
+
+        .admin-wrapper {
+            min-height: 100vh;
             display: flex;
-            justify-content: space-between;
-            background: #2a2a2a;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 6px;
+            justify-content: center;
             align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
-        .key-status {
-            font-size: 0.85rem;
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-left: 10px;
+
+        .admin-card {
+            width: 100%;
+            max-width: 550px;
+            background: #141417;
+            border: 1px solid #232329;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
-        .status-active { background: #2ecc71; color: #000; }
-        .status-used { background: #e74c3c; color: #fff; }
-        .btn-danger {
-            background: #ff4757;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: inherit;
+
+        .dashboard-width {
+            max-width: 850px;
         }
-        .btn-danger:hover {
-            background: #ff6b81;
+
+        .admin-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, #8a8a93 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .add-controls {
-            display: flex;
-            gap: 10px;
+
+        .admin-subtitle {
+            color: #8a8a93;
+            font-size: 0.95rem;
             margin-bottom: 30px;
         }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: #a1a1aa;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
         .admin-input {
-            flex: 1;
-            padding: 10px;
-            border-radius: 4px;
-            border: 1px solid #444;
-            background: #222;
+            width: 100%;
+            padding: 12px 16px;
+            background: #0b0b0d;
+            border: 1px solid #232329;
+            border-radius: 8px;
             color: #fff;
             font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
         }
-        #login-error {
-            color: #ff4757;
-            margin-top: 10px;
+
+        .admin-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        /* Key Liste Styles */
+        .key-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .key-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1c1c21;
+            border: 1px solid #232329;
+            padding: 16px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        .key-name {
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-left: 10px;
+            text-transform: uppercase;
+        }
+
+        .badge-active { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
+        .badge-used { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .alert-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-top: 15px;
             display: none;
+        }
+        
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #232329;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
         }
     </style>
 </head>
@@ -89,54 +179,92 @@
     </div>
 </nav>
 
-<div class="admin-container" id="login-screen">
-    <h2>Admin Login</h2>
-    <p>Bitte logge dich mit deinem Supabase-Account ein.</p>
-    <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px; max-width: 400px;">
-        <input type="email" id="admin-email" class="admin-input" placeholder="E-Mail Adresse...">
-        <input type="password" id="admin-pass" class="admin-input" placeholder="Passwort...">
-        <button onclick="login()" class="btn btn-primary" style="border: none;">Login</button>
-        <p id="login-error">Login fehlgeschlagen. Bitte prüfe deine Daten.</p>
-    </div>
-</div>
+<div class="admin-wrapper">
 
-<div class="admin-container" id="dashboard-screen" style="display: none;">
-    <div class="admin-header">
-        <h2>Beta-Key Verwaltung</h2>
-        <button onclick="logout()" class="btn btn-secondary" style="border: none;">Logout</button>
+    <!-- LOGIN SCREEN -->
+    <div class="admin-card" id="login-screen">
+        <h2 class="admin-title">Admin Login</h2>
+        <p class="admin-subtitle">Melde dich an, um neue Beta-Keys zu generieren.</p>
+        
+        <div class="form-group">
+            <label>E-Mail Adresse</label>
+            <input type="email" id="admin-email" class="admin-input" placeholder="admin@example.com">
+        </div>
+        
+        <div class="form-group">
+            <label>Passwort</label>
+            <input type="password" id="admin-pass" class="admin-input" placeholder="••••••••">
+        </div>
+        
+        <button onclick="login()" class="btn btn-primary" style="border: none; width: 100%; margin-top: 10px; cursor: pointer;">Einloggen</button>
+        <div id="login-error" class="alert-box"></div>
     </div>
 
-    <div class="add-controls">
-        <input type="text" id="new-key" class="admin-input" placeholder="Neuen Access-Key eingeben (z.B. beta-2026)...">
-        <button onclick="addKey()" class="btn btn-primary" style="border: none;">Key hinzufügen</button>
+    <!-- DASHBOARD SCREEN -->
+    <div class="admin-card dashboard-width" id="dashboard-screen" style="display: none;">
+        <div class="header-actions">
+            <div>
+                <h2 class="admin-title" style="margin: 0;">Beta-Key Control Panel</h2>
+                <p style="color: #8a8a93; margin: 5px 0 0 0; font-size: 0.9rem;">Erstelle oder lösche Keys für die geschlossene Beta.</p>
+            </div>
+            <button onclick="logout()" class="btn btn-secondary" style="border: none; cursor: pointer;">Abmelden</button>
+        </div>
+
+        <div class="form-group">
+            <label>Neuen Access-Key erstellen</label>
+            <div class="input-row">
+                <input type="text" id="new-key" class="admin-input" placeholder="z.B. beta-pawa-2026">
+                <button onclick="addKey()" class="btn btn-primary" style="border: none; white-space: nowrap; cursor: pointer;">Key anlegen</button>
+            </div>
+        </div>
+
+        <h3 style="font-size: 1.2rem; margin-bottom: 15px;">Generierte Keys</h3>
+        <ul class="key-list" id="key-list">
+            <li class="key-item">Lade Datenbank-Einträge...</li>
+        </ul>
     </div>
 
-    <h3>Aktive & Verwendete Keys</h3>
-    <ul class="pass-list" id="key-list">
-        <li class="pass-item">Lade Keys...</li>
-    </ul>
 </div>
 
 <script>
-    // Supabase Initialisierung mit deinen Daten
+    // Konfiguration aus deinem cURL-Befehl
     const supabaseUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co';
     const supabaseKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    let supabase = null;
 
-    // Prüft beim Laden der Seite, ob du schon eingeloggt bist
+    // Supabase absolut sicher initialisieren, damit bei Fehlern der Rest der Seite weiterläuft
+    try {
+        if (typeof window.supabase !== 'undefined') {
+            supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        } else if (typeof库 !== 'undefined') {
+            supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        }
+    } catch (e) {
+        console.error("Supabase konnte nicht initialisiert werden:", e);
+    }
+
+    // Beim Laden der Seite direkt Session prüfen
     window.onload = async () => {
-        const { data: { session } } = await supabase.auth.getSession();
+        if (!supabase) {
+            showError("Supabase-Bibliothek wurde blockiert (z.B. durch einen Adblocker)!");
+            return;
+        }
+
+        const { data: { session }, error } = await supabase.auth.getSession();
         if (session) {
             showDashboard();
         }
     };
 
-    // --- LOGIN & LOGOUT LOGIK ---
+    // --- ENGINES (FUNKTIONEN SIND JETZT IMMER DEFINIERT) ---
 
     async function login() {
+        if (!supabase) return;
         const email = document.getElementById('admin-email').value;
         const password = document.getElementById('admin-pass').value;
-        const errorMsg = document.getElementById('login-error');
+        const errorBox = document.getElementById('login-error');
+
+        errorBox.style.display = 'none';
 
         const { data, error } = await supabase.auth.signInWithPassword({
             email: email,
@@ -144,10 +272,9 @@
         });
 
         if (error) {
-            errorMsg.style.display = 'block';
-            errorMsg.innerText = error.message;
+            errorBox.innerText = "Fehler: " + error.message;
+            errorBox.style.display = 'block';
         } else {
-            errorMsg.style.display = 'none';
             document.getElementById('admin-email').value = '';
             document.getElementById('admin-pass').value = '';
             showDashboard();
@@ -155,6 +282,7 @@
     }
 
     async function logout() {
+        if (!supabase) return;
         await supabase.auth.signOut();
         document.getElementById('login-screen').style.display = 'block';
         document.getElementById('dashboard-screen').style.display = 'none';
@@ -163,52 +291,50 @@
     function showDashboard() {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('dashboard-screen').style.display = 'block';
-        fetchKeys(); // Lädt die Keys aus der Datenbank
+        fetchKeys();
     }
 
-    // --- DATENBANK LOGIK (KEYS VERWALTEN) ---
-
     async function fetchKeys() {
+        if (!supabase) return;
         const list = document.getElementById('key-list');
-        list.innerHTML = '<li class="pass-item">Lade Keys...</li>';
+        list.innerHTML = '<li class="key-item">Lade Keys...</li>';
 
-        // Holt alle Keys, sortiert nach Erstellungsdatum (neueste zuerst)
         const { data: keys, error } = await supabase
             .from('beta_keys')
             .select('*')
             .order('created_at', { ascending: false });
 
         if (error) {
-            list.innerHTML = `<li class="pass-item" style="color: #ff4757;">Fehler: ${error.message}</li>`;
+            list.innerHTML = `<li class="key-item" style="color: #ef4444;">Fehler beim Laden: ${error.message}</li>`;
             return;
         }
 
-        list.innerHTML = ''; // Liste leeren
+        list.innerHTML = '';
 
         if (keys.length === 0) {
-            list.innerHTML = '<li class="pass-item">Keine Keys vorhanden. Erstelle deinen ersten!</li>';
+            list.innerHTML = '<li class="key-item" style="color: #8a8a93;">Keine Keys vorhanden.</li>';
             return;
         }
 
-        // Baut die HTML-Liste basierend auf der Datenbank auf
         keys.forEach(keyObj => {
-            const statusClass = keyObj.is_used ? 'status-used' : 'status-active';
-            const statusText = keyObj.is_used ? 'Benutzt' : 'Aktiv';
+            const badgeClass = keyObj.is_used ? 'badge-used' : 'badge-active';
+            const badgeText = keyObj.is_used ? 'Benutzt' : 'Aktiv';
             
             const li = document.createElement('li');
-            li.className = 'pass-item';
+            li.className = 'key-item';
             li.innerHTML = `
                 <div>
-                    <strong>${keyObj.key}</strong> 
-                    <span class="key-status ${statusClass}">${statusText}</span>
+                    <span class="key-name">${keyObj.key}</span> 
+                    <span class="badge ${badgeClass}">${badgeText}</span>
                 </div>
-                <button class="btn-danger" onclick="deleteKey('${keyObj.id}')">Löschen</button>
+                <button class="btn-delete" onclick="deleteKey('${keyObj.id}')">Löschen</button>
             `;
             list.appendChild(li);
         });
     }
 
     async function addKey() {
+        if (!supabase) return;
         const input = document.getElementById('new-key');
         const keyValue = input.value.trim();
         
@@ -222,16 +348,16 @@
             .insert([{ key: keyValue }]);
 
         if (error) {
-            // Zeigt Fehler, z.B. wenn der Key schon existiert (UNIQUE constraint)
             alert("Fehler beim Erstellen: " + error.message);
         } else {
             input.value = '';
-            fetchKeys(); // Liste aktualisieren
+            fetchKeys();
         }
     }
 
     async function deleteKey(id) {
-        if (!confirm("Diesen Key wirklich löschen?")) return;
+        if (!supabase) return;
+        if (!confirm("Diesen Key wirklich permanent löschen?")) return;
 
         const { error } = await supabase
             .from('beta_keys')
@@ -241,8 +367,14 @@
         if (error) {
             alert("Fehler beim Löschen: " + error.message);
         } else {
-            fetchKeys(); // Liste aktualisieren
+            fetchKeys();
         }
+    }
+
+    function showError(msg) {
+        const errBox = document.getElementById('login-error');
+        errBox.innerText = msg;
+        errBox.style.display = 'block';
     }
 </script>
 
