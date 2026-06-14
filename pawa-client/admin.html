@@ -6,292 +6,87 @@
     <title>Admin Dashboard | Pawa-Client</title>
     <link rel="stylesheet" href="./style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <style>
-        /* Direktes Backup-Styling, falls style.css nicht lädt */
-        body {
-            background-color: #0b0b0d !important;
-            color: #ffffff;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .admin-wrapper {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .admin-card {
-            width: 100%;
-            max-width: 550px;
-            background: #141417;
-            border: 1px solid #232329;
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .dashboard-width {
-            max-width: 850px;
-        }
-
-        .admin-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-top: 0;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #fff 0%, #8a8a93 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .admin-subtitle {
-            color: #8a8a93;
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            font-size: 0.85rem;
-            color: #a1a1aa;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .admin-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: #0b0b0d;
-            border: 1px solid #232329;
-            border-radius: 8px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-            box-sizing: border-box;
-        }
-
-        .admin-input:focus {
-            outline: none;
-            border-color: #4f46e5;
-        }
-
-        .input-row {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .key-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .key-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #1c1c21;
-            border: 1px solid #232329;
-            padding: 16px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-        }
-
-        .key-name {
-            font-family: monospace;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .badge {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            margin-left: 10px;
-            text-transform: uppercase;
-        }
-
+        body { background-color: #0b0b0d !important; color: #ffffff; font-family: sans-serif; margin: 0; padding: 0; }
+        .admin-wrapper { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
+        .admin-card { width: 100%; max-width: 600px; background: #141417; border: 1px solid #232329; border-radius: 16px; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .dashboard-width { max-width: 850px; }
+        .admin-title { font-size: 1.8rem; font-weight: 700; margin: 0 0 10px 0; background: linear-gradient(135deg, #fff 0%, #8a8a93 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+        .form-group label { font-size: 0.85rem; color: #a1a1aa; text-transform: uppercase; }
+        .admin-input { width: 100%; padding: 12px 16px; background: #0b0b0d; border: 1px solid #232329; border-radius: 8px; color: #fff; font-size: 1rem; box-sizing: border-box; }
+        .admin-input:focus { outline: none; border-color: #4f46e5; }
+        .input-row { display: flex; gap: 12px; margin-bottom: 30px; align-items: stretch; }
+        .key-list { list-style: none; padding: 0; margin: 0; }
+        .key-item { display: flex; justify-content: space-between; align-items: center; background: #1c1c21; border: 1px solid #232329; padding: 16px; border-radius: 10px; margin-bottom: 12px; }
+        .key-name { font-family: monospace; font-size: 1.1rem; font-weight: 600; }
+        .badge { font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; margin-left: 10px; }
         .badge-active { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
         .badge-used { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
-
-        .btn-primary {
-            background: #4f46e5;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-family: inherit;
-            transition: background 0.2s;
-        }
-
-        .btn-primary:hover {
-            background: #4338ca;
-        }
-
-        .btn-secondary {
-            background: #27272a;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-family: inherit;
-        }
-
-        .btn-delete {
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            padding: 8px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .btn-delete:hover {
-            background: #ef4444;
-            color: #fff;
-        }
-
-        .alert-box {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            margin-top: 15px;
-            display: none;
-        }
-        
-        .header-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #232329;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
+        .badge-count { background: rgba(79, 70, 229, 0.1); color: #818cf8; border: 1px solid rgba(79, 70, 229, 0.2); margin-left: 10px;}
+        .btn-primary { background: #4f46e5; color: white; padding: 12px 20px; border-radius: 8px; font-weight: 600; border: none; cursor: pointer; }
+        .btn-secondary { background: #27272a; color: white; padding: 8px 16px; border-radius: 8px; font-weight: 600; border: none; cursor: pointer; }
+        .btn-delete { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 8px 14px; border-radius: 6px; cursor: pointer; }
+        .header-actions { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #232329; padding-bottom: 15px; margin-bottom: 25px; }
     </style>
 </head>
 <body>
 
 <div class="admin-wrapper">
-
     <div class="admin-card" id="login-screen">
         <h2 class="admin-title">Admin Login</h2>
-        <p class="admin-subtitle">Melde dich an, um neue Beta-Keys zu generieren.</p>
-        
-        <div class="form-group">
-            <label>E-Mail Adresse</label>
-            <input type="email" id="admin-email" class="admin-input" placeholder="admin@example.com">
-        </div>
-        
-        <div class="form-group">
-            <label>Passwort</label>
-            <input type="password" id="admin-pass" class="admin-input" placeholder="••••••••">
-        </div>
-        
-        <button onclick="login()" class="btn-primary" style="border: none; width: 100%; margin-top: 10px; cursor: pointer;">Einloggen</button>
-        <div id="login-error" class="alert-box"></div>
+        <div class="form-group"><label>E-Mail</label><input type="email" id="admin-email" class="admin-input"></div>
+        <div class="form-group"><label>Passwort</label><input type="password" id="admin-pass" class="admin-input"></div>
+        <button onclick="login()" class="btn-primary" style="width: 100%;">Einloggen</button>
+        <div id="login-error" style="color:#ef4444; margin-top:10px; display:none;"></div>
     </div>
 
     <div class="admin-card dashboard-width" id="dashboard-screen" style="display: none;">
         <div class="header-actions">
-            <div>
-                <h2 class="admin-title" style="margin: 0;">Beta-Key Control Panel</h2>
-                <p style="color: #8a8a93; margin: 5px 0 0 0; font-size: 0.9rem;">Erstelle oder lösche Keys für die geschlossene Beta.</p>
-            </div>
-            <button onclick="logout()" class="btn-secondary" style="border: none; cursor: pointer;">Abmelden</button>
+            <div><h2 class="admin-title">Key Control Panel</h2></div>
+            <button onclick="logout()" class="btn-secondary">Abmelden</button>
         </div>
 
         <div class="form-group">
             <label>Neuen Access-Key erstellen</label>
             <div class="input-row">
-                <input type="text" id="new-key" class="admin-input" placeholder="z.B. beta-pawa-2026">
-                <button onclick="addKey()" class="btn-primary" style="border: none; white-space: nowrap; cursor: pointer;">Key anlegen</button>
+                <input type="text" id="new-key" class="admin-input" placeholder="z.B. beta-team" style="flex: 2;">
+                <input type="number" id="key-limit" class="admin-input" placeholder="Limit" value="1" min="1" style="flex: 1;">
+                <button onclick="addKey()" class="btn-primary" style="white-space: nowrap;">Key anlegen</button>
             </div>
         </div>
 
         <h3 style="font-size: 1.2rem; margin-bottom: 15px;">Generierte Keys</h3>
-        <ul class="key-list" id="key-list">
-            <li class="key-item">Lade Datenbank-Einträge...</li>
-        </ul>
+        <ul class="key-list" id="key-list"><li class="key-item">Lade Einträge...</li></ul>
     </div>
-
 </div>
 
 <script>
-    // Konfiguration aus deinem Projekt
     const supabaseUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co';
     const supabaseKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
-    
-    // WICHTIG: Die Variable heißt jetzt supabaseClient (verhindert den Crash!)
     let supabaseClient = null;
 
-    try {
-        if (typeof window.supabase !== 'undefined') {
-            supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-        }
-    } catch (e) {
-        console.error("Supabase konnte nicht initialisiert werden:", e);
-    }
+    try { if (typeof window.supabase !== 'undefined') supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey); } 
+    catch (e) { console.error(e); }
 
-    // Beim Laden der Seite direkt Session prüfen
     window.onload = async () => {
-        if (!supabaseClient) {
-            showError("Supabase-Bibliothek konnte nicht geladen werden.");
-            return;
-        }
-
-        const { data: { session }, error } = await supabaseClient.auth.getSession();
-        if (session) {
-            showDashboard();
-        }
+        if (!supabaseClient) return;
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session) showDashboard();
     };
 
-    // --- ENGINES ---
-
     async function login() {
-        if (!supabaseClient) return;
-        const email = document.getElementById('admin-email').value;
-        const password = document.getElementById('admin-pass').value;
-        const errorBox = document.getElementById('login-error');
-
-        errorBox.style.display = 'none';
-
-        const { data, error } = await supabaseClient.auth.signInWithPassword({
-            email: email,
-            password: password,
+        const { error } = await supabaseClient.auth.signInWithPassword({
+            email: document.getElementById('admin-email').value,
+            password: document.getElementById('admin-pass').value,
         });
-
         if (error) {
-            errorBox.innerText = "Fehler: " + error.message;
-            errorBox.style.display = 'block';
-        } else {
-            document.getElementById('admin-email').value = '';
-            document.getElementById('admin-pass').value = '';
-            showDashboard();
-        }
+            document.getElementById('login-error').innerText = error.message;
+            document.getElementById('login-error').style.display = 'block';
+        } else { showDashboard(); }
     }
 
     async function logout() {
-        if (!supabaseClient) return;
         await supabaseClient.auth.signOut();
         document.getElementById('login-screen').style.display = 'block';
         document.getElementById('dashboard-screen').style.display = 'none';
@@ -304,30 +99,21 @@
     }
 
     async function fetchKeys() {
-        if (!supabaseClient) return;
         const list = document.getElementById('key-list');
-        list.innerHTML = '<li class="key-item">Lade Keys...</li>';
+        const { data: keys, error } = await supabaseClient.from('beta_keys').select('*').order('created_at', { ascending: false });
 
-        const { data: keys, error } = await supabaseClient
-            .from('beta_keys')
-            .select('*')
-            .order('created_at', { ascending: false });
-
-        if (error) {
-            list.innerHTML = `<li class="key-item" style="color: #ef4444;">Fehler beim Laden: ${error.message}</li>`;
-            return;
-        }
-
+        if (error) { list.innerHTML = `<li class="key-item" style="color: #ef4444;">Fehler: ${error.message}</li>`; return; }
         list.innerHTML = '';
-
-        if (keys.length === 0) {
-            list.innerHTML = '<li class="key-item" style="color: #8a8a93;">Keine Keys vorhanden.</li>';
-            return;
-        }
+        if (keys.length === 0) { list.innerHTML = '<li class="key-item" style="color: #8a8a93;">Keine Keys vorhanden.</li>'; return; }
 
         keys.forEach(keyObj => {
-            const badgeClass = keyObj.is_used ? 'badge-used' : 'badge-active';
-            const badgeText = keyObj.is_used ? 'Benutzt' : 'Aktiv';
+            // Berechnet, ob der Key verbraucht ist
+            const max = keyObj.max_uses || 1;
+            const used = keyObj.uses || 0;
+            const isExhausted = used >= max;
+            
+            const badgeClass = isExhausted ? 'badge-used' : 'badge-active';
+            const badgeText = isExhausted ? 'Verbraucht' : 'Aktiv';
             
             const li = document.createElement('li');
             li.className = 'key-item';
@@ -335,6 +121,7 @@
                 <div>
                     <span class="key-name">${keyObj.key}</span> 
                     <span class="badge ${badgeClass}">${badgeText}</span>
+                    <span class="badge badge-count">${used} / ${max} genutzt</span>
                 </div>
                 <button class="btn-delete" onclick="deleteKey('${keyObj.id}')">Löschen</button>
             `;
@@ -343,49 +130,30 @@
     }
 
     async function addKey() {
-        if (!supabaseClient) return;
-        const input = document.getElementById('new-key');
-        const keyValue = input.value.trim();
+        const keyValue = document.getElementById('new-key').value.trim();
+        const limitValue = parseInt(document.getElementById('key-limit').value) || 1;
         
-        if (!keyValue) {
-            alert("Bitte gib einen Key ein.");
-            return;
-        }
+        if (!keyValue) { alert("Bitte Key eingeben"); return; }
 
-        const { data, error } = await supabaseClient
-            .from('beta_keys')
-            .insert([{ key: keyValue }]);
+        const { error } = await supabaseClient.from('beta_keys').insert([{ 
+            key: keyValue, 
+            max_uses: limitValue, 
+            uses: 0 
+        }]);
 
-        if (error) {
-            alert("Fehler beim Erstellen: " + error.message);
-        } else {
-            input.value = '';
+        if (error) alert("Fehler: " + error.message);
+        else {
+            document.getElementById('new-key').value = '';
+            document.getElementById('key-limit').value = '1';
             fetchKeys();
         }
     }
 
     async function deleteKey(id) {
-        if (!supabaseClient) return;
-        if (!confirm("Diesen Key wirklich permanent löschen?")) return;
-
-        const { error } = await supabaseClient
-            .from('beta_keys')
-            .delete()
-            .eq('id', id);
-
-        if (error) {
-            alert("Fehler beim Löschen: " + error.message);
-        } else {
-            fetchKeys();
-        }
-    }
-
-    function showError(msg) {
-        const errBox = document.getElementById('login-error');
-        errBox.innerText = msg;
-        errBox.style.display = 'block';
+        if (!confirm("Wirklich löschen?")) return;
+        await supabaseClient.from('beta_keys').delete().eq('id', id);
+        fetchKeys();
     }
 </script>
-
 </body>
 </html>
