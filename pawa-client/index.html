@@ -5,6 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pawa-Client | by Padawan985</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Natives Modal Styling für den cleanen Look */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            display: none; justify-content: center; align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #141417; border: 1px solid #232329; border-radius: 12px;
+            padding: 30px; width: 90%; max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); color: #fff;
+        }
+        .modal-content h3 { margin-top: 0; margin-bottom: 15px; }
+        .modal-input {
+            width: 100%; padding: 12px; background: #0b0b0d; border: 1px solid #232329;
+            border-radius: 8px; color: #fff; margin-bottom: 15px; box-sizing: border-box;
+            font-family: monospace; font-size: 1rem;
+        }
+        .modal-input:focus { outline: none; border-color: #4f46e5; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+        .modal-msg { margin-bottom: 15px; font-size: 0.9rem; font-weight: 500; display: none; padding: 10px; border-radius: 6px;}
+        .msg-error { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .msg-success { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
+        .btn { padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-family: inherit;}
+        .btn-primary { background: #4f46e5; color: white; }
+        .btn-primary:hover { background: #4338ca; }
+        .btn-secondary { background: #27272a; color: white; }
+        .btn-secondary:hover { background: #3f3f46; }
+    </style>
 </head>
 <body>
 
@@ -25,119 +55,72 @@
         <h1 class="hero-title">Next-Level <br><span class="highlight-text">Pawa-Client.</span></h1>
         <p class="hero-description">Ein maßgeschneiderter Minecraft Client von Arjen (Padawan985). Optimiertes Movement, cleane Custom-UI und exklusive Module für das beste Spielerlebnis.</p>
         <div class="hero-actions">
-            <button onclick="requestDownload()" class="btn btn-primary" style="border: none; cursor: pointer; font-family: inherit; font-size: 1rem;">Client (1.21.11 Beta) Herunterladen</button>
+            <button onclick="openModal()" class="btn btn-primary" style="font-size: 1rem;">Client Herunterladen</button>
             <a href="#features" class="btn btn-secondary">Features ansehen</a>
         </div>
     </div>
 </section>
 
-<section id="features" class="projects">
-    <div class="section-header">
-        <p class="section-subtitle">Core Features</p>
-        <h2 class="section-title">Was den Pawa-Client ausmacht</h2>
-    </div>
-
-    <div class="projects-grid">
-        <div class="card" data-animate>
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                        <path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"></path>
-                    </svg>
-                </div>
-                <h3>Custom UI</h3>
-            </div>
-            <p class="card-text">Ein komplett überarbeitetes, modernes ClickGUI und HUD, das übersichtlich bleibt und nicht vom Spiel ablenkt.</p>
-            <div class="card-tags">
-                <span class="tag">Design</span>
-                <span class="tag">Interface</span>
-            </div>
-        </div>
-
-        <div class="card" data-animate>
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    </svg>
-                </div>
-                <h3>Erweiterte Module</h3>
-            </div>
-            <p class="card-text">Auf Liquidbounce aufbauende, stark optimierte Bypasses und Skripte für maximale Kontrolle auf dem Server.</p>
-            <div class="card-tags">
-                <span class="tag">Bypasses</span>
-                <span class="tag">Liquidbounce</span>
-            </div>
-        </div>
-
-        <div class="card" data-animate>
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                    </svg>
-                </div>
-                <h3>Performance Boost</h3>
-            </div>
-            <p class="card-text">Ressourcenschonend programmiert für konstant hohe FPS und minimalen RAM-Verbrauch.</p>
-            <div class="card-tags">
-                <span class="tag">FPS</span>
-                <span class="tag">Optimization</span>
-            </div>
-        </div>
-
-        <div class="card" data-animate>
-            <div class="card-header">
-                <div class="card-icon">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                        <polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>
-                    </svg>
-                </div>
-                <h3>Pawa Macros</h3>
-            </div>
-            <p class="card-text">Direkte Integration für benutzerdefinierte Tastenkürzel und schnelle Eingabebefehle im Client.</p>
-            <div class="card-tags">
-                <span class="tag">Keybinds</span>
-                <span class="tag">Utility</span>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="download" class="cta-section">
-    <div class="cta-box">
-        <h2>Bereit für das Upgrade?</h2>
-        <p>Der Pawa-Client befindet sich aktuell in der Closed Beta. Gib deinen Access-Key ein, um die Datei herunterzuladen.</p>
-        <button onclick="requestDownload()" class="btn btn-primary" style="border: none; cursor: pointer; font-family: inherit; font-size: 1rem;">Download mit Access-Key</button>
-    </div>
-</section>
-
-<footer>
-    <div class="footer-container" style="display: flex; justify-content: space-between; align-items: center;">
-        <p>&copy; 2026 Padawan985.</p>
-        <a href="admin.html" style="color: #666; text-decoration: none; font-size: 0.8rem;">Admin Login</a>
-    </div>
-</footer>
-
-<script src="index.js"></script>
-<script>
-    async function requestDownload() {
-        const password = prompt("Bitte gib deinen Pawa-Client Access-Key ein:");
+<div id="download-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Beta-Key erforderlich</h3>
+        <p style="font-size: 0.9rem; color: #8a8a93; margin-top: 0; margin-bottom: 20px;">Bitte gib deinen Pawa-Client Access-Key ein, um die .7z Datei zu laden.</p>
         
-        if (!password) return; 
+        <input type="text" id="beta-key-input" class="modal-input" placeholder="z.B. pawa-xxx-yyy">
+        
+        <div id="modal-msg" class="modal-msg"></div>
+        
+        <div class="modal-actions">
+            <button onclick="closeModal()" class="btn btn-secondary">Abbrechen</button>
+            <button onclick="submitKey()" id="submit-btn" class="btn btn-primary">Key prüfen & Download</button>
+        </div>
+    </div>
+</div>
 
-        // Deine spezifischen Supabase-Daten aus dem Curl-Befehl
+<script>
+    const modal = document.getElementById('download-modal');
+    const inputField = document.getElementById('beta-key-input');
+    const msgBox = document.getElementById('modal-msg');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function openModal() {
+        modal.style.display = 'flex';
+        inputField.value = '';
+        msgBox.style.display = 'none';
+        inputField.focus();
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    function showMessage(text, isError) {
+        msgBox.textContent = text;
+        msgBox.className = 'modal-msg ' + (isError ? 'msg-error' : 'msg-success');
+        msgBox.style.display = 'block';
+    }
+
+    async function submitKey() {
+        const password = inputField.value.trim();
+        if (!password) {
+            showMessage("Bitte gib einen Key ein.", true);
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Prüfe...";
+        msgBox.style.display = 'none';
+
         const edgeFunctionUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co/functions/v1/verify-beta-key';
         const apiKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
 
         try {
-   const response = await fetch(edgeFunctionUrl, {
+            const response = await fetch(edgeFunctionUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // WICHTIG: Füge diese Zeilen hinzu, damit Supabase den Key akzeptiert
-                    'apikey': apiKey,
-                    'Authorization': `Bearer ${apiKey}`
+                    'Authorization': `Bearer ${apiKey}`,
+                    'apikey': apiKey
                 },
                 body: JSON.stringify({ betaKey: password })
             });
@@ -145,16 +128,22 @@
             const data = await response.json();
 
             if (response.ok && data.downloadUrl) {
-                alert("Key akzeptiert! Der Download startet...");
-                // Leitet den Browser auf die sichere, temporäre Signed URL weiter
-                window.location.href = data.downloadUrl;
+                showMessage("Key akzeptiert! Download startet...", false);
+                setTimeout(() => {
+                    window.location.href = data.downloadUrl;
+                    closeModal();
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Key prüfen & Download";
+                }, 1000);
             } else {
-                // Zeigt Fehlermeldungen von der Edge Function an (z.B. "Ungültiger Key")
-                alert("Fehler: " + (data.error || "Zugriff verweigert."));
+                showMessage(data.error || "Zugriff verweigert.", true);
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Key prüfen & Download";
             }
         } catch (err) {
-            console.error(err);
-            alert("Verbindungsfehler zum Server. Bitte versuche es später noch einmal.");
+            showMessage("Verbindungsfehler. Bitte später versuchen.", true);
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Key prüfen & Download";
         }
     }
 </script>
