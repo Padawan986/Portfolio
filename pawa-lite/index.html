@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velocity Exec | Discontinued</title>
+    <style>
+        /* Grund-Styling (Dark Mode) */
+        body {
+            margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #09090b; color: #ffffff; overflow-x: hidden;
+        }
+
+        /* ============================================== */
+        /* DISCONTINUED SCREEN STYLING                    */
+        /* ============================================== */
+        #discontinued-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #09090b; display: none; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            text-align: center; padding: 20px;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a24 0%, #09090b 70%);
+        }
+        .discontinued-icon { margin-bottom: 20px; color: #3b82f6; }
+        .discontinued-title {
+            font-size: 3.5rem; margin-bottom: 15px; font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .discontinued-text {
+            color: #a1a1aa; max-width: 550px; line-height: 1.6; font-size: 1.1rem; margin-bottom: 30px;
+        }
+        .btn-social {
+            background: #18181b; color: white; padding: 12px 24px; border-radius: 8px; 
+            font-weight: 600; text-decoration: none; border: 1px solid #27272a; transition: all 0.2s;
+        }
+        .btn-social:hover { background: #27272a; border-color: #3b82f6; }
+
+        /* ============================================== */
+        /* ALTE WEBSITE STYLING                           */
+        /* ============================================== */
+        .navbar {
+            padding: 20px 50px; border-bottom: 1px solid #27272a;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; color: #fff; text-decoration: none; }
+        .logo span { color: #3b82f6; }
+        
+        .hero { padding: 100px 20px; text-align: center; }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; }
+        .hero p { color: #a1a1aa; font-size: 1.2rem; max-width: 600px; margin: 0 auto 40px auto; }
+        
+        .btn-inject {
+            background: #3b82f6; color: white; padding: 15px 30px; border-radius: 8px; 
+            font-weight: bold; border: none; font-size: 1.1rem; cursor: pointer; transition: background 0.2s;
+        }
+        .btn-inject:hover { background: #2563eb; }
+
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px; padding: 50px; max-width: 1200px; margin: 0 auto;
+        }
+        .feature-card { background: #18181b; border: 1px solid #27272a; padding: 30px; border-radius: 12px; }
+        .feature-card h3 { color: #3b82f6; margin-top: 0; }
+
+        /* ============================================== */
+        /* MODAL STYLING                                  */
+        /* ============================================== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-content {
+            background: #141417; border: 1px solid #27272a; border-radius: 12px;
+            padding: 30px; width: 90%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); color: #fff;
+        }
+        .modal-content h3 { margin-top: 0; margin-bottom: 15px; color: #3b82f6; }
+        .modal-input {
+            width: 100%; padding: 12px; background: #09090b; border: 1px solid #27272a;
+            border-radius: 8px; color: #fff; margin-bottom: 15px; box-sizing: border-box;
+            font-family: monospace; font-size: 1rem;
+        }
+        .modal-input:focus { outline: none; border-color: #3b82f6; }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+        .modal-msg { margin-bottom: 15px; font-size: 0.9rem; font-weight: 500; display: none; padding: 10px; border-radius: 6px;}
+        .msg-error { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .msg-success { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
+        .btn { padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-family: inherit;}
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-secondary { background: #27272a; color: white; }
+        .btn-secondary:hover { background: #3f3f46; }
+    </style>
+</head>
+<body>
+
+<div id="discontinued-screen">
+    <div class="discontinued-icon">
+        <svg viewBox="0 0 24 24" width="64" height="64" stroke="currentColor" stroke-width="1.5" fill="none">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+    </div>
+    <h1 class="discontinued-title">Velocity Exec <br> is Discontinued.</h1>
+    <p class="discontinued-text">
+        Die Entwicklung dieses auf der Velocity-API basierenden Roblox Executors wurde offiziell eingestellt. 
+        <br><br>
+        Danke an alle, die das Projekt unterstützt haben!
+    </p>
+    <a href="https://padawan985.is-a.dev/pawa-client/admin.html" class="btn-social">Admin Panel</a>
+</div>
+
+<div id="main-website-content">
+    
+    <nav class="navbar">
+        <a href="#" class="logo">Velocity<span>Exec</span></a>
+        <div>
+            <a href="#" style="color: #a1a1aa; text-decoration: none; margin-left: 20px;">Features</a>
+            <a href="https://padawan985.is-a.dev/pawa-client/admin.html" style="color: #a1a1aa; text-decoration: none; margin-left: 20px;">Admin Login</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Flawless Execution. <br> Powered by Velocity.</h1>
+        <p>Ein moderner Roblox Executor mit Custom UI, 99% Script-Execution-Rate und blitzschneller Injection. Pure Performance.</p>
+        <button onclick="openModal()" class="btn-inject">Download PawaLite Installer</button>
+    </section>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>Velocity API Integration</h3>
+            <p>Nutzt die neueste Velocity API für stabile Injection und maximale Kompatibilität.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Script Hub Built-in</h3>
+            <p>Zugriff auf hunderte vorgefertigte Scripts direkt im UI, ohne den Browser öffnen zu müssen.</p>
+        </div>
+        <div class="feature-card">
+            <h3>Custom Keybinds</h3>
+            <p>Binde Scripts oder Executor-Funktionen direkt auf deine Tasten für schnelles Ein- und Ausschalten im Game.</p>
+        </div>
+    </div>
+
+</div>
+
+<div id="download-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h3>Beta-Key erforderlich</h3>
+        <p style="font-size: 0.9rem; color: #a1a1aa; margin-top: 0; margin-bottom: 20px;">Bitte gib deinen Access-Key ein, um die <b>PawaLite-Installer.exe</b> herunterzuladen.</p>
+        
+        <input type="text" id="beta-key-input" class="modal-input" placeholder="z.B. exec-xxx-yyy">
+        
+        <div id="modal-msg" class="modal-msg"></div>
+        
+        <div class="modal-actions">
+            <button onclick="closeModal()" class="btn btn-secondary">Abbrechen</button>
+            <button onclick="submitKey()" id="submit-btn" class="btn btn-primary">Key prüfen & Download</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // =====================================================================
+    // KILL-SWITCH / TOGGLE
+    // =====================================================================
+    
+    // Ändere dies zu "false", um die Website und den Download zu aktivieren
+    const isDiscontinued = true; 
+
+    if (isDiscontinued) {
+        document.getElementById('main-website-content').style.display = 'none';
+        document.getElementById('discontinued-screen').style.display = 'flex';
+        document.title = "Velocity Exec | Discontinued";
+    } else {
+        document.title = "Velocity Exec | Powered by Velocity API";
+    }
+
+    // =====================================================================
+    // MODAL & DOWNLOAD LOGIK (SUPABASE)
+    // =====================================================================
+    const modal = document.getElementById('download-modal');
+    const inputField = document.getElementById('beta-key-input');
+    const msgBox = document.getElementById('modal-msg');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function openModal() {
+        modal.style.display = 'flex';
+        inputField.value = '';
+        msgBox.style.display = 'none';
+        inputField.focus();
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    function showMessage(text, isError) {
+        msgBox.textContent = text;
+        msgBox.className = 'modal-msg ' + (isError ? 'msg-error' : 'msg-success');
+        msgBox.style.display = 'block';
+    }
+
+    async function submitKey() {
+        const password = inputField.value.trim();
+        if (!password) {
+            showMessage("Bitte gib einen Key ein.", true);
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Prüfe...";
+        msgBox.style.display = 'none';
+
+        // Deine Supabase Daten
+        const edgeFunctionUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co/functions/v1/verify-beta-key';
+        const apiKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
+
+        try {
+            const response = await fetch(edgeFunctionUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`,
+                    'apikey': apiKey
+                },
+                body: JSON.stringify({ betaKey: password, product: 'executor' })
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.downloadUrl) {
+                showMessage("Key akzeptiert! Download startet...", false);
+                setTimeout(() => {
+                    window.location.href = data.downloadUrl;
+                    closeModal();
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Key prüfen & Download";
+                }, 1000);
+            } else {
+                showMessage(data.error || "Zugriff verweigert.", true);
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Key prüfen & Download";
+            }
+        } catch (err) {
+            showMessage("Verbindungsfehler. Bitte später versuchen.", true);
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Key prüfen & Download";
+        }
+    }
+</script>
+
+</body>
+</html>
