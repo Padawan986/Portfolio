@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pawa-Lite | Discontinued</title>
-    <!-- Zieht sich wieder exakt dein normales Design -->
     <link rel="stylesheet" href="style.css">
     <style>
         /* Natives Modal Styling für den cleanen Look */
@@ -96,7 +95,7 @@
         </div>
     </section>
 
-    <!-- NEU: VERSIONS SECTION (Zwei Produkte nebeneinander) -->
+    <!-- VERSIONS SECTION -->
     <section id="versions" class="projects">
         <div class="section-header">
             <p class="section-subtitle">Wähle dein Tool</p>
@@ -116,7 +115,6 @@
                     Basierend auf der Custom Velocity API. Ein grandioser Execution-Score von <b>98% UNC</b> und <b>99% SUNC</b> für maximale Skript-Kompatibilität.<br><br>
                     <i>Inklusive Script Hub Built-in!</i>
                 </p>
-                <!-- WICHTIG: Gibt 'executor' an die Modal-Funktion -->
                 <button onclick="openModal('executor')" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Executor Downloaden</button>
             </div>
             
@@ -132,8 +130,8 @@
                     Arbeitet komplett außerhalb des Spiels. Höchste Sicherheit vor Anti-Cheats (Byfron/Hyperion) bei stabiler und ressourcenschonender Performance.<br><br>
                     <i>100% Undetected.</i>
                 </p>
-                <!-- WICHTIG: Gibt 'external' an die Modal-Funktion -->
-                <button onclick="openModal('external')" class="btn btn-secondary" style="margin-top: 15px; width: 100%;">External Downloaden</button>
+                <!-- WICHTIG: Die ID "external-btn" hinzugefügt für das JavaScript -->
+                <button id="external-btn" onclick="openModal('external')" class="btn btn-secondary" style="margin-top: 15px; width: 100%;">External Downloaden</button>
             </div>
         </div>
     </section>
@@ -149,7 +147,6 @@
     <div id="download-modal" class="modal-overlay">
         <div class="modal-content">
             <h3>Beta-Key erforderlich</h3>
-            <!-- Hier wird der Dateiname per JavaScript dynamisch reingeschrieben -->
             <p style="font-size: 0.9rem; color: #8a8a93; margin-top: 0; margin-bottom: 20px;">
                 Bitte gib deinen Access-Key ein, um <b id="modal-filename">...</b> zu laden.
             </p>
@@ -161,23 +158,39 @@
             </div>
         </div>
     </div>
-</div> <!-- ENDE main-website-content -->
+</div>
 
 <script src="index.js"></script>
 <script>
     // =====================================================================
-    // KILL-SWITCH / TOGGLE
+    // TOGGLES FÜR DIE WEBSITE
     // =====================================================================
     
-    // Toggle: true = Discontinued Screen | false = Normale Website
+    // Toggle 1: true = Komplette Website ist Discontinued | false = Normale Website
     const isDiscontinued = false; 
 
+    // Toggle 2: true = External ist noch in Entwicklung | false = External ist bereit zum Download
+    const isExternalInDevelopment = true;
+
+    // Logik für den Discontinued-Screen
     if (isDiscontinued) {
         document.getElementById('main-website-content').style.display = 'none';
         document.getElementById('discontinued-screen').style.display = 'flex';
         document.title = "Pawa-Lite | Discontinued";
     } else {
         document.title = "Pawa-Lite | Flawless Execution";
+    }
+
+    // Logik für den External "In Development" Button
+    if (isExternalInDevelopment && !isDiscontinued) {
+        const extBtn = document.getElementById('external-btn');
+        if (extBtn) {
+            extBtn.textContent = "In Development";
+            extBtn.style.opacity = "0.5";
+            extBtn.style.cursor = "not-allowed";
+            // Entfernt die Klick-Funktion, damit sich das Modal nicht öffnet
+            extBtn.removeAttribute("onclick");
+        }
     }
 
     // =====================================================================
@@ -189,14 +202,11 @@
     const submitBtn = document.getElementById('submit-btn');
     const filenameDisplay = document.getElementById('modal-filename');
 
-    // Diese Variable speichert, ob der User "executor" oder "external" gewählt hat
     let selectedProduct = ''; 
 
-    // Die Funktion bekommt jetzt mit, welcher Button geklickt wurde
     function openModal(product) {
         selectedProduct = product;
         
-        // Passt den Text im Fenster an
         if (product === 'executor') {
             filenameDisplay.textContent = 'PawaLite-Installer.7z';
         } else if (product === 'external') {
@@ -241,7 +251,6 @@
                     'Authorization': `Bearer ${apiKey}`,
                     'apikey': apiKey
                 },
-                // WICHTIG: Hier wird jetzt variabel "executor" oder "external" gesendet!
                 body: JSON.stringify({ betaKey: password, product: selectedProduct })
             });
 
