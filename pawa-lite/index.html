@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pawa-Lite | Discontinued</title>
+    <!-- Zieht sich wieder exakt dein normales Design -->
     <link rel="stylesheet" href="style.css">
     <style>
         /* Natives Modal Styling für den cleanen Look */
@@ -57,22 +58,28 @@
 </head>
 <body>
 
+<!-- ============================================== -->
+<!-- DISCONTINUED SCREEN -->
+<!-- ============================================== -->
 <div id="discontinued-screen">
     <h1 class="discontinued-title">Pawa-Lite is Discontinued.</h1>
     <p class="discontinued-text">
-        Die Entwicklung des Pawa-Lite Executors wurde offiziell eingestellt. <br>
+        Die Entwicklung der Pawa-Lite Tools wurde offiziell eingestellt. <br>
         Vielen Dank an alle für den Support!
     </p>
     <a href="https://padawan985.is-a.dev/pawa-client/admin.html" class="btn btn-secondary" style="text-decoration: none;">Admin Panel</a>
 </div>
 
+<!-- ============================================== -->
+<!-- ALTE WEBSITE (Wird versteckt, wenn Discontinued) -->
+<!-- ============================================== -->
 <div id="main-website-content">
     
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="logo">Pawa-Lite</a>
             <div class="nav-links">
-                <a href="#features" class="nav-link">Features</a>
+                <a href="#versions" class="nav-link">Versionen</a>
                 <a href="https://padawan985.is-a.dev/pawa-client/admin.html" class="nav-link admin-login-btn">Admin Login</a>
             </div>
         </div>
@@ -80,50 +87,54 @@
 
     <section class="hero">
         <div class="hero-content">
-            <span class="hero-badge">Executor Release</span>
+            <span class="hero-badge">Executor & External</span>
             <h1 class="hero-title">Flawless Execution. <br><span class="highlight-text">Pawa-Lite.</span></h1>
-            <p class="hero-description">Ein moderner Roblox Executor mit Custom UI, extrem hoher Script-Execution-Rate und blitzschneller Injection. Pure Performance.</p>
+            <p class="hero-description">Wähle deine Waffe. Ob klassischer Executor mit Custom UI oder 100% sicherer External Client. Höchste Performance für dein Gameplay.</p>
             <div class="hero-actions">
-                <button onclick="openModal()" class="btn btn-primary" style="font-size: 1rem;">Download Installer</button>
-                <a href="#features" class="btn btn-secondary">Features ansehen</a>
+                <a href="#versions" class="btn btn-primary" style="font-size: 1rem;">Version wählen</a>
             </div>
         </div>
     </section>
 
-    <section id="features" class="projects">
+    <!-- NEU: VERSIONS SECTION (Zwei Produkte nebeneinander) -->
+    <section id="versions" class="projects">
         <div class="section-header">
-            <p class="section-subtitle">Core Features</p>
-            <h2 class="section-title">Was Pawa-Lite ausmacht</h2>
+            <p class="section-subtitle">Wähle dein Tool</p>
+            <h2 class="section-title">Unsere Pawa-Lite Versionen</h2>
         </div>
 
         <div class="projects-grid">
+            <!-- EXECUTOR KARTE -->
             <div class="card" data-animate>
                 <div class="card-header">
                     <div class="card-icon">
                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
                     </div>
-                    <h3>Basierend auf Custom Velocity Api</h3>
+                    <h3>Pawa-Lite Executor</h3>
                 </div>
-                <p class="card-text">Mit einem grandiosen Execution-Score von <b>98% UNC</b> und <b>99% SUNC</b> für maximale Skript-Kompatibilität.</p>
+                <p class="card-text">
+                    Basierend auf der Custom Velocity API. Ein grandioser Execution-Score von <b>98% UNC</b> und <b>99% SUNC</b> für maximale Skript-Kompatibilität.<br><br>
+                    <i>Inklusive Script Hub Built-in!</i>
+                </p>
+                <!-- WICHTIG: Gibt 'executor' an die Modal-Funktion -->
+                <button onclick="openModal('executor')" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Executor Downloaden</button>
             </div>
             
+            <!-- EXTERNAL KARTE -->
             <div class="card" data-animate>
                 <div class="card-header">
                     <div class="card-icon">
-                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 0 1 9-9"></path></svg>
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                     </div>
-                    <h3>Script Hub Built-in</h3>
+                    <h3>Pawa-Lite External</h3>
                 </div>
-                <p class="card-text">Zugriff auf hunderte vorgefertigte Scripts direkt im UI, ohne den Browser jemals öffnen zu müssen.</p>
+                <p class="card-text">
+                    Arbeitet komplett außerhalb des Spiels. Höchste Sicherheit vor Anti-Cheats (Byfron/Hyperion) bei stabiler und ressourcenschonender Performance.<br><br>
+                    <i>100% Undetected.</i>
+                </p>
+                <!-- WICHTIG: Gibt 'external' an die Modal-Funktion -->
+                <button onclick="openModal('external')" class="btn btn-secondary" style="margin-top: 15px; width: 100%;">External Downloaden</button>
             </div>
-        </div>
-    </section>
-
-    <section id="download" class="cta-section">
-        <div class="cta-box">
-            <h2>Bereit für das Upgrade?</h2>
-            <p>Gib deinen Access-Key ein, um die PawaLite-Installer.7z herunterzuladen.</p>
-            <button onclick="openModal()" class="btn btn-primary" style="font-size: 1rem;">Download mit Access-Key</button>
         </div>
     </section>
 
@@ -134,10 +145,14 @@
         </div>
     </footer>
 
+    <!-- MODAL FÜR DEN DOWNLOAD -->
     <div id="download-modal" class="modal-overlay">
         <div class="modal-content">
             <h3>Beta-Key erforderlich</h3>
-            <p style="font-size: 0.9rem; color: #8a8a93; margin-top: 0; margin-bottom: 20px;">Bitte gib deinen Access-Key ein, um die <b>PawaLite-Installer.7z</b> zu laden.</p>
+            <!-- Hier wird der Dateiname per JavaScript dynamisch reingeschrieben -->
+            <p style="font-size: 0.9rem; color: #8a8a93; margin-top: 0; margin-bottom: 20px;">
+                Bitte gib deinen Access-Key ein, um <b id="modal-filename">...</b> zu laden.
+            </p>
             <input type="text" id="beta-key-input" class="modal-input" placeholder="z.B. exec-xxx-yyy">
             <div id="modal-msg" class="modal-msg"></div>
             <div class="modal-actions">
@@ -146,14 +161,16 @@
             </div>
         </div>
     </div>
-</div> <script src="index.js"></script>
+</div> <!-- ENDE main-website-content -->
+
+<script src="index.js"></script>
 <script>
     // =====================================================================
     // KILL-SWITCH / TOGGLE
     // =====================================================================
     
     // Toggle: true = Discontinued Screen | false = Normale Website
-    const isDiscontinued = false; 
+    const isDiscontinued = true; 
 
     if (isDiscontinued) {
         document.getElementById('main-website-content').style.display = 'none';
@@ -170,8 +187,22 @@
     const inputField = document.getElementById('beta-key-input');
     const msgBox = document.getElementById('modal-msg');
     const submitBtn = document.getElementById('submit-btn');
+    const filenameDisplay = document.getElementById('modal-filename');
 
-    function openModal() {
+    // Diese Variable speichert, ob der User "executor" oder "external" gewählt hat
+    let selectedProduct = ''; 
+
+    // Die Funktion bekommt jetzt mit, welcher Button geklickt wurde
+    function openModal(product) {
+        selectedProduct = product;
+        
+        // Passt den Text im Fenster an
+        if (product === 'executor') {
+            filenameDisplay.textContent = 'PawaLite-Installer.7z';
+        } else if (product === 'external') {
+            filenameDisplay.textContent = 'Pawa-Lite External.7z';
+        }
+
         modal.style.display = 'flex';
         inputField.value = '';
         msgBox.style.display = 'none';
@@ -210,8 +241,8 @@
                     'Authorization': `Bearer ${apiKey}`,
                     'apikey': apiKey
                 },
-                // WICHTIG: Hier steht jetzt product: 'executor' drin!
-                body: JSON.stringify({ betaKey: password, product: 'executor' })
+                // WICHTIG: Hier wird jetzt variabel "executor" oder "external" gesendet!
+                body: JSON.stringify({ betaKey: password, product: selectedProduct })
             });
 
             const data = await response.json();
