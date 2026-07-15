@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pawa-Lite | Discontinued</title>
+    <title>Pawa-Lite | Flawless Execution</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Natives Modal Styling für den cleanen Look */
+        /* Natives Modal Styling */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
@@ -29,13 +29,17 @@
         .modal-msg { margin-bottom: 15px; font-size: 0.9rem; font-weight: 500; display: none; padding: 10px; border-radius: 6px;}
         .msg-error { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
         .msg-success { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
-        .btn { padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-family: inherit;}
+        .btn { padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-family: inherit; text-align: center; display: inline-block; text-decoration: none;}
         .btn-primary { background: #4f46e5; color: white; }
         .btn-primary:hover { background: #4338ca; }
         .btn-secondary { background: #27272a; color: white; }
         .btn-secondary:hover { background: #3f3f46; }
         .admin-login-btn { color: #818cf8 !important; font-weight: bold; border: 1px solid rgba(129, 140, 248, 0.3); padding: 5px 12px; border-radius: 6px; transition: all 0.2s;}
         .admin-login-btn:hover { background: rgba(129, 140, 248, 0.1); border-color: #818cf8;}
+
+        /* Discord Button Styling */
+        .btn-discord { background: #5865F2; color: white; width: 100%; margin-bottom: 15px; box-sizing: border-box;}
+        .btn-discord:hover { background: #4752C4; }
 
         /* Styling für den Discontinued Screen */
         #discontinued-screen {
@@ -57,21 +61,17 @@
 </head>
 <body>
 
-<!-- ============================================== -->
 <!-- DISCONTINUED SCREEN -->
-<!-- ============================================== -->
 <div id="discontinued-screen">
     <h1 class="discontinued-title">Pawa-Lite is Discontinued.</h1>
     <p class="discontinued-text">
         Die Entwicklung der Pawa-Lite Tools wurde offiziell eingestellt. <br>
         Vielen Dank an alle für den Support!
     </p>
-    <a href="https://padawan985.is-a.dev/pawa-client/admin.html" class="btn btn-secondary" style="text-decoration: none;">Admin Panel</a>
+    <a href="https://padawan985.is-a.dev/pawa-client/admin.html" class="btn btn-secondary">Admin Panel</a>
 </div>
 
-<!-- ============================================== -->
-<!-- ALTE WEBSITE (Wird versteckt, wenn Discontinued) -->
-<!-- ============================================== -->
+<!-- HAUPT-WEBSITE -->
 <div id="main-website-content">
     
     <nav class="navbar">
@@ -95,7 +95,6 @@
         </div>
     </section>
 
-    <!-- VERSIONS SECTION -->
     <section id="versions" class="projects">
         <div class="section-header">
             <p class="section-subtitle">Wähle dein Tool</p>
@@ -103,7 +102,7 @@
         </div>
 
         <div class="projects-grid">
-            <!-- EXECUTOR KARTE -->
+            <!-- EXECUTOR -->
             <div class="card" data-animate>
                 <div class="card-header">
                     <div class="card-icon">
@@ -115,10 +114,11 @@
                     Basierend auf der Custom Velocity API. Ein grandioser Execution-Score von <b>98% UNC</b> und <b>99% SUNC</b> für maximale Skript-Kompatibilität.<br><br>
                     <i>Inklusive Script Hub Built-in!</i>
                 </p>
-                <button onclick="openModal('executor')" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Executor Downloaden</button>
+                <!-- NEU: Öffnet erst den Discord-Check -->
+                <button onclick="checkDiscord('executor')" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Executor Downloaden</button>
             </div>
             
-            <!-- EXTERNAL KARTE -->
+            <!-- EXTERNAL -->
             <div class="card" data-animate>
                 <div class="card-header">
                     <div class="card-icon">
@@ -127,11 +127,10 @@
                     <h3>Pawa-Lite External</h3>
                 </div>
                 <p class="card-text">
-                    Arbeitet komplett außerhalb des Spiels. Höchste Sicherheit vor Anti-Cheats (Byfron/Hyperion) bei stabiler und ressourcenschonender Performance. Hat zahlreiche Tools wie ESP, Aimbot und vieles mehr!<br><br>
+                    Arbeitet komplett außerhalb des Spiels. Höchste Sicherheit vor Anti-Cheats (Byfron/Hyperion) bei stabiler und ressourcenschonender Performance.<br><br>
                     <i>100% Undetected.</i>
                 </p>
-                <!-- WICHTIG: Die ID "external-btn" hinzugefügt für das JavaScript -->
-                <button id="external-btn" onclick="openModal('external')" class="btn btn-secondary" style="margin-top: 15px; width: 100%;">External Downloaden</button>
+                <button id="external-btn" onclick="checkDiscord('external')" class="btn btn-secondary" style="margin-top: 15px; width: 100%;">External Downloaden</button>
             </div>
         </div>
     </section>
@@ -143,7 +142,33 @@
         </div>
     </footer>
 
-    <!-- MODAL FÜR DEN DOWNLOAD -->
+    <!-- ========================================== -->
+    <!-- MODAL 1: DISCORD CHECK                     -->
+    <!-- ========================================== -->
+    <div id="discord-modal" class="modal-overlay">
+        <div class="modal-content" style="text-align: center;">
+            <h3 style="color: #5865F2; margin-bottom: 5px;">Discord Pflicht!</h3>
+            <p style="font-size: 0.95rem; color: #a1a1aa; margin-bottom: 25px;">
+                Du musst auf unserem Discord-Server sein, um Pawa-Lite herunterzuladen und Beta-Keys zu erhalten.
+            </p>
+            
+            <!-- Schritt 1: Link anklicken -->
+            <a href="https://discord.gg/ZBfZSEGp39" target="_blank" class="btn btn-discord" onclick="markDiscordJoined()">
+                1. Discord Beitreten
+            </a>
+            
+            <!-- Schritt 2: Wird erst klickbar, wenn Schritt 1 gemacht wurde -->
+            <button onclick="proceedToDownload()" id="proceed-btn" class="btn btn-secondary" style="width: 100%; opacity: 0.5; cursor: not-allowed;" disabled>
+                2. Weiter zum Download
+            </button>
+            
+            <button onclick="closeDiscordModal()" class="btn" style="background: none; color: #666; margin-top: 15px; font-size: 0.8rem; padding: 0;">Abbrechen</button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL 2: BETA KEY / DOWNLOAD               -->
+    <!-- ========================================== -->
     <div id="download-modal" class="modal-overlay">
         <div class="modal-content">
             <h3>Beta-Key erforderlich</h3>
@@ -153,7 +178,7 @@
             <input type="text" id="beta-key-input" class="modal-input" placeholder="z.B. exec-xxx-yyy">
             <div id="modal-msg" class="modal-msg"></div>
             <div class="modal-actions">
-                <button onclick="closeModal()" class="btn btn-secondary">Abbrechen</button>
+                <button onclick="closeDownloadModal()" class="btn btn-secondary">Abbrechen</button>
                 <button onclick="submitKey()" id="submit-btn" class="btn btn-primary">Key prüfen & Download</button>
             </div>
         </div>
@@ -167,12 +192,11 @@
     // =====================================================================
     
     // Toggle 1: true = Komplette Website ist Discontinued | false = Normale Website
-    const isDiscontinued = false; 
+    const isDiscontinued = false; // Auf FALSE gestellt zum Testen!
 
-    // Toggle 2: true = External ist noch in Entwicklung | false = External ist bereit zum Download
+    // Toggle 2: true = External ist noch in Entwicklung | false = External ist bereit
     const isExternalInDevelopment = true;
 
-    // Logik für den Discontinued-Screen
     if (isDiscontinued) {
         document.getElementById('main-website-content').style.display = 'none';
         document.getElementById('discontinued-screen').style.display = 'flex';
@@ -181,46 +205,82 @@
         document.title = "Pawa-Lite | Flawless Execution";
     }
 
-    // Logik für den External "In Development" Button
     if (isExternalInDevelopment && !isDiscontinued) {
         const extBtn = document.getElementById('external-btn');
         if (extBtn) {
             extBtn.textContent = "In Development";
             extBtn.style.opacity = "0.5";
             extBtn.style.cursor = "not-allowed";
-            // Entfernt die Klick-Funktion, damit sich das Modal nicht öffnet
             extBtn.removeAttribute("onclick");
         }
     }
 
     // =====================================================================
-    // Modal & Download Logik (Supabase)
+    // DISCORD CHECK LOGIK
     // =====================================================================
-    const modal = document.getElementById('download-modal');
+    let pendingProduct = ''; 
+    let discordClicked = false;
+
+    function checkDiscord(product) {
+        pendingProduct = product;
+        document.getElementById('discord-modal').style.display = 'flex';
+        
+        // Button-Status zurücksetzen
+        discordClicked = false;
+        const proceedBtn = document.getElementById('proceed-btn');
+        proceedBtn.style.opacity = '0.5';
+        proceedBtn.style.cursor = 'not-allowed';
+        proceedBtn.disabled = true;
+        proceedBtn.classList.remove('btn-primary');
+        proceedBtn.classList.add('btn-secondary');
+    }
+
+    function markDiscordJoined() {
+        discordClicked = true;
+        const proceedBtn = document.getElementById('proceed-btn');
+        // Button aktivieren
+        proceedBtn.style.opacity = '1';
+        proceedBtn.style.cursor = 'pointer';
+        proceedBtn.disabled = false;
+        proceedBtn.classList.remove('btn-secondary');
+        proceedBtn.classList.add('btn-primary');
+    }
+
+    function proceedToDownload() {
+        if (discordClicked) {
+            document.getElementById('discord-modal').style.display = 'none';
+            openDownloadModal(pendingProduct);
+        }
+    }
+
+    function closeDiscordModal() {
+        document.getElementById('discord-modal').style.display = 'none';
+    }
+
+    // =====================================================================
+    // DOWNLOAD & KEY LOGIK (Supabase)
+    // =====================================================================
+    const downloadModal = document.getElementById('download-modal');
     const inputField = document.getElementById('beta-key-input');
     const msgBox = document.getElementById('modal-msg');
     const submitBtn = document.getElementById('submit-btn');
     const filenameDisplay = document.getElementById('modal-filename');
 
-    let selectedProduct = ''; 
-
-    function openModal(product) {
-        selectedProduct = product;
-        
+    function openDownloadModal(product) {
         if (product === 'executor') {
             filenameDisplay.textContent = 'PawaLite-Installer.7z';
         } else if (product === 'external') {
             filenameDisplay.textContent = 'Pawa-Lite External.7z';
         }
 
-        modal.style.display = 'flex';
+        downloadModal.style.display = 'flex';
         inputField.value = '';
         msgBox.style.display = 'none';
         inputField.focus();
     }
 
-    function closeModal() {
-        modal.style.display = 'none';
+    function closeDownloadModal() {
+        downloadModal.style.display = 'none';
     }
 
     function showMessage(text, isError) {
@@ -251,7 +311,7 @@
                     'Authorization': `Bearer ${apiKey}`,
                     'apikey': apiKey
                 },
-                body: JSON.stringify({ betaKey: password, product: selectedProduct })
+                body: JSON.stringify({ betaKey: password, product: pendingProduct })
             });
 
             const data = await response.json();
@@ -260,7 +320,7 @@
                 showMessage("Key akzeptiert! Download startet...", false);
                 setTimeout(() => {
                     window.location.href = data.downloadUrl;
-                    closeModal();
+                    closeDownloadModal();
                     submitBtn.disabled = false;
                     submitBtn.textContent = "Key prüfen & Download";
                 }, 1000);
