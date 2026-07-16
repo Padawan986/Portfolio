@@ -15,7 +15,7 @@
         }
         .modal-content {
             background: #141417; border: 1px solid #232329; border-radius: 12px;
-            padding: 30px; width: 90%; max-width: 400px;
+            padding: 30px; width: 90%; max-width: 420px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5); color: #fff;
         }
         .modal-content h3 { margin-top: 0; margin-bottom: 15px; }
@@ -61,7 +61,6 @@
 </head>
 <body>
 
-<!-- DISCONTINUED SCREEN -->
 <div id="discontinued-screen">
     <h1 class="discontinued-title">Pawa-Lite is Discontinued.</h1>
     <p class="discontinued-text">
@@ -71,7 +70,6 @@
     <a href="https://padawan985.is-a.dev/pawa-client/admin.html" class="btn btn-secondary">Admin Panel</a>
 </div>
 
-<!-- HAUPT-WEBSITE -->
 <div id="main-website-content">
     
     <nav class="navbar">
@@ -102,7 +100,6 @@
         </div>
 
         <div class="projects-grid">
-            <!-- EXECUTOR -->
             <div class="card" data-animate>
                 <div class="card-header">
                     <div class="card-icon">
@@ -114,11 +111,9 @@
                     Basierend auf der Custom Velocity API. Ein grandioser Execution-Score von <b>98% UNC</b> und <b>99% SUNC</b> für maximale Skript-Kompatibilität.<br><br>
                     <i>Inklusive Script Hub Built-in!</i>
                 </p>
-                <!-- NEU: Öffnet erst den Discord-Check -->
                 <button onclick="checkDiscord('executor')" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Executor Downloaden</button>
             </div>
             
-            <!-- EXTERNAL -->
             <div class="card" data-animate>
                 <div class="card-header">
                     <div class="card-icon">
@@ -142,9 +137,6 @@
         </div>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- MODAL 1: DISCORD CHECK                     -->
-    <!-- ========================================== -->
     <div id="discord-modal" class="modal-overlay">
         <div class="modal-content" style="text-align: center;">
             <h3 style="color: #5865F2; margin-bottom: 5px;">Discord Pflicht!</h3>
@@ -152,12 +144,10 @@
                 Du musst auf unserem Discord-Server sein, um Pawa-Lite herunterzuladen und Beta-Keys zu erhalten.
             </p>
             
-            <!-- Schritt 1: Link anklicken -->
             <a href="https://discord.gg/ZBfZSEGp39" target="_blank" class="btn btn-discord" onclick="markDiscordJoined()">
                 1. Discord Beitreten
             </a>
             
-            <!-- Schritt 2: Wird erst klickbar, wenn Schritt 1 gemacht wurde -->
             <button onclick="proceedToDownload()" id="proceed-btn" class="btn btn-secondary" style="width: 100%; opacity: 0.5; cursor: not-allowed;" disabled>
                 2. Weiter zum Download
             </button>
@@ -166,16 +156,27 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- MODAL 2: BETA KEY / DOWNLOAD               -->
-    <!-- ========================================== -->
     <div id="download-modal" class="modal-overlay">
         <div class="modal-content">
-            <h3>Beta-Key erforderlich</h3>
+            <h3>Beta-Key & Nutzungsbedingungen</h3>
             <p style="font-size: 0.9rem; color: #8a8a93; margin-top: 0; margin-bottom: 20px;">
                 Bitte gib deinen Access-Key ein, um <b id="modal-filename">...</b> zu laden.
             </p>
+            
             <input type="text" id="beta-key-input" class="modal-input" placeholder="z.B. exec-xxx-yyy">
+            
+            <div style="margin-bottom: 20px; text-align: left; padding: 12px; background: #0b0b0d; border: 1px solid #232329; border-radius: 8px;">
+                <label style="display: block; font-size: 0.85rem; color: #e4e4e7; cursor: pointer; line-height: 1.5; font-weight: 600;">
+                    <input type="checkbox" id="tos-checkbox" style="margin-right: 8px; transform: scale(1.1); vertical-align: middle; cursor: pointer;">
+                    Ich akzeptiere die Terms of Service:
+                </label>
+                <ul style="font-size: 0.75rem; color: #a1a1aa; margin: 8px 0 0 20px; padding: 0; line-height: 1.4;">
+                    <li><b>Keine Weitergabe:</b> Redistribution, Sharing oder Reselling der Software ist strengstens verboten.</li>
+                    <li><b>Eigene Gefahr:</b> Nutzung erfolgt auf eigenes Risiko. Keine Haftung für eventuelle In-Game Bans.</li>
+                    <li><b>Key-Schutz:</b> Missbrauch, Leaks oder Reverse Engineering führen zur permanenten Sperrung deines Keys.</li>
+                </ul>
+            </div>
+
             <div id="modal-msg" class="modal-msg"></div>
             <div class="modal-actions">
                 <button onclick="closeDownloadModal()" class="btn btn-secondary">Abbrechen</button>
@@ -190,11 +191,7 @@
     // =====================================================================
     // TOGGLES FÜR DIE WEBSITE
     // =====================================================================
-    
-    // Toggle 1: true = Komplette Website ist Discontinued | false = Normale Website
-    const isDiscontinued = false; // Auf FALSE gestellt zum Testen!
-
-    // Toggle 2: true = External ist noch in Entwicklung | false = External ist bereit
+    const isDiscontinued = false; 
     const isExternalInDevelopment = true;
 
     if (isDiscontinued) {
@@ -225,7 +222,6 @@
         pendingProduct = product;
         document.getElementById('discord-modal').style.display = 'flex';
         
-        // Button-Status zurücksetzen
         discordClicked = false;
         const proceedBtn = document.getElementById('proceed-btn');
         proceedBtn.style.opacity = '0.5';
@@ -238,7 +234,6 @@
     function markDiscordJoined() {
         discordClicked = true;
         const proceedBtn = document.getElementById('proceed-btn');
-        // Button aktivieren
         proceedBtn.style.opacity = '1';
         proceedBtn.style.cursor = 'pointer';
         proceedBtn.disabled = false;
@@ -275,6 +270,7 @@
 
         downloadModal.style.display = 'flex';
         inputField.value = '';
+        document.getElementById('tos-checkbox').checked = false; // Reset ToS Checkbox
         msgBox.style.display = 'none';
         inputField.focus();
     }
@@ -291,6 +287,14 @@
 
     async function submitKey() {
         const password = inputField.value.trim();
+        const tosChecked = document.getElementById('tos-checkbox').checked;
+
+        // NEU: Erst prüfen ob die Terms akzeptiert wurden
+        if (!tosChecked) {
+            showMessage("Du musst den Terms of Service zustimmen, um fortzufahren.", true);
+            return;
+        }
+
         if (!password) {
             showMessage("Bitte gib einen Key ein.", true);
             return;
