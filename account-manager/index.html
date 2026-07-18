@@ -34,6 +34,9 @@
             font-size: 0.7rem; font-family: monospace; background: #27272a;
             padding: 3px 8px; border-radius: 4px; color: #a1a1aa;
         }
+        .nav-actions {
+            display: flex; gap: 10px; align-items: center;
+        }
 
         /* Hero Section */
         .hero {
@@ -61,6 +64,8 @@
         .btn-primary:hover { background: #4338ca; transform: translateY(-2px); }
         .btn-secondary { background: #27272a; color: white; border: 1px solid #3f3f46; }
         .btn-secondary:hover { background: #3f3f46; }
+        .btn-outline { background: transparent; color: #e4e4e7; border: 1px solid #3f3f46; }
+        .btn-outline:hover { background: rgba(255, 255, 255, 0.05); }
 
         /* Feature Grid */
         .features-section {
@@ -110,10 +115,17 @@
                 Account Manager
                 <span class="version-badge">v-ddf02245</span>
             </a>
-            <!-- Direct Download Link -->
-            <a href="Roblox_Account_Manager_by_Padawan985_Installer.7zip" download class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">
-                Download
-            </a>
+            <div class="nav-actions">
+                <!-- View Source / GitHub Link -->
+                <a href="https://github.com/Padawan985" target="_blank" class="btn btn-outline" style="padding: 8px 16px; font-size: 0.9rem;">
+                    <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    Source
+                </a>
+                <!-- Direct Download Link -->
+                <a href="Roblox_Account_Manager_by_Padawan985_Installer.7z" download class="btn btn-primary" style="padding: 8px 16px; font-size: 0.9rem;">
+                    Download
+                </a>
+            </div>
         </div>
     </nav>
 
@@ -122,13 +134,18 @@
         <p class="hero-desc">
             The ultimate management tool by Padawan985. Seamlessly store, filter, and launch your alt accounts. Built-in session validation and advanced utilities for power users.
         </p>
-        <div style="display: flex; gap: 15px; justify-content: center;">
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
             <!-- Direct Download Link -->
-            <a href="Roblox_Account_Manager_by_Padawan985_Installer.7zip" download class="btn btn-primary">
+            <a href="Roblox_Account_Manager_by_Padawan985_Installer.7z" download class="btn btn-primary">
                 <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Download Latest
             </a>
-            <a href="#features" class="btn btn-secondary">View Features</a>
+            <!-- View Source Link -->
+            <a href="https://github.com/Padawan985" target="_blank" class="btn btn-secondary">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                View Source
+            </a>
+            <a href="#features" class="btn btn-outline">View Features</a>
         </div>
     </section>
 
