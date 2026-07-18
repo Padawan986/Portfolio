@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Account Manager | Padawan985</title>
+    <style>
+        /* Base Styles & Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0b0b0e;
+            color: #e4e4e7;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background: rgba(11, 11, 14, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #232329;
+            position: fixed; width: 100%; top: 0; z-index: 100;
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; padding: 15px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo {
+            font-size: 1.2rem; font-weight: 700; color: #fff; text-decoration: none;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .version-badge {
+            font-size: 0.7rem; font-family: monospace; background: #27272a;
+            padding: 3px 8px; border-radius: 4px; color: #a1a1aa;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 30px 100px; text-align: center; max-width: 900px; margin: 0 auto;
+        }
+        .hero-title {
+            font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 20px;
+            color: #fff;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero-desc {
+            font-size: 1.2rem; color: #a1a1aa; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer;
+            border: none; font-size: 1rem; text-decoration: none; display: inline-flex;
+            align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;
+        }
+        .btn-primary { background: #4f46e5; color: white; }
+        .btn-primary:hover { background: #4338ca; transform: translateY(-2px); }
+        .btn-secondary { background: #27272a; color: white; border: 1px solid #3f3f46; }
+        .btn-secondary:hover { background: #3f3f46; }
+
+        /* Feature Grid */
+        .features-section {
+            max-width: 1200px; margin: 0 auto 100px; padding: 0 30px;
+        }
+        .section-title {
+            text-align: center; font-size: 2rem; color: #fff; margin-bottom: 50px;
+        }
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;
+        }
+        .card {
+            background: #141417; border: 1px solid #232329; border-radius: 12px; padding: 30px;
+            transition: border-color 0.3s;
+        }
+        .card:hover { border-color: #4f46e5; }
+        .card-icon {
+            width: 40px; height: 40px; background: rgba(79, 70, 229, 0.1); color: #818cf8;
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px;
+        }
+        .card h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: #a1a1aa; font-size: 0.95rem; line-height: 1.5; }
+
+        /* UI Preview Section */
+        .preview-section {
+            max-width: 1000px; margin: 0 auto 100px; padding: 0 30px; text-align: center;
+        }
+        .preview-image {
+            width: 100%; border-radius: 12px; border: 1px solid #232329;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            background: #141417; /* Fallback */
+            min-height: 300px; display: flex; align-items: center; justify-content: center; color: #a1a1aa;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid #232329; padding: 30px; text-align: center; color: #666; font-size: 0.9rem;
+        }
+
+        /* Discord Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-content {
+            background: #141417; border: 1px solid #232329; border-radius: 12px;
+            padding: 30px; width: 90%; max-width: 400px; text-align: center; color: #fff;
+        }
+        .modal-content h3 { margin-top: 0; margin-bottom: 10px; color: #5865F2; }
+        .modal-content p { color: #a1a1aa; font-size: 0.95rem; margin-bottom: 25px; }
+        .btn-discord { background: #5865F2; color: white; width: 100%; margin-bottom: 15px; }
+        .btn-discord:hover { background: #4752C4; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                Account Manager
+                <span class="version-badge">v-ddf02245</span>
+            </a>
+            <button onclick="openModal()" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.9rem;">
+                Download
+            </button>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 class="hero-title">Total Control Over <br><span class="highlight">Multiple Accounts</span></h1>
+        <p class="hero-desc">
+            The ultimate management tool by Padawan985. Seamlessly store, filter, and launch your alt accounts. Built-in session validation and advanced utilities for power users.
+        </p>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <button onclick="openModal()" class="btn btn-primary">
+                <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Download Latest
+            </button>
+            <a href="#features" class="btn btn-secondary">View Features</a>
+        </div>
+    </section>
+
+    <!-- Placeholder for Screenshot 2026-07-18 224804.png -->
+    <section class="preview-section">
+        <img src="Screenshot 2026-07-18 224804.png" alt="Roblox Account Manager Interface" class="preview-image">
+    </section>
+
+    <section id="features" class="features-section">
+        <h2 class="section-title">Core Capabilities</h2>
+        <div class="grid">
+            <!-- Feature 1 -->
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
+                </div>
+                <h3>Multi-Instance Support</h3>
+                <p>Instantly launch and manage multiple accounts simultaneously. View all your saved accounts in a clean, filterable grid or list layout.</p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <h3>Integrated Anti-AFK</h3>
+                <p>Never get disconnected for idling again. Simply toggle the global Anti-AFK feature to keep all active instances running continuously.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                </div>
+                <h3>Session Validation</h3>
+                <p>The manager automatically detects and flags accounts with expired cookies (EXPIRED tag) so you always know which accounts need re-authentication.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                </div>
+                <h3>Advanced Tools</h3>
+                <p>Comes packed with extra utilities including Group managers, Chart statistics, Mixers, and Generators directly accessible from the sidebar.</p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </div>
+                <h3>Instant Process Kill</h3>
+                <p>Need to shut down fast? The "Kill Roblox" shortcut instantly terminates all active game clients safely and completely.</p>
+            </div>
+            
+            <!-- Feature 6 -->
+            <div class="card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                </div>
+                <h3>Search & Filtering</h3>
+                <p>Never lose track of your main or alt accounts. Easily search your entire database by ID or Username, and toggle between grid and list views.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Padawan985. All rights reserved.</p>
+    </footer>
+
+    <!-- Discord Verification Modal (Kept from Pawa-Lite style) -->
+    <div id="discord-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Community Access</h3>
+            <p>You must join our Discord community to verify your identity and download the Account Manager.</p>
+            
+            <a href="https://discord.gg/ZBfZSEGp39" target="_blank" class="btn btn-discord" onclick="markDiscordJoined()">
+                1. Join Discord
+            </a>
+            
+            <button onclick="downloadManager()" id="proceed-btn" class="btn btn-secondary" style="width: 100%; opacity: 0.5; cursor: not-allowed;" disabled>
+                2. Download Software
+            </button>
+            
+            <button onclick="closeModal()" class="btn" style="background: none; color: #666; margin-top: 10px; font-size: 0.8rem; padding: 0;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        let discordClicked = false;
+
+        function openModal() {
+            document.getElementById('discord-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('discord-modal').style.display = 'none';
+        }
+
+        function markDiscordJoined() {
+            discordClicked = true;
+            const proceedBtn = document.getElementById('proceed-btn');
+            proceedBtn.style.opacity = '1';
+            proceedBtn.style.cursor = 'pointer';
+            proceedBtn.disabled = false;
+            proceedBtn.classList.remove('btn-secondary');
+            proceedBtn.classList.add('btn-primary');
+        }
+
+        function downloadManager() {
+            if (discordClicked) {
+                // Replace with your actual download link or routing logic
+                alert("Verification successful. The download would start here.");
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
