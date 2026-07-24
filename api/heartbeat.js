@@ -1,6 +1,6 @@
 // api/heartbeat.js - Pawa-Lite Online-Tracker für Vercel mit kostenloser Firebase-DB
 
-const FIREBASE_DB_URL = "https://DEINE-DATENBANK-ID.europe-west1.firebasedatabase.app"; // <-- DEINE FIREBASE URL HIER REIN!
+const FIREBASE_DB_URL = "https://pawa-lite-tracker-default-rtdb.europe-west1.firebasedatabase.app/"; // <-- DEINE FIREBASE URL HIER REIN!
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
