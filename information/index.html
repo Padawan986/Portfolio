@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawa-Lite Information</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="../index.html" class="logo">Padawan985</a>
+        <div class="nav-links">
+            <a href="../index.html" class="nav-link">← Zurück</a>
+        </div>
+    </div>
+</nav>
+
+<main class="info-page">
+    <section class="info-shell">
+        <div class="info-hero">
+            <span class="hero-badge">Live-Status</span>
+            <h1>Pawa-Lite Instanzen online</h1>
+            <p>Verfolge die aktuelle Verfügbarkeit und die Nutzer, die gerade verbunden sind.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="info-stat">
+                <span class="info-label">Aktiv</span>
+                <div class="count" id="count">0</div>
+                <span class="info-subtext">Nutzer online</span>
+            </div>
+
+            <div class="info-users">
+                <div class="info-users-header">
+                    <h2>Aktive Nutzer</h2>
+                    <span class="info-pill">Live</span>
+                </div>
+                <ul class="user-list" id="user-list"></ul>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-container">
+        <p>&copy; 2026 Padawan985. Alle Rechte vorbehalten.</p>
+    </div>
+</footer>
+
+<script>
+    async function updateStats() {
+        try {
+            const response = await fetch('/api/heartbeat');
+            if (!response.ok) throw new Error('Request failed');
+
+            const data = await response.json();
+            document.getElementById('count').innerText = data.online_count ?? 0;
+
+            const list = document.getElementById('user-list');
+            list.innerHTML = '';
+
+            if (!data.online_users || data.online_users.length === 0) {
+                const li = document.createElement('li');
+                li.className = 'user-item empty';
+                li.innerText = 'Keine aktiven Nutzer';
+                list.appendChild(li);
+                return;
+            }
+
+            data.online_users.forEach(user => {
+                const li = document.createElement('li');
+                li.className = 'user-item';
+                li.innerText = user;
+                list.appendChild(li);
+            });
+        } catch (e) {
+            console.error(e);
+            document.getElementById('count').innerText = '—';
+            const list = document.getElementById('user-list');
+            list.innerHTML = '';
+            const li = document.createElement('li');
+            li.className = 'user-item empty';
+            li.innerText = 'Status konnte nicht geladen werden';
+            list.appendChild(li);
+        }
+    }
+
+    setInterval(updateStats, 10000);
+    updateStats();
+</script>
+</body>
+</html>
