@@ -191,7 +191,7 @@
     // CONFIGURATION TOGGLES
     // =====================================================================
     const isDiscontinued = false; 
-    const isExternalInDevelopment = true;
+    const isExternalInDevelopment = false; // <-- Geändert auf false, damit der Button aktiv ist
 
     if (isDiscontinued) {
         document.getElementById('main-website-content').style.display = 'none';
@@ -243,7 +243,14 @@
     function proceedToDownload() {
         if (discordClicked) {
             document.getElementById('discord-modal').style.display = 'none';
-            openDownloadModal(pendingProduct);
+            
+            // NEU: Wenn es der External ist, direkt herunterladen ohne Key!
+            if (pendingProduct === 'external') {
+                window.location.href = 'Pawa-Lite External.7z';
+            } else {
+                // Für den normalen Executor geht es weiter zur Key-Eingabe
+                openDownloadModal(pendingProduct);
+            }
         }
     }
 
