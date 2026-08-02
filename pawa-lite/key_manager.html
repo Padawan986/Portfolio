@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pawa-Lite Key Manager</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent: #38bdf8;
+            --accent-hover: #0284c7;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --border: #334155;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            color: var(--accent);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            min-width: 250px;
+            background: #0f172a;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent);
+        }
+
+        button {
+            background: var(--accent);
+            color: #0f172a;
+            font-weight: 600;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        button:hover {
+            background: var(--accent-hover);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        button.btn-secondary {
+            background: #334155;
+            color: white;
+        }
+
+        button.btn-secondary:hover {
+            background: #475569;
+        }
+
+        button.btn-danger {
+            background: var(--danger);
+            color: white;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+        }
+
+        button.btn-danger:hover {
+            background: #dc2626;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        th {
+            color: var(--text-sub);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-unused {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-used {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .status-msg {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .code-box {
+            font-family: monospace;
+            background: #0f172a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Pawa-Lite Key Manager</h1>
+        <p>Erstelle & verwalte Einmal-Keys für dein Supabase Key-System</p>
+    </div>
+
+    <div class="container">
+        <!-- Key Generator Card -->
+        <div class="card">
+            <h2>🔑 Neuen Key Generieren</h2>
+            <div class="form-group">
+                <input type="text" id="customKeyInput" placeholder="Eigener Key (leer lassen für automatischen Key)">
+                <button onclick="createKey()">Key Erstellen</button>
+                <button class="btn-secondary" onclick="createRandomKey()">Zufalls-Key Generieren</button>
+            </div>
+            <div id="statusMsg" class="status-msg"></div>
+        </div>
+
+        <!-- Key List Card -->
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h2>📋 Vorhandene Keys (<span id="keyCount">0</span>)</h2>
+                <button class="btn-secondary" onclick="loadKeys()">🔄 Aktualisieren</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Status</th>
+                        <th>Gebundene HWID</th>
+                        <th>Erstellt Am</th>
+                        <th>Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody id="keysTableBody">
+                    <tr><td colspan="5" style="text-align:center; color: var(--text-sub);">Lade Keys...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://tfjfnkckjnfwhjlsscme.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_VDJGR5BVtNwhYjMllZii9g_tH8WHDsW';
+
+        const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function loadKeys() {
+            const tbody = document.getElementById('keysTableBody');
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: var(--text-sub);">Lade Keys...</td></tr>';
+            
+            const { data, error } = await db
+                .from('keys')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                tbody.innerHTML = `<tr><td colspan="5" style="color:var(--danger)">Fehler beim Laden: ${error.message}</td></tr>`;
+                return;
+            }
+
+            document.getElementById('keyCount').innerText = data.length;
+
+            if (data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color: var(--text-sub);">Keine Keys vorhanden.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            data.forEach(k => {
+                const tr = document.createElement('tr');
+                const isUsed = !!k.hwid;
+                const statusBadge = isUsed 
+                    ? '<span class="badge badge-used">An PC Gebunden</span>' 
+                    : '<span class="badge badge-unused">Unbenutzt / Frei</span>';
+                
+                const hwidText = k.hwid ? `<span class="code-box">${k.hwid.substring(0, 16)}...</span>` : '-';
+                const createdDate = new Date(k.created_at).toLocaleDateString('de-DE', { hour: '2-digit', minute: '2-digit' });
+
+                tr.innerHTML = `
+                    <td><strong class="code-box">${k.key}</strong></td>
+                    <td>${statusBadge}</td>
+                    <td>${hwidText}</td>
+                    <td>${createdDate}</td>
+                    <td>
+                        ${isUsed ? `<button class="btn-secondary" style="padding:4px 8px; font-size:0.8rem;" onclick="resetHWID('${k.id}')">HWID Reset</button>` : ''}
+                        <button class="btn-danger" onclick="deleteKey('${k.id}')">Löschen</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function createKey() {
+            const input = document.getElementById('customKeyInput');
+            let keyStr = input.value.trim();
+
+            if (!keyStr) {
+                keyStr = 'PAWA-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            }
+
+            const { data, error } = await db
+                .from('keys')
+                .insert([{ key: keyStr }]);
+
+            const statusMsg = document.getElementById('statusMsg');
+            if (error) {
+                statusMsg.style.color = 'var(--danger)';
+                statusMsg.innerText = 'Fehler beim Erstellen: ' + error.message;
+            } else {
+                statusMsg.style.color = 'var(--success)';
+                statusMsg.innerText = `Key "${keyStr}" erfolgreich erstellt!`;
+                input.value = '';
+                loadKeys();
+            }
+        }
+
+        function createRandomKey() {
+            document.getElementById('customKeyInput').value = 'PAWA-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+            createKey();
+        }
+
+        async function resetHWID(id) {
+            if (!confirm('Möchtest du die HWID-Bindung für diesen Key wirklich aufheben? Der Key kann danach auf einem anderen PC neu aktiviert werden.')) return;
+
+            const { error } = await db
+                .from('keys')
+                .update({ hwid: null, used_at: null })
+                .eq('id', id);
+
+            if (error) alert('Fehler: ' + error.message);
+            else loadKeys();
+        }
+
+        async function deleteKey(id) {
+            if (!confirm('Diesen Key wirklich löschen?')) return;
+
+            const { error } = await db
+                .from('keys')
+                .delete()
+                .eq('id', id);
+
+            if (error) alert('Fehler: ' + error.message);
+            else loadKeys();
+        }
+
+        // Initiales Laden beim Aufruf
+        loadKeys();
+    </script>
+</body>
+</html>
