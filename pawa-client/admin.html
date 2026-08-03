@@ -3,91 +3,365 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Pawa-Client</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>Admin Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { background-color: #0b0b0d !important; color: #ffffff; font-family: sans-serif; margin: 0; padding: 0; }
-        .admin-wrapper { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
-        .admin-card { width: 100%; max-width: 600px; background: #141417; border: 1px solid #232329; border-radius: 16px; padding: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .dashboard-width { max-width: 850px; }
-        .admin-title { font-size: 1.8rem; font-weight: 700; margin: 0 0 10px 0; background: linear-gradient(135deg, #fff 0%, #8a8a93 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
-        .form-group label { font-size: 0.85rem; color: #a1a1aa; text-transform: uppercase; }
-        .admin-input { width: 100%; padding: 12px 16px; background: #0b0b0d; border: 1px solid #232329; border-radius: 8px; color: #fff; font-size: 1rem; box-sizing: border-box; }
-        .admin-input:focus { outline: none; border-color: #4f46e5; }
-        .input-row { display: flex; gap: 12px; margin-bottom: 30px; align-items: stretch; }
-        .key-list { list-style: none; padding: 0; margin: 0; }
-        .key-item { display: flex; justify-content: space-between; align-items: center; background: #1c1c21; border: 1px solid #232329; padding: 16px; border-radius: 10px; margin-bottom: 12px; }
-        .key-name { font-family: monospace; font-size: 1.1rem; font-weight: 600; }
-        .badge { font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; margin-left: 10px; }
-        .badge-active { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
-        .badge-used { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
-        .badge-count { background: rgba(79, 70, 229, 0.1); color: #818cf8; border: 1px solid rgba(79, 70, 229, 0.2); margin-left: 10px;}
-        .btn-primary { background: #4f46e5; color: white; padding: 12px 20px; border-radius: 8px; font-weight: 600; border: none; cursor: pointer; }
-        .btn-secondary { background: #27272a; color: white; padding: 8px 16px; border-radius: 8px; font-weight: 600; border: none; cursor: pointer; }
-        .btn-delete { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 8px 14px; border-radius: 6px; cursor: pointer; }
-        .header-actions { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #232329; padding-bottom: 15px; margin-bottom: 25px; }
+        body { 
+            background-color: #0b0b0d !important; 
+            color: #ffffff; 
+            font-family: sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        .admin-wrapper { 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start; 
+            padding: 40px 20px; 
+            box-sizing: border-box; 
+        }
+        
+        .admin-card { 
+            width: 100%; 
+            max-width: 600px; 
+            background: #141417; 
+            border: 1px solid #232329; 
+            border-radius: 16px; 
+            padding: 40px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
+        }
+        
+        .dashboard-width { 
+            max-width: 900px; 
+        }
+        
+        .admin-title { 
+            font-size: 1.8rem; 
+            font-weight: 700; 
+            margin: 0 0 10px 0; 
+            background: linear-gradient(135deg, #fff 0%, #8a8a93 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0 0 20px 0;
+            color: #e4e4e7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-group { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+            margin-bottom: 20px; 
+        }
+        
+        .form-group label { 
+            font-size: 0.85rem; 
+            color: #a1a1aa; 
+            text-transform: uppercase; 
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .admin-input { 
+            width: 100%; 
+            padding: 12px 16px; 
+            background: #0b0b0d; 
+            border: 1px solid #232329; 
+            border-radius: 8px; 
+            color: #fff; 
+            font-size: 1rem; 
+            box-sizing: border-box; 
+            transition: border-color 0.2s;
+        }
+        
+        .admin-input:focus { 
+            outline: none; 
+            border-color: #4f46e5; 
+        }
+        
+        .input-row { 
+            display: flex; 
+            gap: 12px; 
+            margin-bottom: 25px; 
+            align-items: stretch; 
+            flex-wrap: wrap;
+        }
+        
+        .key-list { 
+            list-style: none; 
+            padding: 0; 
+            margin: 0; 
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .key-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: #1c1c21; 
+            border: 1px solid #232329; 
+            padding: 16px; 
+            border-radius: 10px; 
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .key-info-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .key-name { 
+            font-family: monospace; 
+            font-size: 1.1rem; 
+            font-weight: 600; 
+            background: #0b0b0d;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #232329;
+            color: #e4e4e7;
+        }
+        
+        .badge { 
+            font-size: 0.75rem; 
+            padding: 4px 10px; 
+            border-radius: 20px; 
+            font-weight: 600; 
+        }
+        
+        .badge-active { 
+            background: rgba(34, 197, 94, 0.1); 
+            color: #22c55e; 
+            border: 1px solid rgba(34, 197, 94, 0.2); 
+        }
+        
+        .badge-used { 
+            background: rgba(239, 68, 68, 0.1); 
+            color: #ef4444; 
+            border: 1px solid rgba(239, 68, 68, 0.2); 
+        }
+        
+        .badge-count { 
+            background: rgba(79, 70, 229, 0.1); 
+            color: #818cf8; 
+            border: 1px solid rgba(79, 70, 229, 0.2); 
+        }
+
+        .hwid-text {
+            font-size: 0.8rem;
+            color: #a1a1aa;
+            font-family: monospace;
+            background: #0b0b0d;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        
+        .btn-primary { 
+            background: #4f46e5; 
+            color: white; 
+            padding: 12px 20px; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            border: none; 
+            cursor: pointer; 
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #4338ca;
+        }
+        
+        .btn-secondary { 
+            background: #27272a; 
+            color: white; 
+            padding: 8px 16px; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            border: none; 
+            cursor: pointer; 
+            transition: background 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: #3f3f46;
+        }
+        
+        .btn-delete { 
+            background: rgba(239, 68, 68, 0.1); 
+            color: #ef4444; 
+            border: 1px solid rgba(239, 68, 68, 0.2); 
+            padding: 8px 14px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+        
+        .header-actions { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #232329; 
+            padding-bottom: 15px; 
+            margin-bottom: 30px; 
+        }
+
+        .divider {
+            height: 1px;
+            background: #232329;
+            margin: 40px 0;
+            width: 100%;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
 
 <div class="admin-wrapper">
+    <!-- Login Screen -->
     <div class="admin-card" id="login-screen">
-        <h2 class="admin-title">Admin Login</h2>
-        <div class="form-group"><label>E-Mail</label><input type="email" id="admin-email" class="admin-input"></div>
-        <div class="form-group"><label>Passwort</label><input type="password" id="admin-pass" class="admin-input"></div>
-        <button onclick="login()" class="btn-primary" style="width: 100%;">Einloggen</button>
-        <div id="login-error" style="color:#ef4444; margin-top:10px; display:none;"></div>
+        <h2 class="admin-title" style="text-align: center; margin-bottom: 25px;">Admin Login</h2>
+        <div class="form-group">
+            <label>E-Mail</label>
+            <input type="email" id="admin-email" class="admin-input" placeholder="admin@example.com">
+        </div>
+        <div class="form-group">
+            <label>Passwort</label>
+            <input type="password" id="admin-pass" class="admin-input" placeholder="••••••••">
+        </div>
+        <button onclick="login()" class="btn-primary" style="width: 100%; margin-top: 10px;">Einloggen</button>
+        <div id="login-error" style="color:#ef4444; margin-top:15px; text-align: center; font-size: 0.9rem; display:none;"></div>
     </div>
 
+    <!-- Dashboard Screen -->
     <div class="admin-card dashboard-width" id="dashboard-screen" style="display: none;">
+        
         <div class="header-actions">
-            <div><h2 class="admin-title">Key Control Panel</h2></div>
-            <button onclick="logout()" class="btn-secondary">Abmelden</button>
+            <div>
+                <h2 class="admin-title">Pawa Admin Dashboard</h2>
+                <span style="color: #a1a1aa; font-size: 0.9rem;">Verwalte HWID- & Beta-Keys an einem Ort</span>
+            </div>
+            <button onclick="logout()" class="btn-secondary" style="padding: 10px 20px;">Abmelden</button>
         </div>
 
+        <!-- ========================================== -->
+        <!-- BEREICH 1: PAWA-LITE HWID KEYS (Einmal-Keys) -->
+        <!-- ========================================== -->
+        <h3 class="section-title">
+             Pawa-Lite HWID Keys 
+            <button class="btn-secondary" style="font-size: 0.8rem;" onclick="fetchPawaKeys()"> Refresh</button>
+        </h3>
+        
         <div class="form-group">
-            <label>Neuen Access-Key erstellen</label>
+            <label>Neuen HWID-Key erstellen</label>
             <div class="input-row">
-                <input type="text" id="new-key" class="admin-input" placeholder="z.B. beta-team" style="flex: 2;">
-                <input type="number" id="key-limit" class="admin-input" placeholder="Limit" value="1" min="1" style="flex: 1;">
-                <button onclick="addKey()" class="btn-primary" style="white-space: nowrap;">Key anlegen</button>
+                <input type="text" id="pawa-new-key" class="admin-input" placeholder="Eigener Key (Leer lassen für Auto-Key)" style="flex: 2; min-width: 250px;">
+                <button onclick="createPawaKey()" class="btn-primary" style="white-space: nowrap;">Key Erstellen</button>
+                <button onclick="createRandomPawaKey()" class="btn-secondary" style="white-space: nowrap;">Zufall</button>
             </div>
         </div>
 
-        <h3 style="font-size: 1.2rem; margin-bottom: 15px;">Generierte Keys</h3>
-        <ul class="key-list" id="key-list"><li class="key-item">Lade Einträge...</li></ul>
+        <ul class="key-list" id="pawa-key-list">
+            <li class="key-item" style="color: #8a8a93;">Lade HWID-Keys...</li>
+        </ul>
+
+        <div class="divider"></div>
+
+        <!-- ========================================== -->
+        <!-- BEREICH 2: BETA ACCESS KEYS (Multi-Use)    -->
+        <!-- ========================================== -->
+        <h3 class="section-title">
+             Pawa-Client Beta Keys 
+            <button class="btn-secondary" style="font-size: 0.8rem;" onclick="fetchBetaKeys()"> Refresh</button>
+        </h3>
+        
+        <div class="form-group">
+            <label>Neuen Beta-Key erstellen</label>
+            <div class="input-row">
+                <input type="text" id="beta-new-key" class="admin-input" placeholder="z.B. beta-team-1" style="flex: 2; min-width: 250px;">
+                <input type="number" id="beta-key-limit" class="admin-input" placeholder="Limit" value="1" min="1" style="flex: 1; max-width: 120px;">
+                <button onclick="addBetaKey()" class="btn-primary" style="white-space: nowrap;">Key anlegen</button>
+            </div>
+        </div>
+
+        <ul class="key-list" id="beta-key-list">
+            <li class="key-item" style="color: #8a8a93;">Lade Beta-Keys...</li>
+        </ul>
+
     </div>
 </div>
 
 <script>
-    const supabaseUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co';
-    const supabaseKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
-    let supabaseClient = null;
+    // ==========================================
+    // SUPABASE KONFIGURATION (BEIDE SYSTEME)
+    // ==========================================
+    
+    // 1. Client für das Haupt-Dashboard & Beta Keys (Login läuft hierrüber)
+    const supabaseBetaUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co';
+    const supabaseBetaKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
+    let dbBeta = null;
 
-    try { if (typeof window.supabase !== 'undefined') supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey); } 
-    catch (e) { console.error(e); }
+    // 2. Client für die Pawa-Lite HWID Keys
+    const supabasePawaUrl = 'https://tfjfnkckjnfwhjlsscme.supabase.co';
+    const supabasePawaKey = 'sb_publishable_VDJGR5BVtNwhYjMllZii9g_tH8WHDsW';
+    let dbPawa = null;
 
+    try { 
+        if (typeof window.supabase !== 'undefined') {
+            dbBeta = window.supabase.createClient(supabaseBetaUrl, supabaseBetaKey); 
+            dbPawa = window.supabase.createClient(supabasePawaUrl, supabasePawaKey);
+        }
+    } catch (e) { 
+        console.error("Supabase Init Error:", e); 
+    }
+
+    // ==========================================
+    // AUTH LOGIK
+    // ==========================================
     window.onload = async () => {
-        if (!supabaseClient) return;
-        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (!dbBeta) return;
+        const { data: { session } } = await dbBeta.auth.getSession();
         if (session) showDashboard();
     };
 
     async function login() {
-        const { error } = await supabaseClient.auth.signInWithPassword({
+        const { error } = await dbBeta.auth.signInWithPassword({
             email: document.getElementById('admin-email').value,
             password: document.getElementById('admin-pass').value,
         });
+        
         if (error) {
-            document.getElementById('login-error').innerText = error.message;
-            document.getElementById('login-error').style.display = 'block';
-        } else { showDashboard(); }
+            const errDiv = document.getElementById('login-error');
+            errDiv.innerText = error.message;
+            errDiv.style.display = 'block';
+        } else { 
+            showDashboard(); 
+        }
     }
 
     async function logout() {
-        await supabaseClient.auth.signOut();
+        await dbBeta.auth.signOut();
         document.getElementById('login-screen').style.display = 'block';
         document.getElementById('dashboard-screen').style.display = 'none';
     }
@@ -95,19 +369,114 @@
     function showDashboard() {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('dashboard-screen').style.display = 'block';
-        fetchKeys();
+        // Lade beide Listen, sobald das Dashboard angezeigt wird
+        fetchPawaKeys();
+        fetchBetaKeys();
     }
 
-    async function fetchKeys() {
-        const list = document.getElementById('key-list');
-        const { data: keys, error } = await supabaseClient.from('beta_keys').select('*').order('created_at', { ascending: false });
+    // ==========================================
+    // BEREICH 1: PAWA HWID KEYS LOGIK
+    // ==========================================
+    
+    async function fetchPawaKeys() {
+        const list = document.getElementById('pawa-key-list');
+        list.innerHTML = '<li class="key-item" style="color: #8a8a93;">Lade HWID-Keys...</li>';
+        
+        const { data: keys, error } = await dbPawa.from('keys').select('*').order('created_at', { ascending: false });
 
         if (error) { list.innerHTML = `<li class="key-item" style="color: #ef4444;">Fehler: ${error.message}</li>`; return; }
         list.innerHTML = '';
-        if (keys.length === 0) { list.innerHTML = '<li class="key-item" style="color: #8a8a93;">Keine Keys vorhanden.</li>'; return; }
+        if (keys.length === 0) { list.innerHTML = '<li class="key-item" style="color: #8a8a93;">Keine HWID-Keys vorhanden.</li>'; return; }
+
+        keys.forEach(k => {
+            const isUsed = !!k.hwid;
+            const badgeClass = isUsed ? 'badge-used' : 'badge-active';
+            const badgeText = isUsed ? 'An PC Gebunden' : 'Unbenutzt / Frei';
+            const hwidDisplay = isUsed ? `HWID: ${k.hwid.substring(0, 16)}...` : 'HWID: -';
+            
+            const li = document.createElement('li');
+            li.className = 'key-item';
+            
+            // Aufbau der Liste im Admin.html Design
+            let buttonsHtml = '';
+            if (isUsed) {
+                buttonsHtml += `<button class="btn-secondary" onclick="resetPawaHWID('${k.id}')">HWID Reset</button>`;
+            }
+            buttonsHtml += `<button class="btn-delete" onclick="deletePawaKey('${k.id}')">Löschen</button>`;
+
+            li.innerHTML = `
+                <div class="key-info-wrapper">
+                    <span class="key-name">${k.key}</span> 
+                    <span class="badge ${badgeClass}">${badgeText}</span>
+                    <span class="hwid-text">${hwidDisplay}</span>
+                </div>
+                <div class="action-buttons">
+                    ${buttonsHtml}
+                </div>
+            `;
+            list.appendChild(li);
+        });
+    }
+
+    async function createPawaKey() {
+        const input = document.getElementById('pawa-new-key');
+        let keyStr = input.value.trim();
+
+        if (!keyStr) {
+            alert("Bitte gib einen Key ein oder klicke auf 'Zufall'.");
+            return;
+        }
+
+        const { error } = await dbPawa.from('keys').insert([{ key: keyStr }]);
+
+        if (error) {
+            alert('Fehler beim Erstellen: ' + error.message);
+        } else {
+            input.value = '';
+            fetchPawaKeys();
+        }
+    }
+
+    function createRandomPawaKey() {
+        const randomKey = 'PAWA-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        document.getElementById('pawa-new-key').value = randomKey;
+        createPawaKey();
+    }
+
+    async function resetPawaHWID(id) {
+        if (!confirm('HWID-Bindung für diesen Key wirklich aufheben?')) return;
+        
+        const { error } = await dbPawa.from('keys').update({ hwid: null, used_at: null }).eq('id', id);
+        
+        if (error) alert('Fehler: ' + error.message);
+        else fetchPawaKeys();
+    }
+
+    async function deletePawaKey(id) {
+        if (!confirm('Diesen HWID-Key wirklich löschen?')) return;
+        
+        const { error } = await dbPawa.from('keys').delete().eq('id', id);
+        
+        if (error) alert('Fehler: ' + error.message);
+        else fetchPawaKeys();
+    }
+
+
+    // ==========================================
+    // BEREICH 2: BETA KEYS LOGIK
+    // ==========================================
+    
+    async function fetchBetaKeys() {
+        const list = document.getElementById('beta-key-list');
+        list.innerHTML = '<li class="key-item" style="color: #8a8a93;">Lade Beta-Keys...</li>';
+        
+        const { data: keys, error } = await dbBeta.from('beta_keys').select('*').order('created_at', { ascending: false });
+
+        if (error) { list.innerHTML = `<li class="key-item" style="color: #ef4444;">Fehler: ${error.message}</li>`; return; }
+        list.innerHTML = '';
+        if (keys.length === 0) { list.innerHTML = '<li class="key-item" style="color: #8a8a93;">Keine Beta-Keys vorhanden.</li>'; return; }
 
         keys.forEach(keyObj => {
-            // Berechnet, ob der Key verbraucht ist
             const max = keyObj.max_uses || 1;
             const used = keyObj.uses || 0;
             const isExhausted = used >= max;
@@ -118,24 +487,26 @@
             const li = document.createElement('li');
             li.className = 'key-item';
             li.innerHTML = `
-                <div>
+                <div class="key-info-wrapper">
                     <span class="key-name">${keyObj.key}</span> 
                     <span class="badge ${badgeClass}">${badgeText}</span>
                     <span class="badge badge-count">${used} / ${max} genutzt</span>
                 </div>
-                <button class="btn-delete" onclick="deleteKey('${keyObj.id}')">Löschen</button>
+                <div class="action-buttons">
+                    <button class="btn-delete" onclick="deleteBetaKey('${keyObj.id}')">Löschen</button>
+                </div>
             `;
             list.appendChild(li);
         });
     }
 
-    async function addKey() {
-        const keyValue = document.getElementById('new-key').value.trim();
-        const limitValue = parseInt(document.getElementById('key-limit').value) || 1;
+    async function addBetaKey() {
+        const keyValue = document.getElementById('beta-new-key').value.trim();
+        const limitValue = parseInt(document.getElementById('beta-key-limit').value) || 1;
         
         if (!keyValue) { alert("Bitte Key eingeben"); return; }
 
-        const { error } = await supabaseClient.from('beta_keys').insert([{ 
+        const { error } = await dbBeta.from('beta_keys').insert([{ 
             key: keyValue, 
             max_uses: limitValue, 
             uses: 0 
@@ -143,16 +514,19 @@
 
         if (error) alert("Fehler: " + error.message);
         else {
-            document.getElementById('new-key').value = '';
-            document.getElementById('key-limit').value = '1';
-            fetchKeys();
+            document.getElementById('beta-new-key').value = '';
+            document.getElementById('beta-key-limit').value = '1';
+            fetchBetaKeys();
         }
     }
 
-    async function deleteKey(id) {
-        if (!confirm("Wirklich löschen?")) return;
-        await supabaseClient.from('beta_keys').delete().eq('id', id);
-        fetchKeys();
+    async function deleteBetaKey(id) {
+        if (!confirm("Diesen Beta-Key wirklich löschen?")) return;
+        
+        const { error } = await dbBeta.from('beta_keys').delete().eq('id', id);
+        
+        if (error) alert("Fehler: " + error.message);
+        else fetchBetaKeys();
     }
 </script>
 </body>
