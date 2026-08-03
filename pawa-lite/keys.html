@@ -38,6 +38,7 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
+            position: relative;
         }
 
         .header h1 {
@@ -50,6 +51,7 @@
         .header p {
             color: var(--text-sub);
             font-size: 0.95rem;
+            margin-bottom: 15px;
         }
 
         .container {
@@ -58,6 +60,12 @@
             display: flex;
             flex-direction: column;
             gap: 24px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            margin-top: 10vh;
         }
 
         .card {
@@ -81,9 +89,25 @@
             flex-wrap: wrap;
         }
 
-        input[type="text"] {
+        .login-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .login-group label {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+            text-transform: uppercase;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
             flex: 1;
             min-width: 250px;
+            width: 100%;
             background: #0f172a;
             border: 1px solid var(--border);
             color: white;
@@ -93,7 +117,7 @@
             outline: none;
         }
 
-        input[type="text"]:focus {
+        input:focus {
             border-color: var(--accent);
         }
 
@@ -192,43 +216,64 @@
 </head>
 <body>
 
-    <div class="header">
-        <h1>Pawa-Lite Key Manager</h1>
-        <p>Erstelle & verwalte Einmal-Keys für dein Supabase Key-System</p>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-container">
+        <div class="card">
+            <h2 style="text-align: center; border-bottom: none; font-size: 1.8rem; color: var(--accent);">Admin Login</h2>
+            <div class="login-group">
+                <label>E-Mail</label>
+                <input type="email" id="admin-email" placeholder="admin@example.com">
+            </div>
+            <div class="login-group">
+                <label>Passwort</label>
+                <input type="password" id="admin-pass" placeholder="••••••••">
+            </div>
+            <button onclick="login()" style="width: 100%; margin-top: 10px;">Einloggen</button>
+            <div id="login-error" style="color:var(--danger); margin-top:15px; text-align: center; display:none; font-size: 0.9rem;"></div>
+        </div>
     </div>
 
-    <div class="container">
-        <!-- Key Generator Card -->
-        <div class="card">
-            <h2>🔑 Neuen Key Generieren</h2>
-            <div class="form-group">
-                <input type="text" id="customKeyInput" placeholder="Eigener Key (leer lassen für automatischen Key)">
-                <button onclick="createKey()">Key Erstellen</button>
-                <button class="btn-secondary" onclick="createRandomKey()">Zufalls-Key Generieren</button>
-            </div>
-            <div id="statusMsg" class="status-msg"></div>
+    <!-- Dashboard Screen -->
+    <div id="dashboard-screen" style="display: none; width: 100%; flex-direction: column; align-items: center;">
+        <div class="header">
+            <h1>Pawa-Lite Key Manager</h1>
+            <p>Erstelle & verwalte Einmal-Keys für dein Supabase Key-System</p>
+            <button class="btn-secondary" style="padding: 6px 14px; font-size: 0.85rem;" onclick="logout()">Abmelden</button>
         </div>
 
-        <!-- Key List Card -->
-        <div class="card">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h2>📋 Vorhandene Keys (<span id="keyCount">0</span>)</h2>
-                <button class="btn-secondary" onclick="loadKeys()">🔄 Aktualisieren</button>
+        <div class="container">
+            <!-- Key Generator Card -->
+            <div class="card">
+                <h2>🔑 Neuen Key Generieren</h2>
+                <div class="form-group">
+                    <input type="text" id="customKeyInput" placeholder="Eigener Key (leer lassen für automatischen Key)">
+                    <button onclick="createKey()">Key Erstellen</button>
+                    <button class="btn-secondary" onclick="createRandomKey()">Zufalls-Key Generieren</button>
+                </div>
+                <div id="statusMsg" class="status-msg"></div>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Key</th>
-                        <th>Status</th>
-                        <th>Gebundene HWID</th>
-                        <th>Erstellt Am</th>
-                        <th>Aktionen</th>
-                    </tr>
-                </thead>
-                <tbody id="keysTableBody">
-                    <tr><td colspan="5" style="text-align:center; color: var(--text-sub);">Lade Keys...</td></tr>
-                </tbody>
-            </table>
+
+            <!-- Key List Card -->
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <h2>📋 Vorhandene Keys (<span id="keyCount">0</span>)</h2>
+                    <button class="btn-secondary" onclick="loadKeys()">🔄 Aktualisieren</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Status</th>
+                            <th>Gebundene HWID</th>
+                            <th>Erstellt Am</th>
+                            <th>Aktionen</th>
+                        </tr>
+                    </thead>
+                    <tbody id="keysTableBody">
+                        <tr><td colspan="5" style="text-align:center; color: var(--text-sub);">Lade Keys...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -237,6 +282,46 @@
         const SUPABASE_ANON_KEY = 'sb_publishable_VDJGR5BVtNwhYjMllZii9g_tH8WHDsW';
 
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Prüfe bei Aufruf, ob der Nutzer bereits eingeloggt ist
+        window.onload = async () => {
+            const { data: { session } } = await db.auth.getSession();
+            if (session) showDashboard();
+        };
+
+        // Login Logik
+        async function login() {
+            const email = document.getElementById('admin-email').value;
+            const password = document.getElementById('admin-pass').value;
+            const errorDiv = document.getElementById('login-error');
+
+            const { error } = await db.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                errorDiv.innerText = error.message;
+                errorDiv.style.display = 'block';
+            } else {
+                errorDiv.style.display = 'none';
+                showDashboard();
+            }
+        }
+
+        // Logout Logik
+        async function logout() {
+            await db.auth.signOut();
+            document.getElementById('login-screen').style.display = 'block';
+            document.getElementById('dashboard-screen').style.display = 'none';
+        }
+
+        // Dashboard anzeigen und Keys laden
+        function showDashboard() {
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('dashboard-screen').style.display = 'flex';
+            loadKeys();
+        }
 
         async function loadKeys() {
             const tbody = document.getElementById('keysTableBody');
@@ -336,9 +421,6 @@
             if (error) alert('Fehler: ' + error.message);
             else loadKeys();
         }
-
-        // Initiales Laden beim Aufruf
-        loadKeys();
     </script>
 </body>
 </html>
