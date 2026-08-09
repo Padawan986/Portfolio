@@ -58,6 +58,27 @@
             color: #a1a1aa; max-width: 500px; line-height: 1.6; font-size: 1.1rem;
             margin-bottom: 30px;
         }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        .status-online {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        .status-offline {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -67,7 +88,7 @@
     <p class="discontinued-text">
         The development of Pawa-Lite software has been officially discontinued. Thank you all for your support and trust.
     </p>
-    <a href="https://padawan985.is-a.dev/pawa-lite/admin.html" class="btn btn-secondary">Admin Panel</a>
+    <a href="https://padawan985.is-a.dev/pawa-client/admin.html" class="btn btn-secondary">Admin Panel</a>
 </div>
 
 <div id="main-website-content">
@@ -77,7 +98,7 @@
             <a href="#" class="logo">Pawa-Lite</a>
             <div class="nav-links">
                 <a href="#versions" class="nav-link">Editions</a>
-                <a href="https://padawan985.is-a.dev/pawa-lite/admin.html" class="nav-link admin-login-btn">Admin Login</a>
+                <a href="https://padawan985.is-a.dev/pawa-client/admin.html" class="nav-link admin-login-btn">Admin Login</a>
             </div>
         </div>
     </nav>
@@ -100,6 +121,7 @@
         </div>
 
         <div class="projects-grid">
+            <!-- EXECUTOR CARD -->
             <div class="card" data-animate>
                 <div class="card-header">
                     <div class="card-icon">
@@ -107,13 +129,15 @@
                     </div>
                     <h3>Pawa-Lite Executor</h3>
                 </div>
+                <div id="status-executor" class="status-badge">Checking...</div>
                 <p class="card-text">
                     Powered by the Custom Velocity API. Achieves an execution rate of <b>98% UNC</b> and <b>99% SUNC</b> for maximum script compatibility.<br><br>
                     <i>Includes built-in Script Hub.</i>
                 </p>
-                <button onclick="checkDiscord('executor')" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Request Beta</button>
+                <button id="executor-btn" onclick="checkDiscord('executor')" class="btn btn-primary" style="margin-top: 15px; width: 100%;">Request Beta</button>
             </div>
             
+            <!-- EXTERNAL CARD -->
             <div class="card" data-animate>
                 <div class="card-header">
                     <div class="card-icon">
@@ -121,11 +145,12 @@
                     </div>
                     <h3>Pawa-Lite External</h3>
                 </div>
+                <div id="status-external" class="status-badge">Checking...</div>
                 <p class="card-text">
                     Operates entirely outside the game process. Offers maximum protection against anti-cheat systems (Byfron/Hyperion) with stable and lightweight performance.<br><br>
                     <i>100% Undetected.</i>
                 </p>
-                <button id="external-btn" onclick="checkDiscord('external')" class="btn btn-secondary" style="margin-top: 15px; width: 100%;">Download External</button>
+                <button id="external-btn" onclick="checkDiscord('external')" class="btn btn-secondary" style="margin-top: 15px; width: 100%;">Request External</button>
             </div>
         </div>
     </section>
@@ -188,10 +213,15 @@
 <script src="index.js"></script>
 <script>
     // =====================================================================
-    // CONFIGURATION TOGGLES
+    // CONFIGURATION & STATUS TOGGLES
     // =====================================================================
+    
+    // Globale Webseite Settings
     const isDiscontinued = false; 
-    const isExternalInDevelopment = false; // <-- Geändert auf false, damit der Button aktiv ist
+    
+    // Status der einzelnen Versionen (true = Online, false = Offline/Updating)
+    const isExecutorOnline = true;
+    const isExternalOnline = true; 
 
     if (isDiscontinued) {
         document.getElementById('main-website-content').style.display = 'none';
@@ -201,14 +231,30 @@
         document.title = "Pawa-Lite | Professional Execution";
     }
 
-    if (isExternalInDevelopment && !isDiscontinued) {
-        const extBtn = document.getElementById('external-btn');
-        if (extBtn) {
-            extBtn.textContent = "In Development";
-            extBtn.style.opacity = "0.5";
-            extBtn.style.cursor = "not-allowed";
-            extBtn.removeAttribute("onclick");
+    // Funktion um den Status in der Karte zu updaten
+    function updateProductStatus(elementId, buttonId, isOnline) {
+        const statusBadge = document.getElementById(elementId);
+        const actionBtn = document.getElementById(buttonId);
+        
+        if (statusBadge && actionBtn) {
+            if (isOnline) {
+                statusBadge.innerHTML = '&#x25CF; Status: Undetected';
+                statusBadge.className = 'status-badge status-online';
+            } else {
+                statusBadge.innerHTML = '&#x25CF; Status: Updating';
+                statusBadge.className = 'status-badge status-offline';
+                actionBtn.textContent = "Currently Unavailable";
+                actionBtn.style.opacity = "0.5";
+                actionBtn.style.cursor = "not-allowed";
+                actionBtn.removeAttribute("onclick");
+            }
         }
+    }
+
+    // Status anwenden, wenn nicht discontinued
+    if (!isDiscontinued) {
+        updateProductStatus('status-executor', 'executor-btn', isExecutorOnline);
+        updateProductStatus('status-external', 'external-btn', isExternalOnline);
     }
 
     // =====================================================================
@@ -244,11 +290,9 @@
         if (discordClicked) {
             document.getElementById('discord-modal').style.display = 'none';
             
-            // NEU: Wenn es der External ist, direkt herunterladen ohne Key!
             if (pendingProduct === 'external') {
-                window.location.href = 'Pawa-Lite-Installer.exe';
+                window.location.href = 'Pawa-Lite External.7z';
             } else {
-                // Für den normalen Executor geht es weiter zur Key-Eingabe
                 openDownloadModal(pendingProduct);
             }
         }
@@ -268,9 +312,8 @@
     const filenameText = document.getElementById('modal-filename-text');
 
     function openDownloadModal(product) {
-        const filename = product === 'executor' ? 'PawaLite-Installer.7z' : 'Pawa-Lite-Installer.exe';
+        const filename = product === 'executor' ? 'PawaLite-Installer.7z' : 'Pawa-Lite External.7z';
         
-        // Dynamically build the description text
         filenameText.innerHTML = `Please enter your access key to download <b>${filename}</b>.`;
 
         downloadModal.style.display = 'flex';
