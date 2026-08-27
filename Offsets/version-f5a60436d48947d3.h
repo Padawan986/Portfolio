@@ -1,7 +1,7 @@
 #pragma once
 /* =============================================================
 /* Pawa-Lite External offsets
-/* https://discord.gg/GDGMtKcARQ
+/* https://discord.gg/SKGmyMVtKP
 /* -------------------------------------------------------------
 /* Roblox Version : version-f5a60436d48947d3
 /* =============================================================
