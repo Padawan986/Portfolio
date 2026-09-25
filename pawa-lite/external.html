@@ -1,1 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <title>Pawa-Lite | External</title>
+    <style>
+        /* Modernes Dark-Theme passend zu Pawa-Lite */
+        :root {
+            --bg-color: #0b0b0e;
+            --sidebar-bg: #141417;
+            --border-color: #232329;
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Ambient Background Orbs */
+        .ambient {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; pointer-events: none; overflow: hidden;
+        }
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.4;
+        }
+        .orb-1 {
+            width: 400px; height: 400px; background: var(--primary);
+            top: -100px; left: -100px;
+        }
+        .orb-2 {
+            width: 300px; height: 300px; background: #818cf8;
+            bottom: -50px; right: -50px;
+        }
+
+        /* Layout & Sidebar */
+        .layout {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 25px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .side-button {
+            display: flex; align-items: center; width: 100%; padding: 12px 15px;
+            background: transparent; border: 1px solid transparent; border-radius: 8px;
+            color: var(--text-muted); font-size: 1rem; font-weight: 500; cursor: pointer;
+            transition: all 0.2s ease; text-align: left;
+        }
+
+        .side-button:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: var(--border-color);
+            color: var(--text-main);
+            transform: translateX(3px);
+        }
+
+        .btn-icon {
+            width: 20px; height: 20px; margin-right: 12px; display: flex;
+            align-items: center; justify-content: center;
+        }
+        .btn-icon svg { width: 100%; height: 100%; }
+        .btn-arrow { margin-left: auto; font-size: 1.2rem; opacity: 0.5; }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            padding: 50px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .brand {
+            font-size: 4rem; font-weight: 900; margin-bottom: 5px;
+            background: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            font-size: 1.2rem; color: var(--text-muted); margin-bottom: 50px;
+            text-align: center;
+        }
+
+        /* 3D Preview Effect */
+        .preview-container {
+            width: 100%; max-width: 850px; transform-style: preserve-3d;
+            perspective: 1200px;
+        }
+
+        .preview-wrapper {
+            position: relative; width: 100%; border-radius: 12px; overflow: hidden;
+            transform-style: preserve-3d;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+            background: var(--sidebar-bg);
+        }
+
+        .product-preview {
+            width: 100%; display: block; border-radius: 12px;
+        }
+
+        .preview-glow, .preview-shine {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; border-radius: 12px;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .modal-overlay.open {
+            display: flex; opacity: 1;
+        }
+        .modal {
+            background: var(--sidebar-bg); border: 1px solid var(--border-color);
+            padding: 30px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%;
+        }
+        .modal h2 { margin-bottom: 10px; color: var(--text-main); }
+        .modal p { color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem; }
+        .modal-button {
+            background: var(--primary); color: #fff; border: none; padding: 10px 24px;
+            border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+        }
+        .modal-button:hover { background: var(--primary-hover); }
+
+        /* Footer */
+        .footer {
+            text-align: center; padding: 20px; background: var(--bg-color);
+            border-top: 1px solid var(--border-color); color: #666; font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="ambient" aria-hidden="true">
+        <span class="orb orb-1"></span>
+        <span class="orb orb-2"></span>
+    </div>
+
+    <main class="layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <button class="side-button" onclick="goTo('index.html')">
+                <span class="btn-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </span>
+                <span class="btn-label">Home</span>
+                <span class="btn-arrow">›</span>
+            </button>
+
+            <button class="side-button" onclick="goTo('index.html')">
+                <span class="btn-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                </span>
+                <span class="btn-label">Executor</span>
+                <span class="btn-arrow">›</span>
+            </button>
+            
+            <!-- Hervorgehobener Button für die aktuelle Seite -->
+            <button class="side-button" onclick="goTo('external.html')" style="border-color: var(--border-color); background: rgba(255,255,255,0.03);">
+                <span class="btn-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </span>
+                <span class="btn-label">External</span>
+                <span class="btn-arrow">›</span>
+            </button>
+
+            <button class="side-button" onclick="goTo('https://discord.gg/ZBfZSEGp39')">
+                <span class="btn-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.444.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.036A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.127c-.598.349-1.22.644-1.873.891a.076.076 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028ZM8.02 15.331c-1.182 0-2.157-1.085-2.157-2.419 0-1.333.956-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.334-.956 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"></path></svg>
+                </span>
+                <span class="btn-label">Discord</span>
+                <span class="btn-arrow">›</span>
+            </button>
+
+            <button class="side-button" onclick="openModal()">
+                <span class="btn-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                </span>
+                <span class="btn-label">Documentation</span>
+                <span class="btn-arrow">›</span>
+            </button>
+        </aside>
+
+        <!-- Main Content Area -->
+        <section class="content">
+            <h1 class="brand" style="font-size: 3.5rem;">Pawa-Lite External</h1>
+            <p class="tagline">100% Undetected. Operating entirely outside the game process.</p>            
+            
+            <div class="preview-container" id="previewContainer">
+                <div class="preview-wrapper" id="previewWrapper">
+                    <!-- Bildpfad für das External-Menü. Falls es nicht existiert, wird der Platzhalter geladen. -->
+                    <img src="images/external.png" alt="Pawa-Lite External Interface" class="product-preview" onerror="this.src='https://via.placeholder.com/850x500/141417/a1a1aa?text=Pawa-Lite+External+Preview'">
+                    <div class="preview-glow" id="previewGlow"></div>
+                    <div class="preview-shine" id="previewShine"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Docs Modal -->
+    <div class="modal-overlay" id="modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <h2>Coming Soon</h2>
+            <p>The official Pawa-Lite Documentation is currently being written. Stay tuned!</p>
+            <button class="modal-button" onclick="closeModal()">Got it</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        © 2026 Padawan985 (Pawa-Lite) — All rights reserved.
+    </footer>
+
+    <script>
+        // Navigation Logic
+        function goTo(url) {
+            window.location.href = url;
+        }
+
+        // Modal Logic
+        var modal = document.getElementById('modal');
+        function openModal() {
+            modal.classList.add('open');
+        }
+        function closeModal() {
+            modal.classList.remove('open');
+        }
+        function closeModalOnOverlay(e) {
+            if (e.target === modal) closeModal();
+        }
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // 3D Hover/Tilt Effect Logic
+        var previewContainer = document.getElementById('previewContainer');
+        var previewWrapper = document.getElementById('previewWrapper');
+        var previewGlow = document.getElementById('previewGlow');
+        var previewShine = document.getElementById('previewShine');
+
+        var bounds = null;
+        var currentX = 0;
+        var currentY = 0;
+        var targetX = 0;
+        var targetY = 0;
+        var rafId = null;
+
+        function updateBounds() {
+            bounds = previewContainer.getBoundingClientRect();
+        }
+
+        function handleMouseMove(e) {
+            if (!bounds) updateBounds();
+            
+            var relX = (e.clientX - bounds.left) / bounds.width;
+            var relY = (e.clientY - bounds.top) / bounds.height;
+            
+            var maxTilt = 8;
+            targetY = (relX - 0.5) * maxTilt;
+            targetX = (0.5 - relY) * maxTilt;
+            
+            var glowX = relX * 100;
+            var glowY = relY * 100;
+            previewGlow.style.background = 'radial-gradient(circle at ' + glowX + '% ' + glowY + '%, rgba(255, 255, 255, 0.4), transparent 30%)';
+            previewShine.style.background = 'linear-gradient(' + (135 + (relX - 0.5) * 60) + 'deg, rgba(255,255,255,' + (0.08 + relY * 0.05) + ') 0%, transparent 50%)';
+            
+            if (!rafId) {
+                rafId = requestAnimationFrame(animate);
+            }
+        }
+
+        function animate() {
+            currentX += (targetX - currentX) * 0.12;
+            currentY += (targetY - currentY) * 0.12;
+            
+            var depth = Math.sqrt(currentX * currentX + currentY * currentY);
+            var translateZ = depth * 1.5;
+            
+            previewWrapper.style.transform = 'perspective(1200px) rotateX(' + currentX + 'deg) rotateY(' + currentY + 'deg) translateZ(' + translateZ + 'px)';
+            
+            if (Math.abs(targetX - currentX) > 0.01 || Math.abs(targetY - currentY) > 0.01) {
+                rafId = requestAnimationFrame(animate);
+            } else {
+                rafId = null;
+            }
+        }
+
+        function handleMouseLeave() {
+            targetX = 0;
+            targetY = 0;
+            previewGlow.style.background = 'radial-gradient(circle at center, rgba(79, 70, 229, 0.15), transparent 70%)';
+            previewShine.style.background = 'transparent';
+            
+            if (!rafId) {
+                rafId = requestAnimationFrame(animate);
+            }
+        }
+
+        // Event Listeners
+        previewContainer.addEventListener('mousemove', handleMouseMove);
+        previewContainer.addEventListener('mouseleave', handleMouseLeave);
+        window.addEventListener('resize', updateBounds);
+        window.addEventListener('scroll', updateBounds);
+        
+        // Initial setup
+        setTimeout(updateBounds, 100);
+    </script>
+</body>
+</html>
