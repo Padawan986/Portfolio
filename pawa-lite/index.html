@@ -6,7 +6,6 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <title>Pawa-Lite | Executor</title>
     <style>
-        /* Modernes Dark-Theme passend zu Pawa-Lite */
         :root {
             --bg-color: #0b0b0e;
             --sidebar-bg: #141417;
@@ -17,147 +16,59 @@
             --primary-hover: #4338ca;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
 
         /* Ambient Background Orbs */
-        .ambient {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; pointer-events: none; overflow: hidden;
-        }
-        .orb {
-            position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.4;
-        }
-        .orb-1 {
-            width: 400px; height: 400px; background: var(--primary);
-            top: -100px; left: -100px;
-        }
-        .orb-2 {
-            width: 300px; height: 300px; background: #818cf8;
-            bottom: -50px; right: -50px;
-        }
+        .ambient { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; overflow: hidden; }
+        .orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.4; }
+        .orb-1 { width: 400px; height: 400px; background: var(--primary); top: -100px; left: -100px; }
+        .orb-2 { width: 300px; height: 300px; background: #818cf8; bottom: -50px; right: -50px; }
 
         /* Layout & Sidebar */
-        .layout {
-            display: flex;
-            flex: 1;
-        }
-
-        .sidebar {
-            width: 260px;
-            background: var(--sidebar-bg);
-            border-right: 1px solid var(--border-color);
-            padding: 25px 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .side-button {
-            display: flex; align-items: center; width: 100%; padding: 12px 15px;
-            background: transparent; border: 1px solid transparent; border-radius: 8px;
-            color: var(--text-muted); font-size: 1rem; font-weight: 500; cursor: pointer;
-            transition: all 0.2s ease; text-align: left;
-        }
-
-        .side-button:hover {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: var(--border-color);
-            color: var(--text-main);
-            transform: translateX(3px);
-        }
-
-        .btn-icon {
-            width: 20px; height: 20px; margin-right: 12px; display: flex;
-            align-items: center; justify-content: center;
-        }
+        .layout { display: flex; flex: 1; }
+        .sidebar { width: 260px; background: var(--sidebar-bg); border-right: 1px solid var(--border-color); padding: 25px 15px; display: flex; flex-direction: column; gap: 8px; }
+        .side-button { display: flex; align-items: center; width: 100%; padding: 12px 15px; background: transparent; border: 1px solid transparent; border-radius: 8px; color: var(--text-muted); font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; text-align: left; }
+        .side-button:hover { background: rgba(255, 255, 255, 0.03); border-color: var(--border-color); color: var(--text-main); transform: translateX(3px); }
+        .btn-icon { width: 20px; height: 20px; margin-right: 12px; display: flex; align-items: center; justify-content: center; }
         .btn-icon svg { width: 100%; height: 100%; }
-        .btn-icon img { width: 100%; height: 100%; border-radius: 4px; }
         .btn-arrow { margin-left: auto; font-size: 1.2rem; opacity: 0.5; }
 
         /* Main Content */
-        .content {
-            flex: 1;
-            padding: 50px 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+        .content { flex: 1; padding: 50px 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .brand { font-size: 4rem; font-weight: 900; margin-bottom: 5px; background: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tagline { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; }
 
-        .brand {
-            font-size: 4rem; font-weight: 900; margin-bottom: 5px;
-            background: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
-
-        .tagline {
-            font-size: 1.2rem; color: var(--text-muted); margin-bottom: 50px;
-        }
+        /* Buttons */
+        .btn { padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 1rem; transition: background 0.2s; display: inline-block; text-decoration: none; text-align: center; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-hover); }
+        .btn-secondary { background: #27272a; color: white; }
+        .btn-secondary:hover { background: #3f3f46; }
+        .btn-discord { background: #5865F2; color: white; width: 100%; margin-bottom: 15px; box-sizing: border-box; }
+        .btn-discord:hover { background: #4752C4; }
+        .download-btn-container { margin-bottom: 50px; }
 
         /* 3D Preview Effect */
-        .preview-container {
-            width: 100%; max-width: 850px; transform-style: preserve-3d;
-            perspective: 1200px;
-        }
+        .preview-container { width: 100%; max-width: 850px; transform-style: preserve-3d; perspective: 1200px; }
+        .preview-wrapper { position: relative; width: 100%; border-radius: 12px; overflow: hidden; transform-style: preserve-3d; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6); background: var(--sidebar-bg); }
+        .product-preview { width: 100%; display: block; border-radius: 12px; }
+        .preview-glow, .preview-shine { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; border-radius: 12px; }
 
-        .preview-wrapper {
-            position: relative; width: 100%; border-radius: 12px; overflow: hidden;
-            transform-style: preserve-3d;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-            background: var(--sidebar-bg); /* Fallback falls Bild nicht lädt */
-        }
+        /* Modals */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s; }
+        .modal-overlay.open { display: flex; opacity: 1; }
+        .modal { background: var(--sidebar-bg); border: 1px solid var(--border-color); padding: 30px; border-radius: 12px; max-width: 420px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .modal h2, .modal h3 { margin-top: 0; margin-bottom: 15px; color: var(--text-main); }
+        
+        .modal-input { width: 100%; padding: 12px; background: #0b0b0d; border: 1px solid var(--border-color); border-radius: 8px; color: #fff; margin-bottom: 15px; box-sizing: border-box; font-family: monospace; font-size: 1rem; }
+        .modal-input:focus { outline: none; border-color: var(--primary); }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+        .modal-msg { margin-bottom: 15px; font-size: 0.9rem; font-weight: 500; display: none; padding: 10px; border-radius: 6px; }
+        .msg-error { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .msg-success { background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.2); }
 
-        .product-preview {
-            width: 100%; display: block; border-radius: 12px;
-        }
-
-        .preview-glow, .preview-shine {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; border-radius: 12px;
-        }
-
-        /* Modal */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
-            display: none; justify-content: center; align-items: center; z-index: 1000;
-            opacity: 0; transition: opacity 0.3s;
-        }
-        .modal-overlay.open {
-            display: flex; opacity: 1;
-        }
-        .modal {
-            background: var(--sidebar-bg); border: 1px solid var(--border-color);
-            padding: 30px; border-radius: 12px; text-align: center; max-width: 400px; width: 90%;
-        }
-        .modal h2 { margin-bottom: 10px; color: var(--text-main); }
-        .modal p { color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem; }
-        .modal-button {
-            background: var(--primary); color: #fff; border: none; padding: 10px 24px;
-            border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s;
-        }
-        .modal-button:hover { background: var(--primary-hover); }
-
-        /* Footer */
-        .footer {
-            text-align: center; padding: 20px; background: var(--bg-color);
-            border-top: 1px solid var(--border-color); color: #666; font-size: 0.85rem;
-        }
+        .footer { text-align: center; padding: 20px; background: var(--bg-color); border-top: 1px solid var(--border-color); color: #666; font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -178,8 +89,17 @@
                 <span class="btn-label">Home</span>
                 <span class="btn-arrow">›</span>
             </button>
+
+            <!-- Active Button -->
+            <button class="side-button" onclick="goTo('executor.html')" style="border-color: var(--border-color); background: rgba(255,255,255,0.03);">
+                <span class="btn-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+                </span>
+                <span class="btn-label">Executor</span>
+                <span class="btn-arrow">›</span>
+            </button>
             
-            <button class="side-button" onclick="goTo('external.html')" style="border-color: var(--border-color); background: rgba(255,255,255,0.03);">
+            <button class="side-button" onclick="goTo('external.html')">
                 <span class="btn-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 </span>
@@ -195,7 +115,7 @@
                 <span class="btn-arrow">›</span>
             </button>
 
-            <button class="side-button" onclick="openModal()">
+            <button class="side-button" onclick="openDocsModal()">
                 <span class="btn-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 </span>
@@ -209,9 +129,15 @@
             <h1 class="brand">Pawa-Lite</h1>
             <p class="tagline">Flawless Execution. Built for performance.</p>            
             
+            <!-- DOWNLOAD BUTTON HINZUGEFÜGT -->
+            <div class="download-btn-container">
+                <button class="btn btn-primary" onclick="checkDiscord('executor')">
+                    Download Executor
+                </button>
+            </div>
+
             <div class="preview-container" id="previewContainer">
                 <div class="preview-wrapper" id="previewWrapper">
-                    <!-- VERGISS NICHT: Hier den Pfad zu deinem echten UI-Screenshot einzufügen -->
                     <img src="images/editor.png" alt="Pawa-Lite Executor Interface" class="product-preview" onerror="this.src='https://via.placeholder.com/850x500/141417/a1a1aa?text=Pawa-Lite+Executor+Preview'">
                     <div class="preview-glow" id="previewGlow"></div>
                     <div class="preview-shine" id="previewShine"></div>
@@ -222,11 +148,59 @@
     </main>
 
     <!-- Docs Modal -->
-    <div class="modal-overlay" id="modal" onclick="closeModalOnOverlay(event)">
-        <div class="modal">
+    <div class="modal-overlay" id="docs-modal" onclick="closeModalOnOverlay(event, 'docs-modal')">
+        <div class="modal" style="text-align: center;">
             <h2>Coming Soon</h2>
-            <p>The official Pawa-Lite Documentation is currently being written. Stay tuned!</p>
-            <button class="modal-button" onclick="closeModal()">Got it</button>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">The official Pawa-Lite Documentation is currently being written. Stay tuned!</p>
+            <button class="btn btn-primary" onclick="closeModal('docs-modal')">Got it</button>
+        </div>
+    </div>
+
+    <!-- Discord Verification Modal -->
+    <div id="discord-modal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'discord-modal')">
+        <div class="modal" style="text-align: center;">
+            <h3 style="color: #5865F2;">Discord Verification</h3>
+            <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 25px;">
+                Joining our Discord server is required in order to download Pawa-Lite and receive beta keys.
+            </p>
+            
+            <a href="https://discord.gg/ZBfZSEGp39" target="_blank" class="btn btn-discord" onclick="markDiscordJoined()">
+                1. Join Discord
+            </a>
+            
+            <button onclick="proceedToDownload()" id="proceed-btn" class="btn btn-secondary" style="width: 100%; opacity: 0.5; cursor: not-allowed;" disabled>
+                2. Proceed to Download
+            </button>
+            
+            <button onclick="closeModal('discord-modal')" class="btn" style="background: none; color: #666; margin-top: 15px; font-size: 0.8rem; padding: 0;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Download Key Modal -->
+    <div id="download-modal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'download-modal')">
+        <div class="modal">
+            <h3>Beta Key & Terms of Service</h3>
+            <p style="font-size: 0.9rem; color: #8a8a93; margin-top: 0; margin-bottom: 20px;" id="modal-filename-text"></p>
+            
+            <input type="text" id="beta-key-input" class="modal-input" placeholder="e.g., exec-xxx-yyy">
+            
+            <div style="margin-bottom: 20px; text-align: left; padding: 12px; background: #0b0b0d; border: 1px solid var(--border-color); border-radius: 8px;">
+                <label style="display: block; font-size: 0.85rem; color: #e4e4e7; cursor: pointer; line-height: 1.5; font-weight: 600;">
+                    <input type="checkbox" id="tos-checkbox" style="margin-right: 8px; transform: scale(1.1); vertical-align: middle; cursor: pointer;">
+                    <span>I accept the Terms of Service:</span>
+                </label>
+                <ul style="font-size: 0.75rem; color: var(--text-muted); margin: 8px 0 0 20px; padding: 0; line-height: 1.4;">
+                    <li><b>No Redistribution:</b> Redistribution, sharing, or reselling of this software is strictly prohibited.</li>
+                    <li><b>Own Risk:</b> Use at your own risk. We hold no liability for potential in-game bans.</li>
+                    <li><b>Key Protection:</b> Misuse or reverse engineering will lead to permanent blacklisting of your key.</li>
+                </ul>
+            </div>
+
+            <div id="modal-msg" class="modal-msg"></div>
+            <div class="modal-actions">
+                <button onclick="closeModal('download-modal')" class="btn btn-secondary">Cancel</button>
+                <button onclick="submitKey()" id="submit-btn" class="btn btn-primary">Verify Key & Download</button>
+            </div>
         </div>
     </div>
 
@@ -235,97 +209,175 @@
     </footer>
 
     <script>
-        // Navigation Logic
-        function goTo(url) {
-            window.location.href = url;
-        }
+        // Navigation
+        function goTo(url) { window.location.href = url; }
 
-        // Modal Logic
-        var modal = document.getElementById('modal');
-        function openModal() {
-            modal.classList.add('open');
-        }
-        function closeModal() {
-            modal.classList.remove('open');
-        }
-        function closeModalOnOverlay(e) {
-            if (e.target === modal) closeModal();
-        }
+        // General Modal Logic
+        function openDocsModal() { document.getElementById('docs-modal').classList.add('open'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+        function closeModalOnOverlay(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') closeModal();
+            if (e.key === 'Escape') {
+                closeModal('docs-modal');
+                closeModal('discord-modal');
+                closeModal('download-modal');
+            }
         });
 
-        // 3D Hover/Tilt Effect Logic
+        // ==========================================
+        // DOWNLOAD / DISCORD / SUPABASE LOGIC
+        // ==========================================
+        let pendingProduct = ''; 
+        let discordClicked = false;
+
+        function checkDiscord(product) {
+            pendingProduct = product;
+            document.getElementById('discord-modal').classList.add('open');
+            
+            discordClicked = false;
+            const proceedBtn = document.getElementById('proceed-btn');
+            proceedBtn.style.opacity = '0.5';
+            proceedBtn.style.cursor = 'not-allowed';
+            proceedBtn.disabled = true;
+            proceedBtn.classList.remove('btn-primary');
+            proceedBtn.classList.add('btn-secondary');
+        }
+
+        function markDiscordJoined() {
+            discordClicked = true;
+            const proceedBtn = document.getElementById('proceed-btn');
+            proceedBtn.style.opacity = '1';
+            proceedBtn.style.cursor = 'pointer';
+            proceedBtn.disabled = false;
+            proceedBtn.classList.remove('btn-secondary');
+            proceedBtn.classList.add('btn-primary');
+        }
+
+        function proceedToDownload() {
+            if (discordClicked) {
+                closeModal('discord-modal');
+                openDownloadModal(pendingProduct);
+            }
+        }
+
+        const inputField = document.getElementById('beta-key-input');
+        const msgBox = document.getElementById('modal-msg');
+        const submitBtn = document.getElementById('submit-btn');
+        const filenameText = document.getElementById('modal-filename-text');
+
+        function openDownloadModal(product) {
+            const filename = product === 'executor' ? 'PawaLite-Installer.7z' : 'Pawa-Lite External.7z';
+            filenameText.innerHTML = `Please enter your access key to download <b>${filename}</b>.`;
+            document.getElementById('download-modal').classList.add('open');
+            inputField.value = '';
+            document.getElementById('tos-checkbox').checked = false;
+            msgBox.style.display = 'none';
+            inputField.focus();
+        }
+
+        function showMessage(text, isError) {
+            msgBox.textContent = text;
+            msgBox.className = 'modal-msg ' + (isError ? 'msg-error' : 'msg-success');
+            msgBox.style.display = 'block';
+        }
+
+        async function submitKey() {
+            const password = inputField.value.trim();
+            const tosChecked = document.getElementById('tos-checkbox').checked;
+
+            if (!tosChecked) {
+                showMessage("You must accept the Terms of Service to proceed.", true);
+                return;
+            }
+            if (!password) {
+                showMessage("Please enter an access key.", true);
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Verifying...";
+            msgBox.style.display = 'none';
+
+            const edgeFunctionUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co/functions/v1/verify-beta-key';
+            const apiKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
+
+            try {
+                const response = await fetch(edgeFunctionUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}`, 'apikey': apiKey },
+                    body: JSON.stringify({ betaKey: password, product: pendingProduct })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.downloadUrl) {
+                    showMessage("Key verified successfully! Starting download...", false);
+                    setTimeout(() => {
+                        window.location.href = data.downloadUrl;
+                        closeModal('download-modal');
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = "Verify Key & Download";
+                    }, 1000);
+                } else {
+                    showMessage(data.error || "Access denied.", true);
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Verify Key & Download";
+                }
+            } catch (err) {
+                showMessage("Connection error. Please try again later.", true);
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Verify Key & Download";
+            }
+        }
+
+        // ==========================================
+        // 3D HOVER EFFECT LOGIC
+        // ==========================================
         var previewContainer = document.getElementById('previewContainer');
         var previewWrapper = document.getElementById('previewWrapper');
         var previewGlow = document.getElementById('previewGlow');
         var previewShine = document.getElementById('previewShine');
 
-        var bounds = null;
-        var currentX = 0;
-        var currentY = 0;
-        var targetX = 0;
-        var targetY = 0;
-        var rafId = null;
+        var bounds = null; var currentX = 0; var currentY = 0; var targetX = 0; var targetY = 0; var rafId = null;
 
-        function updateBounds() {
-            bounds = previewContainer.getBoundingClientRect();
-        }
+        function updateBounds() { bounds = previewContainer.getBoundingClientRect(); }
 
         function handleMouseMove(e) {
             if (!bounds) updateBounds();
-            
             var relX = (e.clientX - bounds.left) / bounds.width;
             var relY = (e.clientY - bounds.top) / bounds.height;
-            
             var maxTilt = 8;
-            targetY = (relX - 0.5) * maxTilt;
-            targetX = (0.5 - relY) * maxTilt;
+            targetY = (relX - 0.5) * maxTilt; targetX = (0.5 - relY) * maxTilt;
             
-            var glowX = relX * 100;
-            var glowY = relY * 100;
+            var glowX = relX * 100; var glowY = relY * 100;
             previewGlow.style.background = 'radial-gradient(circle at ' + glowX + '% ' + glowY + '%, rgba(255, 255, 255, 0.4), transparent 30%)';
             previewShine.style.background = 'linear-gradient(' + (135 + (relX - 0.5) * 60) + 'deg, rgba(255,255,255,' + (0.08 + relY * 0.05) + ') 0%, transparent 50%)';
             
-            if (!rafId) {
-                rafId = requestAnimationFrame(animate);
-            }
+            if (!rafId) rafId = requestAnimationFrame(animate);
         }
 
         function animate() {
-            currentX += (targetX - currentX) * 0.12;
-            currentY += (targetY - currentY) * 0.12;
-            
+            currentX += (targetX - currentX) * 0.12; currentY += (targetY - currentY) * 0.12;
             var depth = Math.sqrt(currentX * currentX + currentY * currentY);
             var translateZ = depth * 1.5;
-            
             previewWrapper.style.transform = 'perspective(1200px) rotateX(' + currentX + 'deg) rotateY(' + currentY + 'deg) translateZ(' + translateZ + 'px)';
             
             if (Math.abs(targetX - currentX) > 0.01 || Math.abs(targetY - currentY) > 0.01) {
                 rafId = requestAnimationFrame(animate);
-            } else {
-                rafId = null;
-            }
+            } else { rafId = null; }
         }
 
         function handleMouseLeave() {
-            targetX = 0;
-            targetY = 0;
+            targetX = 0; targetY = 0;
             previewGlow.style.background = 'radial-gradient(circle at center, rgba(79, 70, 229, 0.15), transparent 70%)';
             previewShine.style.background = 'transparent';
-            
-            if (!rafId) {
-                rafId = requestAnimationFrame(animate);
-            }
+            if (!rafId) rafId = requestAnimationFrame(animate);
         }
 
-        // Event Listeners
         previewContainer.addEventListener('mousemove', handleMouseMove);
         previewContainer.addEventListener('mouseleave', handleMouseLeave);
         window.addEventListener('resize', updateBounds);
         window.addEventListener('scroll', updateBounds);
-        
-        // Initial setup
         setTimeout(updateBounds, 100);
     </script>
 </body>
