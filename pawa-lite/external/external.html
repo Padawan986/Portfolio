@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon2.ico" type="image/x-icon">
-    <title>Pawa-Lite | Executor</title>
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+    <title>Pawa-Lite | External</title>
     <style>
         :root {
             --bg-color: #0b0b0e;
@@ -36,8 +36,8 @@
 
         /* Main Content */
         .content { flex: 1; padding: 50px 30px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .brand { font-size: 4rem; font-weight: 900; margin-bottom: 5px; background: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .tagline { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; }
+        .brand { font-size: 3.5rem; font-weight: 900; margin-bottom: 5px; background: linear-gradient(135deg, #4f46e5 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tagline { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px; text-align: center; }
 
         /* Buttons */
         .btn { padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 1rem; transition: background 0.2s; display: inline-block; text-decoration: none; text-align: center; }
@@ -82,7 +82,7 @@
         
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <button class="side-button" onclick="goTo('/pawa-lite/')">
+            <button class="side-button" onclick="goTo('../index.html')">
                 <span class="btn-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 </span>
@@ -90,8 +90,7 @@
                 <span class="btn-arrow">›</span>
             </button>
 
-            <!-- Active Button -->
-            <button class="side-button" onclick="goTo('/pawa-lite/executor/')" style="border-color: var(--border-color); background: rgba(255,255,255,0.03);">
+            <button class="side-button" onclick="goTo('../executor/index.html')">
                 <span class="btn-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
                 </span>
@@ -99,7 +98,8 @@
                 <span class="btn-arrow">›</span>
             </button>
             
-            <button class="side-button" onclick="goTo('/pawa-lite/external/')">
+            <!-- Active Button: External -->
+            <button class="side-button" onclick="goTo('external.html')" style="border-color: var(--border-color); background: rgba(255,255,255,0.03);">
                 <span class="btn-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 </span>
@@ -126,19 +126,18 @@
 
         <!-- Main Content Area -->
         <section class="content">
-            <h1 class="brand">Pawa-Lite</h1>
-            <p class="tagline">Flawless Execution. Built for performance.</p>            
+            <h1 class="brand">Pawa-Lite External</h1>
+            <p class="tagline">100% Undetected. Operating entirely outside the game process.</p>            
             
-            <!-- DOWNLOAD BUTTON HINZUGEFÜGT -->
             <div class="download-btn-container">
-                <button class="btn btn-primary" onclick="checkDiscord('executor')">
-                    Download Executor
+                <button class="btn btn-primary" onclick="checkDiscord('external')">
+                    Download External
                 </button>
             </div>
 
             <div class="preview-container" id="previewContainer">
                 <div class="preview-wrapper" id="previewWrapper">
-                    <img src="/pawa-lite/images/editor.png" alt="Pawa-Lite Executor Interface" class="product-preview" onerror="this.src='https://via.placeholder.com/850x500/141417/a1a1aa?text=Pawa-Lite+Executor+Preview'">
+                    <img src="../images/external.png" alt="Pawa-Lite External Interface" class="product-preview" onerror="this.src='https://via.placeholder.com/850x500/141417/a1a1aa?text=Pawa-Lite+External+Preview'">
                     <div class="preview-glow" id="previewGlow"></div>
                     <div class="preview-shine" id="previewShine"></div>
                 </div>
@@ -179,156 +178,141 @@
     <!-- Download Key Modal -->
     <div id="download-modal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'download-modal')">
         <div class="modal">
-            <h3 id="modal-title">Enter Key</h3>
+            <h3>Beta Key & Terms of Service</h3>
+            <p style="font-size: 0.9rem; color: #8a8a93; margin-top: 0; margin-bottom: 20px;" id="modal-filename-text"></p>
             
-            <div id="modal-msg" class="modal-msg"></div>
+            <input type="text" id="beta-key-input" class="modal-input" placeholder="e.g., ext-xxx-yyy">
+            
+            <div style="margin-bottom: 20px; text-align: left; padding: 12px; background: #0b0b0d; border: 1px solid var(--border-color); border-radius: 8px;">
+                <label style="display: block; font-size: 0.85rem; color: #e4e4e7; cursor: pointer; line-height: 1.5; font-weight: 600;">
+                    <input type="checkbox" id="tos-checkbox" style="margin-right: 8px; transform: scale(1.1); vertical-align: middle; cursor: pointer;">
+                    <span>I accept the Terms of Service:</span>
+                </label>
+                <ul style="font-size: 0.75rem; color: var(--text-muted); margin: 8px 0 0 20px; padding: 0; line-height: 1.4;">
+                    <li><b>No Redistribution:</b> Redistribution, sharing, or reselling of this software is strictly prohibited.</li>
+                    <li><b>Own Risk:</b> Use at your own risk. We hold no liability for potential in-game bans.</li>
+                    <li><b>Key Protection:</b> Misuse or reverse engineering will lead to permanent blacklisting of your key.</li>
+                </ul>
+            </div>
 
-            <form id="key-form" onsubmit="handleKeySubmit(event)">
-                <input 
-                    type="text" 
-                    id="key-input" 
-                    class="modal-input" 
-                    placeholder="PAWA-XXXX-XXXX-XXXX" 
-                    required 
-                    autocomplete="off"
-                    spellcheck="false"
-                >
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('download-modal')">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="submit-btn">Verify Key & Download</button>
-                </div>
-            </form>
+            <div id="modal-msg" class="modal-msg"></div>
+            <div class="modal-actions">
+                <button onclick="closeModal('download-modal')" class="btn btn-secondary">Cancel</button>
+                <button onclick="submitKey()" id="submit-btn" class="btn btn-primary">Verify Key & Download</button>
+            </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer class="footer">
-        <p>© 2026 Pawa-Lite. All rights reserved.</p>
+        © 2026 Padawan985 (Pawa-Lite) — All rights reserved.
     </footer>
 
-    <!-- Logic Script -->
     <script>
-        // ==========================================
-        // CONFIGURATION
-        // ==========================================
-        var API_URL = "https://bduypfymatnkgjlwzzoi.supabase.co/functions/v1/verify-beta-key";
-        var currentProduct = "executor";
-
-        // ==========================================
-        // NAVIGATION HELPER
-        // ==========================================
+        // Navigation
         function goTo(url) { window.location.href = url; }
 
-        // ==========================================
-        // MODAL TOGGLES
-        // ==========================================
-        function openDocsModal() {
-            var modal = document.getElementById('docs-modal');
-            modal.classList.add('open');
-        }
-
-        function closeModal(modalId) {
-            var modal = document.getElementById(modalId);
-            modal.classList.remove('open');
-        }
-
-        function closeModalOnOverlay(e, modalId) {
-            if (e.target.id === modalId) {
-                closeModal(modalId);
+        // General Modal Logic
+        function openDocsModal() { document.getElementById('docs-modal').classList.add('open'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+        function closeModalOnOverlay(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeModal('docs-modal');
+                closeModal('discord-modal');
+                closeModal('download-modal');
             }
-        }
+        });
 
         // ==========================================
-        // DISCORD VERIFICATION LOGIC
+        // DOWNLOAD / DISCORD / SUPABASE LOGIC
         // ==========================================
+        let pendingProduct = ''; 
+        let discordClicked = false;
+
         function checkDiscord(product) {
-            currentProduct = product;
-            var joined = localStorage.getItem('discord_joined');
-            if (joined === 'true') {
-                openDownloadModal();
-            } else {
-                openDiscordModal();
-            }
-        }
-
-        function openDiscordModal() {
-            var modal = document.getElementById('discord-modal');
-            modal.classList.add('open');
+            pendingProduct = product;
+            document.getElementById('discord-modal').classList.add('open');
             
-            var proceedBtn = document.getElementById('proceed-btn');
-            proceedBtn.disabled = true;
+            discordClicked = false;
+            const proceedBtn = document.getElementById('proceed-btn');
             proceedBtn.style.opacity = '0.5';
             proceedBtn.style.cursor = 'not-allowed';
+            proceedBtn.disabled = true;
+            proceedBtn.classList.remove('btn-primary');
+            proceedBtn.classList.add('btn-secondary');
         }
 
         function markDiscordJoined() {
-            localStorage.setItem('discord_joined', 'true');
-            var proceedBtn = document.getElementById('proceed-btn');
-            proceedBtn.disabled = false;
+            discordClicked = true;
+            const proceedBtn = document.getElementById('proceed-btn');
             proceedBtn.style.opacity = '1';
             proceedBtn.style.cursor = 'pointer';
+            proceedBtn.disabled = false;
             proceedBtn.classList.remove('btn-secondary');
             proceedBtn.classList.add('btn-primary');
         }
 
         function proceedToDownload() {
-            closeModal('discord-modal');
-            openDownloadModal();
+            if (discordClicked) {
+                closeModal('discord-modal');
+                openDownloadModal(pendingProduct);
+            }
         }
 
-        // ==========================================
-        // DOWNLOAD / KEY VERIFICATION MODAL LOGIC
-        // ==========================================
-        function openDownloadModal() {
-            var modal = document.getElementById('download-modal');
-            var title = document.getElementById('modal-title');
-            var input = document.getElementById('key-input');
-            
-            title.textContent = "Enter Key for " + currentProduct.charAt(0).toUpperCase() + currentProduct.slice(1);
-            input.value = "";
-            hideMessage();
-            
-            modal.classList.add('open');
-            input.focus();
+        const inputField = document.getElementById('beta-key-input');
+        const msgBox = document.getElementById('modal-msg');
+        const submitBtn = document.getElementById('submit-btn');
+        const filenameText = document.getElementById('modal-filename-text');
+
+        function openDownloadModal(product) {
+            const filename = product === 'executor' ? 'PawaLite-Installer.7z' : 'Pawa-Lite External.7z';
+            filenameText.innerHTML = `Please enter your access key to download <b>${filename}</b>.`;
+            document.getElementById('download-modal').classList.add('open');
+            inputField.value = '';
+            document.getElementById('tos-checkbox').checked = false;
+            msgBox.style.display = 'none';
+            inputField.focus();
         }
 
         function showMessage(text, isError) {
-            var msg = document.getElementById('modal-msg');
-            msg.textContent = text;
-            msg.className = "modal-msg " + (isError ? "msg-error" : "msg-success");
-            msg.style.display = "block";
+            msgBox.textContent = text;
+            msgBox.className = 'modal-msg ' + (isError ? 'msg-error' : 'msg-success');
+            msgBox.style.display = 'block';
         }
 
-        function hideMessage() {
-            var msg = document.getElementById('modal-msg');
-            msg.style.display = "none";
-        }
+        async function submitKey() {
+            const password = inputField.value.trim();
+            const tosChecked = document.getElementById('tos-checkbox').checked;
 
-        async function handleKeySubmit(e) {
-            e.preventDefault();
-            var input = document.getElementById('key-input');
-            var submitBtn = document.getElementById('submit-btn');
-            var key = input.value.trim();
+            if (!tosChecked) {
+                showMessage("You must accept the Terms of Service to proceed.", true);
+                return;
+            }
+            if (!password) {
+                showMessage("Please enter an access key.", true);
+                return;
+            }
 
-            if (!key) return;
-
-            hideMessage();
             submitBtn.disabled = true;
             submitBtn.textContent = "Verifying...";
+            msgBox.style.display = 'none';
+
+            const edgeFunctionUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co/functions/v1/verify-beta-key';
+            const apiKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
 
             try {
-                var res = await fetch(API_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ key: key, product: currentProduct })
+                const response = await fetch(edgeFunctionUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}`, 'apikey': apiKey },
+                    body: JSON.stringify({ betaKey: password, product: pendingProduct })
                 });
 
-                var data = await res.json();
+                const data = await response.json();
 
-                if (res.ok && data.success) {
-                    showMessage("Key valid! Starting download...", false);
-                    setTimeout(function() {
-                        window.location.href = data.download_url;
+                if (response.ok && data.downloadUrl) {
+                    showMessage("Key verified successfully! Starting download...", false);
+                    setTimeout(() => {
+                        window.location.href = data.downloadUrl;
                         closeModal('download-modal');
                         submitBtn.disabled = false;
                         submitBtn.textContent = "Verify Key & Download";
