@@ -313,16 +313,10 @@
 </div>
 
 <script>
-    // ==========================================
-    // SUPABASE KONFIGURATION (BEIDE SYSTEME)
-    // ==========================================
-    
-    // 1. Client für das Haupt-Dashboard & Beta Keys (Login läuft hierrüber)
     const supabaseBetaUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co';
     const supabaseBetaKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
     let dbBeta = null;
 
-    // 2. Client für die Pawa-Lite HWID Keys
     const supabasePawaUrl = 'https://tfjfnkckjnfwhjlsscme.supabase.co';
     const supabasePawaKey = 'sb_publishable_VDJGR5BVtNwhYjMllZii9g_tH8WHDsW';
     let dbPawa = null;
@@ -336,9 +330,6 @@
         console.error("Supabase Init Error:", e); 
     }
 
-    // ==========================================
-    // AUTH LOGIK
-    // ==========================================
     window.onload = async () => {
         if (!dbBeta) return;
         const { data: { session } } = await dbBeta.auth.getSession();
@@ -369,15 +360,10 @@
     function showDashboard() {
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('dashboard-screen').style.display = 'block';
-        // Lade beide Listen, sobald das Dashboard angezeigt wird
         fetchPawaKeys();
         fetchBetaKeys();
     }
 
-    // ==========================================
-    // BEREICH 1: PAWA HWID KEYS LOGIK
-    // ==========================================
-    
     async function fetchPawaKeys() {
         const list = document.getElementById('pawa-key-list');
         list.innerHTML = '<li class="key-item" style="color: #8a8a93;">Lade HWID-Keys...</li>';
@@ -397,7 +383,6 @@
             const li = document.createElement('li');
             li.className = 'key-item';
             
-            // Aufbau der Liste im Admin.html Design
             let buttonsHtml = '';
             if (isUsed) {
                 buttonsHtml += `<button class="btn-secondary" onclick="resetPawaHWID('${k.id}')">HWID Reset</button>`;
@@ -461,11 +446,6 @@
         else fetchPawaKeys();
     }
 
-
-    // ==========================================
-    // BEREICH 2: BETA KEYS LOGIK
-    // ==========================================
-    
     async function fetchBetaKeys() {
         const list = document.getElementById('beta-key-list');
         list.innerHTML = '<li class="key-item" style="color: #8a8a93;">Lade Beta-Keys...</li>';

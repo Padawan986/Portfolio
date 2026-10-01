@@ -176,43 +176,15 @@
         </div>
     </div>
 
-    <!-- Download Key Modal -->
-    <div id="download-modal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'download-modal')">
-        <div class="modal">
-            <h3>Beta Key & Terms of Service</h3>
-            <p style="font-size: 0.9rem; color: #8a8a93; margin-top: 0; margin-bottom: 20px;" id="modal-filename-text"></p>
-            
-            <input type="text" id="beta-key-input" class="modal-input" placeholder="e.g., exec-xxx-yyy">
-            
-            <div style="margin-bottom: 20px; text-align: left; padding: 12px; background: #0b0b0d; border: 1px solid var(--border-color); border-radius: 8px;">
-                <label style="display: block; font-size: 0.85rem; color: #e4e4e7; cursor: pointer; line-height: 1.5; font-weight: 600;">
-                    <input type="checkbox" id="tos-checkbox" style="margin-right: 8px; transform: scale(1.1); vertical-align: middle; cursor: pointer;">
-                    <span>I accept the Terms of Service:</span>
-                </label>
-                <ul style="font-size: 0.75rem; color: var(--text-muted); margin: 8px 0 0 20px; padding: 0; line-height: 1.4;">
-                    <li><b>No Redistribution:</b> Redistribution, sharing, or reselling of this software is strictly prohibited.</li>
-                    <li><b>Own Risk:</b> Use at your own risk. We hold no liability for potential in-game bans.</li>
-                    <li><b>Key Protection:</b> Misuse or reverse engineering will lead to permanent blacklisting of your key.</li>
-                </ul>
-            </div>
 
-            <div id="modal-msg" class="modal-msg"></div>
-            <div class="modal-actions">
-                <button onclick="closeModal('download-modal')" class="btn btn-secondary">Cancel</button>
-                <button onclick="submitKey()" id="submit-btn" class="btn btn-primary">Verify Key & Download</button>
-            </div>
-        </div>
-    </div>
 
     <footer class="footer">
         © 2026 Padawan985 (Pawa-Lite) — All rights reserved.
     </footer>
 
     <script>
-        // Navigation
         function goTo(url) { window.location.href = url; }
 
-        // General Modal Logic
         function openDocsModal() { document.getElementById('docs-modal').classList.add('open'); }
         function closeModal(id) { document.getElementById(id).classList.remove('open'); }
         function closeModalOnOverlay(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
@@ -220,18 +192,13 @@
             if (e.key === 'Escape') {
                 closeModal('docs-modal');
                 closeModal('discord-modal');
-                closeModal('download-modal');
             }
         });
 
-        // ==========================================
-        // DOWNLOAD / DISCORD / SUPABASE LOGIC
-        // ==========================================
-        let pendingProduct = ''; 
+        const EXECUTOR_DOWNLOAD_URL = "https://github.com/Padawan986/Portfolio/raw/refs/heads/main/pawa-lite/external/PawaLite-Installer.zip";
         let discordClicked = false;
 
         function checkDiscord(product) {
-            pendingProduct = product;
             document.getElementById('discord-modal').classList.add('open');
             
             discordClicked = false;
@@ -256,83 +223,10 @@
         function proceedToDownload() {
             if (discordClicked) {
                 closeModal('discord-modal');
-                openDownloadModal(pendingProduct);
+                window.location.href = EXECUTOR_DOWNLOAD_URL;
             }
         }
 
-        const inputField = document.getElementById('beta-key-input');
-        const msgBox = document.getElementById('modal-msg');
-        const submitBtn = document.getElementById('submit-btn');
-        const filenameText = document.getElementById('modal-filename-text');
-
-        function openDownloadModal(product) {
-            const filename = product === 'executor' ? 'PawaLite-Installer.7z' : 'Pawa-Lite External.7z';
-            filenameText.innerHTML = `Please enter your access key to download <b>${filename}</b>.`;
-            document.getElementById('download-modal').classList.add('open');
-            inputField.value = '';
-            document.getElementById('tos-checkbox').checked = false;
-            msgBox.style.display = 'none';
-            inputField.focus();
-        }
-
-        function showMessage(text, isError) {
-            msgBox.textContent = text;
-            msgBox.className = 'modal-msg ' + (isError ? 'msg-error' : 'msg-success');
-            msgBox.style.display = 'block';
-        }
-
-        async function submitKey() {
-            const password = inputField.value.trim();
-            const tosChecked = document.getElementById('tos-checkbox').checked;
-
-            if (!tosChecked) {
-                showMessage("You must accept the Terms of Service to proceed.", true);
-                return;
-            }
-            if (!password) {
-                showMessage("Please enter an access key.", true);
-                return;
-            }
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Verifying...";
-            msgBox.style.display = 'none';
-
-            const edgeFunctionUrl = 'https://bduypfymatnkgjlwzzoi.supabase.co/functions/v1/verify-beta-key';
-            const apiKey = 'sb_publishable_upzUkUE4lKwZqpd9FUyQng_v264SGfx';
-
-            try {
-                const response = await fetch(edgeFunctionUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}`, 'apikey': apiKey },
-                    body: JSON.stringify({ betaKey: password, product: pendingProduct })
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.downloadUrl) {
-                    showMessage("Key verified successfully! Starting download...", false);
-                    setTimeout(() => {
-                        window.location.href = data.downloadUrl;
-                        closeModal('download-modal');
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = "Verify Key & Download";
-                    }, 1000);
-                } else {
-                    showMessage(data.error || "Access denied.", true);
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = "Verify Key & Download";
-                }
-            } catch (err) {
-                showMessage("Connection error. Please try again later.", true);
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Verify Key & Download";
-            }
-        }
-
-        // ==========================================
-        // 3D HOVER EFFECT LOGIC
-        // ==========================================
         var previewContainer = document.getElementById('previewContainer');
         var previewWrapper = document.getElementById('previewWrapper');
         var previewGlow = document.getElementById('previewGlow');

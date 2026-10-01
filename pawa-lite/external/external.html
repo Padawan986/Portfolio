@@ -208,10 +208,8 @@
     </footer>
 
     <script>
-        // Navigation
         function goTo(url) { window.location.href = url; }
 
-        // General Modal Logic
         function openDocsModal() { document.getElementById('docs-modal').classList.add('open'); }
         function closeModal(id) { document.getElementById(id).classList.remove('open'); }
         function closeModalOnOverlay(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
@@ -223,9 +221,6 @@
             }
         });
 
-        // ==========================================
-        // DOWNLOAD / DISCORD / SUPABASE LOGIC
-        // ==========================================
         let pendingProduct = ''; 
         let discordClicked = false;
 
@@ -329,9 +324,6 @@
             }
         }
 
-        // ==========================================
-        // 3D HOVER EFFECT LOGIC
-        // ==========================================
         var previewContainer = document.getElementById('previewContainer');
         var previewWrapper = document.getElementById('previewWrapper');
         var previewGlow = document.getElementById('previewGlow');

@@ -176,31 +176,6 @@
         </div>
     </div>
 
-    <!-- Download Key Modal -->
-    <div id="download-modal" class="modal-overlay" onclick="closeModalOnOverlay(event, 'download-modal')">
-        <div class="modal">
-            <h3 id="modal-title">Enter Key</h3>
-            
-            <div id="modal-msg" class="modal-msg"></div>
-
-            <form id="key-form" onsubmit="handleKeySubmit(event)">
-                <input 
-                    type="text" 
-                    id="key-input" 
-                    class="modal-input" 
-                    placeholder="PAWA-XXXX-XXXX-XXXX" 
-                    required 
-                    autocomplete="off"
-                    spellcheck="false"
-                >
-                <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('download-modal')">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="submit-btn">Verify Key & Download</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="footer">
         <p>© 2026 Pawa-Lite. All rights reserved.</p>
@@ -208,20 +183,10 @@
 
     <!-- Logic Script -->
     <script>
-        // ==========================================
-        // CONFIGURATION
-        // ==========================================
-        var API_URL = "https://bduypfymatnkgjlwzzoi.supabase.co/functions/v1/verify-beta-key";
-        var currentProduct = "executor";
+        var EXECUTOR_DOWNLOAD_URL = "https://github.com/Padawan986/Portfolio/raw/refs/heads/main/pawa-lite/external/PawaLite-Installer.zip";
 
-        // ==========================================
-        // NAVIGATION HELPER
-        // ==========================================
         function goTo(url) { window.location.href = url; }
 
-        // ==========================================
-        // MODAL TOGGLES
-        // ==========================================
         function openDocsModal() {
             var modal = document.getElementById('docs-modal');
             modal.classList.add('open');
@@ -238,20 +203,7 @@
             }
         }
 
-        // ==========================================
-        // DISCORD VERIFICATION LOGIC
-        // ==========================================
         function checkDiscord(product) {
-            currentProduct = product;
-            var joined = localStorage.getItem('discord_joined');
-            if (joined === 'true') {
-                openDownloadModal();
-            } else {
-                openDiscordModal();
-            }
-        }
-
-        function openDiscordModal() {
             var modal = document.getElementById('discord-modal');
             modal.classList.add('open');
             
@@ -259,10 +211,11 @@
             proceedBtn.disabled = true;
             proceedBtn.style.opacity = '0.5';
             proceedBtn.style.cursor = 'not-allowed';
+            proceedBtn.classList.remove('btn-primary');
+            proceedBtn.classList.add('btn-secondary');
         }
 
         function markDiscordJoined() {
-            localStorage.setItem('discord_joined', 'true');
             var proceedBtn = document.getElementById('proceed-btn');
             proceedBtn.disabled = false;
             proceedBtn.style.opacity = '1';
@@ -273,81 +226,9 @@
 
         function proceedToDownload() {
             closeModal('discord-modal');
-            openDownloadModal();
+            window.location.href = EXECUTOR_DOWNLOAD_URL;
         }
 
-        // ==========================================
-        // DOWNLOAD / KEY VERIFICATION MODAL LOGIC
-        // ==========================================
-        function openDownloadModal() {
-            var modal = document.getElementById('download-modal');
-            var title = document.getElementById('modal-title');
-            var input = document.getElementById('key-input');
-            
-            title.textContent = "Enter Key for " + currentProduct.charAt(0).toUpperCase() + currentProduct.slice(1);
-            input.value = "";
-            hideMessage();
-            
-            modal.classList.add('open');
-            input.focus();
-        }
-
-        function showMessage(text, isError) {
-            var msg = document.getElementById('modal-msg');
-            msg.textContent = text;
-            msg.className = "modal-msg " + (isError ? "msg-error" : "msg-success");
-            msg.style.display = "block";
-        }
-
-        function hideMessage() {
-            var msg = document.getElementById('modal-msg');
-            msg.style.display = "none";
-        }
-
-        async function handleKeySubmit(e) {
-            e.preventDefault();
-            var input = document.getElementById('key-input');
-            var submitBtn = document.getElementById('submit-btn');
-            var key = input.value.trim();
-
-            if (!key) return;
-
-            hideMessage();
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Verifying...";
-
-            try {
-                var res = await fetch(API_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ key: key, product: currentProduct })
-                });
-
-                var data = await res.json();
-
-                if (res.ok && data.success) {
-                    showMessage("Key valid! Starting download...", false);
-                    setTimeout(function() {
-                        window.location.href = data.download_url;
-                        closeModal('download-modal');
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = "Verify Key & Download";
-                    }, 1000);
-                } else {
-                    showMessage(data.error || "Access denied.", true);
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = "Verify Key & Download";
-                }
-            } catch (err) {
-                showMessage("Connection error. Please try again later.", true);
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Verify Key & Download";
-            }
-        }
-
-        // ==========================================
-        // 3D HOVER EFFECT LOGIC
-        // ==========================================
         var previewContainer = document.getElementById('previewContainer');
         var previewWrapper = document.getElementById('previewWrapper');
         var previewGlow = document.getElementById('previewGlow');
