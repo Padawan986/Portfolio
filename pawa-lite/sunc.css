@@ -1,0 +1,162 @@
+/* Featured compatibility card; the compatibility figure is product copy. */
+.sunc-feature.feature-card {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 64px;
+  isolation: isolate;
+  min-height: 330px;
+  margin-bottom: 28px;
+  padding: 50px 58px;
+  border: 1px solid #38313f;
+  border-radius: 24px;
+  background: radial-gradient(ellipse at 14% 50%, #ac8ddb12, transparent 57%), linear-gradient(125deg, #111013, #070708 75%);
+  box-shadow: inset 0 1px 0 #ffffff04;
+}
+
+.sunc-feature.feature-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #bfa9e77a, #d4e6ec4a, transparent);
+  pointer-events: none;
+}
+
+.sunc-feature::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 390px;
+  height: 390px;
+  left: -90px;
+  top: -30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #b599e915, transparent 67%);
+  animation: sunc-glow-drift 12s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.sunc-feature-metric {
+  padding-right: 54px;
+  border-right: 1px solid #ffffff0c;
+}
+
+.sunc-feature-metric h3 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 23px;
+}
+
+.sunc-feature-number {
+  color: #f2edf9;
+  font-size: clamp(96px, 10vw, 148px);
+  font-weight: 500;
+  letter-spacing: -.075em;
+  line-height: .95;
+  font-variant-numeric: lining-nums tabular-nums;
+  white-space: nowrap;
+  text-shadow: 0 0 55px #bea4ed12;
+}
+
+.sunc-feature-percent {
+  display: inline-block;
+  margin-left: .06em;
+  font-size: .48em;
+  letter-spacing: -.04em;
+}
+
+.sunc-feature-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: .06em;
+  color: #aaa2b6;
+}
+
+.sunc-feature-copy {
+  position: relative;
+  max-width: 450px;
+}
+
+.sunc-feature-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 25px;
+  margin-bottom: 21px;
+  padding: 4px 10px;
+  border: 1px solid #b89bdf28;
+  border-radius: 999px;
+  background: #b89bdf09;
+  color: #bca9d6;
+  font: 9px/1.5 var(--mono);
+  letter-spacing: 1.5px;
+}
+
+.sunc-feature-heading {
+  color: #e7e3eb;
+  font-size: 30px;
+  letter-spacing: -.7px;
+  line-height: 1.25;
+}
+
+.sunc-feature-description {
+  margin-top: 15px;
+  color: #96919c;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.sunc-feature-copy .text-link {
+  margin-top: 26px;
+  font-size: 13px;
+}
+
+@keyframes sunc-glow-drift {
+  from { transform: translate3d(0, 0, 0); opacity: .65; }
+  to { transform: translate3d(24px, 12px, 0); opacity: 1; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .sunc-feature.feature-card:hover {
+    translate: 0 -3px;
+    border-color: #63516f;
+    box-shadow: 0 18px 50px #a98cdd09, inset 0 1px 0 #ffffff07;
+  }
+}
+
+@media (max-width: 1000px) {
+  .sunc-feature.feature-card { gap: 38px; padding: 40px; }
+  .sunc-feature-metric { padding-right: 34px; }
+  .sunc-feature-heading { font-size: 26px; }
+}
+
+@media (max-width: 800px) {
+  .sunc-feature.feature-card { gap: 28px; min-height: 300px; margin-bottom: 25px; padding: 35px 30px; border-radius: 19px; }
+  .sunc-feature-metric { padding-right: 25px; }
+  .sunc-feature-number { font-size: clamp(90px, 15vw, 120px); }
+  .sunc-feature-label { font-size: 10px; }
+  .sunc-feature-heading { font-size: 23px; }
+  .sunc-feature-description { font-size: 13px; }
+  .sunc-feature-copy .text-link { font-size: 12px; }
+}
+
+@media (max-width: 680px) {
+  .sunc-feature.feature-card { grid-template-columns: minmax(0, 1fr); gap: 29px; padding: 32px 27px; }
+  .sunc-feature-metric { padding: 0 0 27px; border-right: 0; border-bottom: 1px solid #ffffff0c; }
+  .sunc-feature-metric h3 { gap: 17px; }
+  .sunc-feature-number { font-size: clamp(92px, 26vw, 130px); }
+  .sunc-feature-label { font-size: 11px; }
+  .sunc-feature-badge { margin-bottom: 17px; }
+  .sunc-feature-heading { font-size: 26px; }
+  .sunc-feature-description { font-size: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sunc-feature::after { animation: none; }
+  .sunc-feature.feature-card { transition: none; }
+  .sunc-feature.feature-card:hover { translate: none; }
+}
