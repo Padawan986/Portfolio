@@ -135,19 +135,26 @@
   // Intercept all download triggers across the site
   document.addEventListener("click", (event) => {
     if (event.defaultPrevented || event.button !== 0 || !(event.target instanceof Element)) return;
-    const link = event.target.closest("a, button");
+    const link = event.target.closest("[data-download], a, button");
     if (!link || dialog.contains(link)) return;
 
+    const downloadAttr = link.getAttribute("data-download") || link.closest("[data-download]")?.getAttribute("data-download");
     const href = link.getAttribute("href") || "";
-    const isDownloadAction = href.includes("action=download") || href.includes("PawaLite-Installer") || href.includes("Pawa-Lite-Installer-External") || link.classList.contains("download-trigger") || link.textContent.includes("Download");
+    const isDownloadAction = downloadAttr || href.includes("action=download") || href.includes("PawaLite-Installer") || href.includes("Pawa-Lite-Installer-External") || link.classList.contains("download-trigger");
     
     if (!isDownloadAction) return;
 
-    // Detect if external or executor
-    const isExternal = window.location.pathname.includes("external") || href.includes("external") || href.includes("External") || link.textContent.includes("External");
-    
     event.preventDefault();
-    openPopup(isExternal ? "external" : "executor");
+    event.stopPropagation();
+
+    // Detect product from data-download attribute or fallback
+    let product = downloadAttr || "executor";
+    if (!downloadAttr) {
+      const isExternal = window.location.pathname.includes("external") || href.includes("external") || href.includes("External") || link.textContent.includes("External");
+      product = isExternal ? "external" : "executor";
+    }
+    
+    openPopup(product);
   });
 
   window.checkDiscord = function(product) {
