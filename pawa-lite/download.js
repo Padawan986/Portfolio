@@ -15,7 +15,7 @@
       <button class="download-dialog-close" type="button" aria-label="Close download popup">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
       </button>
-      <img class="download-dialog-logo" src="assets/logo.png" onerror="this.src='/pawa-lite/assets/logo.png'" alt="" width="56" height="56">
+      <img class="download-dialog-logo" src="/pawa-lite/assets/logo.png" onerror="this.src='/pawa-lite/assets/logo.png'" alt="" width="56" height="56">
       <h2 id="download-dialog-title">Discord Verification</h2>
       <p id="download-dialog-description">Joining our Discord server is required to download Pawa-Lite, get setup guidance, and receive updates.</p>
       

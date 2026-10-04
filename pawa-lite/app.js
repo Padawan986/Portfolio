@@ -266,21 +266,21 @@
 
   const views = {
     editor: {
-      source: "assets/editor-hd.png",
+      source: "/pawa-lite/assets/editor-hd.png",
       alt: "Pawa-Lite script editor interface",
       caption: "Script editor",
       width: 871,
       height: 441
     },
     library: {
-      source: "assets/editor-hd.png",
+      source: "/pawa-lite/assets/editor-hd.png",
       alt: "Pawa-Lite script library interface",
       caption: "Script library",
       width: 871,
       height: 441
     },
     settings: {
-      source: "assets/editor-hd.png",
+      source: "/pawa-lite/assets/editor-hd.png",
       alt: "Pawa-Lite settings interface",
       caption: "Settings",
       width: 874,
@@ -331,7 +331,7 @@
       };
       capture.onerror = () => {
         const fallback = new Image();
-        fallback.src = "assets/editor-hd.png";
+        fallback.src = "/pawa-lite/assets/editor-hd.png";
         fallback.onload = () => resolve(fallback);
         fallback.onerror = () => resolve(capture);
       };
