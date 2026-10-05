@@ -100,3 +100,8 @@ body.remix .eyebrow{color:var(--v2);font-size:11px;letter-spacing:2.4px}
   .rx-table th,.rx-table td{padding:13px 14px}
   .rx-final{padding:90px 0}
 }
+
+/* Original-Hintergrund (Video) wieder aktiv; Sternenfeld liegt dezent darüber */
+.rx-hero .hero-background{z-index:-3}
+.rx-hero .hero-glow{z-index:-2}
+.rx-hero .rx-sky{z-index:-1;opacity:.8}
