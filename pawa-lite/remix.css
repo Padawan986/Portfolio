@@ -105,3 +105,18 @@ body.remix .eyebrow{color:var(--v2);font-size:11px;letter-spacing:2.4px}
 .rx-hero .hero-background{z-index:-3}
 .rx-hero .hero-glow{z-index:-2}
 .rx-hero .rx-sky{z-index:-1;opacity:.8}
+
+/* Rechtliche Seiten (Privacy) */
+.rx-legal{position:relative;isolation:isolate;max-width:760px;padding:140px 0 90px}
+.rx-legal .rx-sky{height:420px;bottom:auto}
+.rx-legal h1{font:600 clamp(38px,6vw,60px)/1.05 var(--sans);letter-spacing:-.045em;color:#f4f0ff;margin:14px 0 8px}
+.rx-updated{color:#6f6785;font-size:13px;margin-bottom:34px}
+.rx-legal h2{font:600 22px var(--sans);letter-spacing:-.02em;color:#efeaff;margin:44px 0 12px;padding-top:28px;border-top:1px solid var(--cell-line)}
+.rx-legal h3{font:600 16px var(--sans);color:#d9d0f2;margin:22px 0 6px}
+.rx-legal p,.rx-legal li{color:#a79fbd;line-height:1.75;font-size:15px}
+.rx-legal p{margin-bottom:14px}
+.rx-legal ul{margin:0 0 16px 20px;padding:0;list-style:disc}
+.rx-legal li{margin-bottom:6px}
+.rx-legal strong{color:#e6e0f7;font-weight:600}
+.rx-legal a:not(.text-link){color:var(--v2);text-decoration:underline;text-underline-offset:3px}
+.rx-back{margin-top:44px}
