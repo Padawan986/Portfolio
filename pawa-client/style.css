@@ -228,6 +228,22 @@ body::before {
   flex-wrap: wrap;
 }
 
+/* Basis-Button (vorher nur inline in index.html -> <a class="btn"> war unformatiert) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+.btn:hover { transform: translateY(-1px); }
+
+/* Ohne JavaScript Karten trotzdem anzeigen */
+@media (scripting: none) { .card { opacity: 1; transform: none; } }
+
 /* ============================================================
    BUTTONS (re-stated to override modal-defined btn styles when needed)
    ============================================================ */
@@ -291,7 +307,8 @@ body::before {
   transform: translateY(24px);
 }
 
-.card.visible {
+.card.visible,
+.card.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
