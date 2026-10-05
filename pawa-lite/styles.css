@@ -1,8 +1,5 @@
-@font-face{font-family:Favorit;src:url("/pawa-lite/assets/ref-abc_favorit_book.p.2svqvtuar83ra.woff2") format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:Favorit;src:url("/pawa-lite/assets/ref-abc_favorit_medium.p.2r95o5prhs9hb.woff2") format("woff2");font-weight:500 800;font-display:swap}
-@font-face{font-family:Domaine;src:url("/pawa-lite/assets/ref-domaine_regular.p.2joc-huu8rdu_.woff2") format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:Commit;src:url("/pawa-lite/assets/ref-commit_mono_regular.p.17ccpk27lq6an.woff2") format("woff2");font-weight:400;font-display:swap}
-:root{color-scheme:dark;--bg:#000;--ink:#eee;--muted:#949494;--line:#252525;--purple:#a98cdd;--sans:Favorit,Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--serif:Domaine,Georgia,serif;--mono:Commit,Consolas,monospace}
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{color-scheme:dark;--bg:#07070d;--ink:#f0f0f5;--muted:#8a8a96;--line:#1c1c28;--purple:#6366f1;--sans:"Space Grotesk",Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--serif:"Source Serif 4",Georgia,serif;--mono:"JetBrains Mono",Consolas,monospace}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:100px;background:var(--bg)}
 body{margin:0;color:var(--ink);background:var(--bg);font:400 15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
@@ -13,8 +10,8 @@ a,button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 img,svg{display:block;max-width:100%}
 h1,h2,h3,p,figure{margin:0}
 h1,h2,h3{font-weight:400}
-a:focus-visible,button:focus-visible,[role=tabpanel]:focus-visible{outline:2px solid #b59ce3;outline-offset:6px}
-::selection{background:#66577b;color:#fff}
+a:focus-visible,button:focus-visible,[role=tabpanel]:focus-visible{outline:2px solid #818cf8;outline-offset:6px}
+::selection{background:#312e81;color:#fff}
 .icon-definitions{position:absolute;width:0;height:0;overflow:hidden}
 .icon{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
 .shell{width:min(1200px,calc(100% - 64px));margin:0 auto}
@@ -40,7 +37,7 @@ a:focus-visible,button:focus-visible,[role=tabpanel]:focus-visible{outline:2px s
 .nav-discord:hover{color:#eee}
 .nav-discord span{display:none}
 .button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:49px;padding:0 20px;color:#eee;border:2px solid #ffffff0a;border-radius:16px;font-size:15px;font-weight:500;line-height:1.2;white-space:nowrap;background-image:linear-gradient(104deg,#fdfdfd0d 5%,#f0f0e41a);background-color:transparent;box-shadow:inset 0 1px 1px #ffffff07,0 1px 2px #000;transition:background-color .4s cubic-bezier(.22,1,.36,1),color .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s,transform .2s;position:relative}
-.button:after{content:"";position:absolute;inset:-2px;border-radius:inherit;background:url("/pawa-lite/assets/ref-texture-btn.png") repeat;pointer-events:none;opacity:.8}
+.button:after{content:"";position:absolute;inset:-2px;border-radius:inherit;background:repeating-linear-gradient(135deg,rgba(255,255,255,.02) 0,rgba(255,255,255,.02) 1px,transparent 1px,transparent 3px);pointer-events:none;opacity:.8}
 .button:active{transform:translateY(1px)}
 .button .icon{width:17px;height:17px}
 .button-small{min-height:41px;padding:0 18px;font-size:14px}
@@ -79,7 +76,7 @@ a:focus-visible,button:focus-visible,[role=tabpanel]:focus-visible{outline:2px s
 @media(hover:hover) and (pointer:fine){.hero-tilt-surface{will-change:transform}}
 @property --frame-angle{syntax:"<angle>";inherits:false;initial-value:0deg}
 @keyframes frame-orbit{to{--frame-angle:360deg}}
-.screenshot-frame{--frame-colors:transparent 0deg,transparent 195deg,#785bff55 235deg,#b49aff 265deg,#a3e4ff 285deg,#e2d4ff 300deg,transparent 335deg;position:relative;isolation:isolate;padding:8px;border:1px solid #39383d;border-radius:18px;background:linear-gradient(145deg,#1b1b1d,#101012 55%,#18171b);box-shadow:0 24px 70px #0009,inset 0 1px 0 #ffffff07;overflow:visible}
+.screenshot-frame{--frame-colors:transparent 0deg,transparent 195deg,#4f46e555 235deg,#818cf8 265deg,#a5b4fc 285deg,#c7d2fe 300deg,transparent 335deg;position:relative;isolation:isolate;padding:8px;border:1px solid #39383d;border-radius:18px;background:linear-gradient(145deg,#1b1b1d,#101012 55%,#18171b);box-shadow:0 24px 70px #0009,inset 0 1px 0 #ffffff07;overflow:visible}
 .screenshot-frame:before,.screenshot-frame:after{content:"";position:absolute;inset:-2px;border-radius:inherit;background:conic-gradient(from var(--frame-angle),var(--frame-colors));animation:frame-orbit 9s linear infinite;pointer-events:none}
 .screenshot-frame:before{z-index:2;padding:2px;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
 .screenshot-frame:after{inset:-8px;z-index:-1;filter:blur(22px);opacity:.48}
@@ -113,11 +110,11 @@ a:focus-visible,button:focus-visible,[role=tabpanel]:focus-visible{outline:2px s
 .feature-copy h3{font-size:21px;letter-spacing:-.4px;margin-bottom:13px}
 .feature-copy p{color:#929292;font-size:14px;line-height:1.65;min-height:75px}
 .feature-copy .text-link{font-size:12px;margin-top:24px}
-.editor-art{background:radial-gradient(ellipse at 50% 45%,#bca5ef0c,transparent 70%)}
+.editor-art{background:radial-gradient(ellipse at 50% 45%,#818cf80c,transparent 70%)}
 .workspace-symbol{background:radial-gradient(ellipse at 30% 0,#353040,#121113 80%);border-color:#494052}
-.workspace-symbol>.icon{color:#c5b6de}
+.workspace-symbol>.icon{color:#a5b4fc}
 .community-symbol{width:82px;height:82px;display:flex;align-items:center;justify-content:center;border:1px solid #37343c;border-radius:22px;background:linear-gradient(140deg,#25222b,#080709);z-index:1;box-shadow:0 12px 35px #000,inset 0 1px 1px #ffffff19}
-.community-symbol .icon{width:34px;height:34px;color:#b4aabd;stroke-width:1}
+.community-symbol .icon{width:34px;height:34px;color:#a5b4fc;stroke-width:1}
 .community-orbit{position:absolute;inset:30px;border:1px solid #1d1b20;border-radius:50%;transform:rotate(-25deg) scaleX(1.5) scaleY(.65)}
 
 /* Desktop screenshots */
@@ -125,7 +122,7 @@ a:focus-visible,button:focus-visible,[role=tabpanel]:focus-visible{outline:2px s
 .preview-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:30px}
 .preview-tabs button{height:76px;display:flex;align-items:center;justify-content:center;gap:14px;border:1px solid #252525;border-radius:16px;background:linear-gradient(#121212,#080808);color:#828282;font-size:17px;transition:border-color .2s,color .2s,background .2s;position:relative}
 .preview-tabs button[aria-selected=true]{color:#ddd;border-color:#56515d;background:radial-gradient(ellipse at 50% 0,#332b3d55,transparent 80%),#101010}
-.preview-tabs button[aria-selected=true]:before{content:"";height:1px;position:absolute;top:0;left:20%;right:20%;background:linear-gradient(90deg,transparent,#b098c0,transparent)}
+.preview-tabs button[aria-selected=true]:before{content:"";height:1px;position:absolute;top:0;left:20%;right:20%;background:linear-gradient(90deg,transparent,#818cf8,transparent)}
 .preview-tabs .icon{width:21px;height:21px}
 .preview-tabs button:hover{color:#eee;border-color:#4e4e4e}
 .full-preview{padding:12px;border-radius:22px;box-shadow:0 35px 65px #000}
@@ -182,7 +179,7 @@ a:focus-visible,button:focus-visible,[role=tabpanel]:focus-visible{outline:2px s
 .footer-bottom a:hover{color:#bbb}
 
 /* Legal documents and real release information. */
-.legal-page{background:radial-gradient(ellipse 1000px 650px at 65% 0,#30213c44,transparent 80%),#000}
+.legal-page{background:radial-gradient(ellipse 1000px 650px at 65% 0,#1e1b4b44,transparent 80%),#07070d}
 .legal-main{width:min(1120px,calc(100% - 64px));padding:75px 0 110px}
 .legal-back{font-size:12px;margin-bottom:37px}
 .legal-intro{padding-bottom:48px;margin-bottom:48px;border-bottom:1px solid #28242b}
@@ -199,7 +196,7 @@ a:focus-visible,button:focus-visible,[role=tabpanel]:focus-visible{outline:2px s
 .legal-sidebar nav>a{display:flex;align-items:baseline;gap:12px;padding:10px 0;color:#8f8f8f;font-size:12px;line-height:1.55;transition:color .25s}
 .legal-sidebar nav>a>span{color:#555;font:9px var(--mono)}
 .legal-sidebar nav>a:hover{color:#ddd}
-.legal-contact{display:block;border-top:1px solid #27232c;margin-top:23px;padding-top:23px;color:#b6a1ce;font-size:11px;line-height:1.8}
+.legal-contact{display:block;border-top:1px solid #27232c;margin-top:23px;padding-top:23px;color:#a5b4fc;font-size:11px;line-height:1.8}
 .legal-content section{scroll-margin-top:115px;border-bottom:1px solid #252228;padding-bottom:38px;margin-bottom:38px}
 .legal-content section:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
 .legal-section-number{display:block;color:#6d637b;font:10px var(--mono);margin-bottom:12px}
@@ -209,8 +206,8 @@ a:focus-visible,button:focus-visible,[role=tabpanel]:focus-visible{outline:2px s
 .legal-content strong{color:#c7c0d1;font-weight:500}
 .legal-content ul{padding-left:22px;margin:17px 0}
 .legal-content li{padding-left:3px;margin:9px 0}
-.legal-content a{color:#c4afd9;text-decoration:underline;text-underline-offset:4px;text-decoration-color:#6b587a;transition:color .25s}
-.legal-content a:hover{color:#e1c9ff}
+.legal-content a{color:#a5b4fc;text-decoration:underline;text-underline-offset:4px;text-decoration-color:#4338ca;transition:color .25s}
+.legal-content a:hover{color:#c7d2fe}
 .legal-help{display:flex;align-items:center;justify-content:space-between;gap:24px;border-top:1px solid #27232c;margin-top:52px;padding-top:27px;font-size:15px;color:#929292}
 .release-panel{border:1px solid #39303f;border-radius:22px;padding:32px;background:radial-gradient(ellipse at 30% 0,#67516e0b,transparent 65%),#0a090b}
 .release-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:25px;margin-bottom:25px}
@@ -259,9 +256,9 @@ a:focus-visible,button:focus-visible,[role=tabpanel]:focus-visible{outline:2px s
 .ring-two{animation-delay:-3s}.ring-three{animation-delay:-6s}
 .preview-tabs button{transition:border-color .35s,color .35s,background .35s,translate .35s,box-shadow .35s}
 @media(hover:hover){
-  .button:hover{background-color:#e8e8e8;color:#111;border-color:#ffffff70;box-shadow:inset 0 1px 1px #ffffff07,0 9px 25px #0004,0 0 24px #c7a6ff14}
-  .feature-card:hover{translate:0 -5px;border-color:#51495d;box-shadow:0 14px 45px #a98cdd08}
-  .feature-card:hover .feature-symbol,.feature-card:hover .community-symbol{transform:translateY(-5px) rotate(-3deg);border-color:#70627f;box-shadow:0 15px 40px #0008,0 0 28px #b99be51a}
+  .button:hover{background-color:#e8e8e8;color:#111;border-color:#ffffff70;box-shadow:inset 0 1px 1px #ffffff07,0 9px 25px #0004,0 0 24px #818cf814}
+  .feature-card:hover{translate:0 -5px;border-color:#312e81;box-shadow:0 14px 45px #6366f108}
+  .feature-card:hover .feature-symbol,.feature-card:hover .community-symbol{transform:translateY(-5px) rotate(-3deg);border-color:#4338ca;box-shadow:0 15px 40px #0008,0 0 28px #a5b4fc1a}
   .preview-tabs button:hover{translate:0 -2px;box-shadow:0 8px 25px #0005}
 }
 
