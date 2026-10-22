@@ -3,7 +3,7 @@ window.PAWA_STATUS = {
   notice: "",
   services: [
     { name: "Executor", status: "updating", note: "" },
-    { name: "External", status: "updating", note: "" },
+    { name: "External", status: "online", note: "" },
     { name: "Downloads", status: "online", note: "" },
     { name: "Website", status: "online", note: "" }
   ],
