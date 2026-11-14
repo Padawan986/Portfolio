@@ -8,6 +8,6 @@ window.PAWA_STATUS = {
     { name: "Website", status: "online", note: "" }
   ],
   incidents: [
-    "Hollow Detections"
+  
   ]
 };
