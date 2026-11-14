@@ -1,5 +1,5 @@
 window.PAWA_STATUS = {
-  updated: "2026-10-05T12:00:00Z",
+  updated: "2026-11-14T12:00:00Z",
   notice: "",
   services: [
     { name: "Executor", status: "online", note: "" },
@@ -7,7 +7,5 @@ window.PAWA_STATUS = {
     { name: "Downloads", status: "online", note: "" },
     { name: "Website", status: "online", note: "" }
   ],
-  incidents: [
-  
-  ]
+  incidents: []
 };
