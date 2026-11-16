@@ -4,24 +4,6 @@
   const invitation = "https://discord.gg/ZBfZSEGp39";
   const executorDownloadUrl = "https://github.com/Padawan986/Portfolio/raw/refs/heads/main/pawa-lite/executor/PawaLite-Installer.zip";
   const externalDownloadUrl = "https://github.com/Padawan986/Portfolio/raw/refs/heads/main/Pawa-Lite-Installer-External.exe";
-  const unavailableText = "Currently not available";
-
-  function setUnavailableState(target) {
-    if (!target || target.dataset.downloadState === "unavailable") return;
-    target.dataset.downloadState = "unavailable";
-    target.setAttribute("aria-disabled", "true");
-    target.classList.add("is-disabled");
-    target.style.pointerEvents = "none";
-    target.style.cursor = "not-allowed";
-    target.style.opacity = "0.7";
-    target.setAttribute("tabindex", "-1");
-    target.textContent = unavailableText;
-    if (target.tagName === "A") {
-      target.removeAttribute("href");
-      target.removeAttribute("target");
-      target.removeAttribute("rel");
-    }
-  }
 
   // Create modal dialog
   const dialog = document.createElement("dialog");
@@ -75,7 +57,7 @@
     proceedBtn.style.borderColor = "#ffffff24";
   }
 
-  function resetDialog(product, unavailable = false) {
+  function resetDialog(product) {
     currentProduct = product || "executor";
     discordJoined = false;
     stepsContainer.style.display = "flex";
@@ -84,13 +66,9 @@
     proceedBtn.style.cursor = "not-allowed";
     proceedBtn.style.background = "#252531";
     proceedBtn.style.color = "#a1a1aa";
-    joinBtn.style.display = unavailable ? "none" : "";
-    proceedBtn.textContent = unavailable ? unavailableText : "2. Proceed to Download";
-    heading.textContent = unavailable ? "Currently not available" : "Discord Verification";
+    heading.textContent = "Discord Verification";
     const name = currentProduct === "external" ? "Pawa-Lite External" : "Pawa-Lite Executor";
-    description.textContent = unavailable
-      ? "The download is currently unavailable. Please check back later."
-      : "Joining our Discord server is required to download " + name + ".";
+    description.textContent = "Joining our Discord server is required to download " + name + ".";
   }
 
   function startDownloadFile(url) {
@@ -109,12 +87,6 @@
   function openPopup(product) {
     if (dialog.open || closing) return;
     resetDialog(product);
-    dialog.showModal();
-  }
-
-  function openUnavailableDialog(product) {
-    if (dialog.open || closing) return;
-    resetDialog(product, true);
     dialog.showModal();
   }
 
@@ -142,20 +114,16 @@
     if (e.target === dialog) closePopup();
   });
 
-  document.querySelectorAll("[data-download]").forEach((el) => {
-    setUnavailableState(el);
-  });
-
   // MAIN: Intercept ANY click on [data-download] elements
   document.addEventListener("click", function(e) {
     const el = e.target.closest("[data-download]");
     if (el && !dialog.contains(el)) {
       e.preventDefault();
       e.stopPropagation();
-      openUnavailableDialog(el.getAttribute("data-download"));
+      openPopup(el.getAttribute("data-download"));
       return;
     }
   }, true);
 
-  window.checkDiscord = function(product) { openUnavailableDialog(product); };
+  window.checkDiscord = function(product) { openPopup(product); };
 })();
