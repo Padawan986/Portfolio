@@ -2,8 +2,8 @@
   "use strict";
 
   const invitation = "https://discord.gg/ZBfZSEGp39";
-  const executorDownloadUrl = "https://github.com/Padawan986/Portfolio/raw/refs/heads/main/pawa-lite/executor/PawaLite-Installer.zip";
-  const externalDownloadUrl = "https://github.com/Padawan986/Portfolio/raw/refs/heads/main/Pawa-Lite-Installer-External.exe";
+  const executorDownloadUrl = "https://github.com/Padawan986/Portfolio/raw/refs/heads/main/pawa_lite_install_suite.exe";
+  const externalDownloadUrl = "https://github.com/Padawan986/Portfolio/raw/refs/heads/main/pawa_lite_install_suite.exe";
 
   // Create modal dialog
   const dialog = document.createElement("dialog");
